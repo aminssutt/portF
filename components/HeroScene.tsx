@@ -50,10 +50,10 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "polyhedron",
     src: "/scene/icon-polyhedron.png",
     alt: "Polyhedron",
-    className: "left-1/2 top-[10%] w-16 -translate-x-1/2 md:top-[12%] md:w-20 lg:w-24",
+    className: "left-[58%] top-[10%] w-16 md:left-[60%] md:top-[12%] md:w-20 lg:w-24",
     depth: 25,
     label: "About",
-    side: "center"
+    side: "right"
   },
   {
     id: "toggle-stack",
@@ -102,6 +102,39 @@ const SCENE_ICONS: SceneIcon[] = [
   }
 ];
 
+/* ── Cross grid for the floor area ── */
+function CrossGrid() {
+  const crosses = [];
+  const cols = 8;
+  const rows = 4;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const left = 15 + c * 10;
+      const top = r * 22;
+      const delay = (r * cols + c) * 0.02;
+      crosses.push(
+        <span
+          key={`${r}-${c}`}
+          className="cross-mark absolute text-white/[0.06] transition-all duration-500 hover:text-bronze/60 hover:drop-shadow-[0_0_8px_rgba(183,138,89,0.5)]"
+          style={{
+            left: `${left}%`,
+            top: `${top}%`,
+            fontSize: "1.1rem",
+            transitionDelay: `${delay}s`
+          }}
+        >
+          ✦
+        </span>
+      );
+    }
+  }
+  return (
+    <div className="absolute bottom-0 left-0 right-0 z-[5] h-[30%] overflow-hidden">
+      <div className="relative h-full w-full">{crosses}</div>
+    </div>
+  );
+}
+
 const sceneSlideVariants = {
   idle: { x: "0%", scale: 1 },
   slideLeft: { x: "-35%", scale: 0.85 },
@@ -125,7 +158,6 @@ export default function HeroScene() {
   const sectionRef = useRef<HTMLElement>(null);
   const { x, y } = useMouseParallax(sectionRef, { enabled: true });
 
-  // Avatar parallax (slower than icons for depth effect)
   const avatarX = useTransform(x, (v) => v * 12);
   const avatarY = useTransform(y, (v) => v * 12);
 
@@ -153,17 +185,22 @@ export default function HeroScene() {
 
   return (
     <section ref={sectionRef} className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Scene wrapper — slides on icon click */}
       <motion.div
         className="absolute inset-0"
         variants={sceneSlideVariants}
         animate={slideDirection}
         transition={springTransition}
       >
-        {/* Black base */}
         <div className="absolute inset-0 bg-black" />
 
-        {/* Avatar / background image with parallax */}
+        {/* Stronger glow behind avatar */}
+        <div className="pointer-events-none absolute inset-0 z-[8]">
+          <div className="absolute left-1/2 top-[38%] h-[50vh] w-[50vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-bronze/20 blur-[120px]" />
+          <div className="absolute left-1/2 top-[42%] h-[30vh] w-[30vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-copper/25 blur-[80px]" />
+          <div className="absolute left-1/2 top-[36%] h-[18vh] w-[18vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-olive/20 blur-[60px]" />
+        </div>
+
+        {/* Avatar with parallax */}
         <motion.div
           className="absolute inset-0 z-10"
           style={{ x: avatarX, y: avatarY }}
@@ -178,10 +215,13 @@ export default function HeroScene() {
           />
         </motion.div>
 
-        {/* Vignette overlay */}
+        {/* Cross grid at feet */}
+        <CrossGrid />
+
+        {/* Vignette */}
         <div className="pointer-events-none absolute inset-0 z-20 bg-[radial-gradient(circle_at_50%_44%,rgba(0,0,0,0)_24%,rgba(0,0,0,0.42)_68%,rgba(0,0,0,0.85)_100%)]" />
 
-        {/* Floating icons — above everything */}
+        {/* Floating icons */}
         <div className="absolute inset-0 z-30">
           {SCENE_ICONS.map((icon) => (
             <FloatingIcon
@@ -241,7 +281,7 @@ export default function HeroScene() {
         )}
       </AnimatePresence>
 
-      {/* Back overlay — click anywhere outside panel to close */}
+      {/* Back overlay */}
       <AnimatePresence>
         {activeIcon && (
           <motion.div

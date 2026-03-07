@@ -7,7 +7,7 @@ import MobileScrollView from "@/components/MobileScrollView";
 
 export default function HomePage() {
   const [loaded, setLoaded] = useState(false);
-  const [isTabletOrMobile, setIsTabletOrMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 100);
@@ -25,15 +25,15 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const mql = window.matchMedia("(max-width: 1024px)");
-    setIsTabletOrMobile(mql.matches);
-    const handler = (e: MediaQueryListEvent) => setIsTabletOrMobile(e.matches);
+    const mql = window.matchMedia("(max-width: 500px)");
+    setIsMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
     mql.addEventListener("change", handler);
     return () => mql.removeEventListener("change", handler);
   }, []);
 
   return (
-    <main className={isTabletOrMobile ? "h-screen w-full" : "h-screen w-full overflow-hidden"}>
+    <main className={isMobile ? "h-screen w-full" : "h-screen w-full overflow-hidden"}>
       <AnimatePresence>
         {!loaded && (
           <motion.div
@@ -49,7 +49,7 @@ export default function HomePage() {
           </motion.div>
         )}
       </AnimatePresence>
-      {isTabletOrMobile ? <MobileScrollView /> : <HeroScene />}
+      {isMobile ? <MobileScrollView /> : <HeroScene />}
     </main>
   );
 }

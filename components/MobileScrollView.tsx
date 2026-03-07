@@ -1,13 +1,25 @@
 "use client";
 
-import { useRef, useState, useEffect, type ReactNode } from "react";
+import { useRef, useState, useCallback, useEffect, type ReactNode } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { t, getIconLabel, type Lang } from "@/lib/i18n";
 
 /* ── Language flags ── */
 const FLAGS: Record<Lang, string> = { en: "🇬🇧", fr: "🇫🇷", ko: "🇰🇷" };
 const LANG_ORDER: Lang[] = ["en", "fr", "ko"];
+
+/* ── Scattered icon positions — around center, avoiding title band ── */
+const MOBILE_ICONS = [
+  { id: "polyhedron", src: "/scene/icon-polyhedron.png", left: "22%", top: "10%", depth: 25 },
+  { id: "text-card", src: "/scene/icon-text-card.png", left: "72%", top: "8%", depth: 35 },
+  { id: "phone", src: "/scene/icon-phone.png", left: "14%", top: "30%", depth: 55 },
+  { id: "dots", src: "/scene/icon-color-dots.png", left: "76%", top: "32%", depth: 20 },
+  { id: "toggle-stack", src: "/scene/icon-toggle-stack.png", left: "12%", top: "60%", depth: 50 },
+  { id: "cubes", src: "/scene/icon-cubes.png", left: "78%", top: "58%", depth: 40 },
+  { id: "ai", src: "/scene/icon-ai.png", left: "18%", top: "78%", depth: 60 },
+  { id: "palette", src: "/scene/icon-palette.png", left: "72%", top: "76%", depth: 45 },
+];
 
 /* ── Section definition ── */
 type SectionDef = {
@@ -15,202 +27,6 @@ type SectionDef = {
   iconId: string;
   content: ReactNode;
 };
-
-/* ── Scroll-animated section wrapper — fade in/out with slide ── */
-function ScrollSection({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.2 });
-
-  return (
-    <div ref={ref} className="flex items-center justify-center px-4 sm:px-8 py-14 sm:py-20">
-      <motion.div
-        className="w-full max-w-lg sm:max-w-xl"
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
-
-/* ── Burger menu — responsive for mobile & tablet ── */
-function BurgerMenu({
-  lang,
-  setLang,
-  onContact,
-  sections,
-  scrollToSection,
-}: {
-  lang: Lang;
-  setLang: (l: Lang) => void;
-  onContact: () => void;
-  sections: SectionDef[];
-  scrollToSection: (id: string) => void;
-}) {
-  const [open, setOpen] = useState(false);
-
-  /* Close on Escape */
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  return (
-    <div className="relative z-50">
-      {/* Burger button */}
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all hover:bg-white/10 hover:border-bronze/20"
-        aria-label="Menu"
-      >
-        <div className="flex flex-col items-center justify-center gap-[5px]">
-          <motion.span
-            className="block h-[2px] w-5 sm:w-6 rounded-full bg-sand/70"
-            animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-          />
-          <motion.span
-            className="block h-[2px] w-5 sm:w-6 rounded-full bg-sand/70"
-            animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.2 }}
-          />
-          <motion.span
-            className="block h-[2px] w-5 sm:w-6 rounded-full bg-sand/70"
-            animate={open ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-          />
-        </div>
-      </button>
-
-      {/* Fullscreen overlay menu */}
-      <AnimatePresence>
-        {open && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => setOpen(false)}
-            />
-
-            {/* Menu panel — slides from right */}
-            <motion.div
-              className="fixed top-0 right-0 z-50 flex h-full w-[85vw] max-w-[360px] sm:w-[55vw] sm:max-w-[400px] flex-col border-l border-white/[0.06] bg-obsidian/98 backdrop-blur-2xl"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 35 }}
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between border-b border-white/[0.06] px-5 sm:px-6 py-4 sm:py-5">
-                <h2 className="font-[var(--font-display)] text-base sm:text-lg font-semibold text-sand tracking-wide">
-                  Menu
-                </h2>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/50 transition-colors hover:bg-white/10 hover:text-sand"
-                >
-                  <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Language switcher */}
-              <div className="flex items-center gap-2 px-5 sm:px-6 py-4 border-b border-white/[0.04]">
-                <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/30 mr-2">Lang</span>
-                {LANG_ORDER.map((l) => (
-                  <button
-                    key={l}
-                    type="button"
-                    onClick={() => setLang(l)}
-                    className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border text-base sm:text-lg transition-all ${
-                      l === lang
-                        ? "border-bronze/40 bg-bronze/15 shadow-[0_0_12px_rgba(183,138,89,0.15)]"
-                        : "border-white/10 bg-white/5 hover:bg-white/10"
-                    }`}
-                  >
-                    {FLAGS[l]}
-                  </button>
-                ))}
-              </div>
-
-              {/* Section navigation — 2-col grid on tablet, compact list on mobile */}
-              <div className="flex-1 px-5 sm:px-6 py-3 sm:py-4">
-                <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/25 mb-2 sm:mb-3">
-                  Sections
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-0.5 sm:gap-1">
-                  {sections.map((s) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => {
-                        scrollToSection(s.id);
-                        setOpen(false);
-                      }}
-                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 sm:py-2.5 text-left text-xs sm:text-sm text-white/60 transition-all hover:bg-white/[0.04] hover:text-sand active:scale-[0.98]"
-                    >
-                      <span className="text-[6px] text-bronze/50">◆</span>
-                      {getIconLabel(s.iconId, lang)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Footer: social + contact */}
-              <div className="border-t border-white/[0.06] px-5 sm:px-6 py-4 sm:py-5 space-y-4">
-                <div className="flex items-center justify-center gap-4">
-                  <a
-                    href="https://github.com/aminssutt"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/40 transition-all hover:bg-white/10 hover:text-sand"
-                  >
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/lakhdar-berache-62095426a/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/40 transition-all hover:bg-white/10 hover:text-sand"
-                  >
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                  </a>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    onContact();
-                    setOpen(false);
-                  }}
-                  className="w-full rounded-xl border border-bronze/30 bg-bronze/10 py-3 sm:py-3.5 text-xs sm:text-sm font-medium text-bronze/80 transition-all hover:bg-bronze/20 hover:text-bronze active:scale-[0.98]"
-                >
-                  {t("openToWork", lang)}
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 /* ── Build sections content (same data as desktop but formatted for mobile) ── */
 function buildSections(
@@ -769,185 +585,208 @@ export default function MobileScrollView() {
   const [lang, setLang] = useState<Lang>("en");
   const [showContact, setShowContact] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  /* ── Touch-drag parallax state ── */
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    const touch = e.touches[0];
+    const dx = (touch.clientX - touchStartRef.current.x) * 0.15;
+    const dy = (touch.clientY - touchStartRef.current.y) * 0.15;
+    setParallax({ x: dx, y: dy });
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    touchStartRef.current = null;
+    setParallax({ x: 0, y: 0 });
+  }, []);
 
   const sections = buildSections(lang, setPreviewUrl);
 
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(`section-${id}`);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  const openSection = (iconId: string) => {
+    const section = sections.find((s) => s.iconId === iconId);
+    if (section) setActiveSection(section.id);
   };
 
+  const activeSectionData = sections.find((s) => s.id === activeSection);
+
   return (
-    <div ref={containerRef} className="mobile-scroll-container relative h-screen overflow-y-auto overflow-x-hidden bg-obsidian">
-      {/* ── Hero (full-screen) ── */}
-      <div className="relative h-screen flex flex-col overflow-hidden">
-        {/* Background glow */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-1/2 h-[80vh] w-[80vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-bronze/10 blur-[140px]" />
-          <div className="absolute left-1/2 top-1/2 h-[50vh] w-[50vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-copper/12 blur-[90px]" />
-        </div>
-
-        {/* Burger menu — fixed so it stays during scroll */}
-        <div className="fixed top-4 right-4 sm:top-5 sm:right-5 z-50">
-          <BurgerMenu
-            lang={lang}
-            setLang={setLang}
-            onContact={() => setShowContact(true)}
-            sections={sections}
-            scrollToSection={scrollToSection}
-          />
-        </div>
-
-        {/* Title at top */}
-        <motion.div
-          className="relative z-20 pt-5 sm:pt-7 flex justify-center px-4"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <h1 className="font-[var(--font-display)] text-xl sm:text-2xl font-semibold tracking-[0.12em] text-bronze/80 drop-shadow-[0_2px_12px_rgba(183,138,89,0.25)]">
-            {t("portfolioTitle", lang)}
-          </h1>
-        </motion.div>
-
-        {/* Avatar — mobile/tablet specific image, centered & scales UP on smaller screens */}
-        <motion.div
-          className="absolute inset-0 z-10"
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <div className="relative w-full h-full">
-            <Image
-              src="/scene/background-tablet-mobile.png"
-              alt="Avatar"
-              fill
-              priority
-              className="object-cover object-center"
-              sizes="100vw"
-            />
-          </div>
-        </motion.div>
-
-        {/* Scroll hint — at bottom over the avatar */}
-        <motion.div
-          className="absolute bottom-5 sm:bottom-7 inset-x-0 flex flex-col items-center gap-2 z-20"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          <p className="text-[10px] sm:text-xs tracking-[0.15em] text-white/40 bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
-            {t("scrollDown", lang)}
-          </p>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          >
-            <svg
-              className="h-5 w-5 sm:h-6 sm:w-6 text-bronze/50"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
-              />
-            </svg>
-          </motion.div>
-        </motion.div>
+    <div
+      className="relative h-[100dvh] overflow-hidden bg-obsidian touch-none"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Background glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-1/2 h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-bronze/8 blur-[120px]" />
+        <div className="absolute left-1/2 top-1/2 h-[35vh] w-[35vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-copper/10 blur-[80px]" />
       </div>
 
-      {/* ── Scroll sections ── */}
-      {sections.map((section) => (
-        <div key={section.id} id={`section-${section.id}`}>
-          <ScrollSection>
-            <div className="glass-panel p-5 sm:p-7">
-              {/* Section header */}
-              <div className="mb-4 flex items-center gap-2">
-                <span className="text-[8px] text-bronze/50">◆</span>
-                <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-bronze">
-                  {getIconLabel(section.iconId, lang)}
-                </p>
-              </div>
-              <h2 className="mb-5 font-[var(--font-display)] text-xl sm:text-2xl font-semibold text-sand">
-                {getIconLabel(section.iconId, lang)}
-              </h2>
-              <div className="text-sm sm:text-base leading-relaxed text-white/60">
-                {section.content}
-              </div>
-            </div>
-          </ScrollSection>
-        </div>
+      {/* ── Title — centered with typewriter animation ── */}
+      <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+        <h1 className="font-[var(--font-display)] text-[2rem] font-semibold tracking-[0.10em] text-bronze/80 text-center leading-tight drop-shadow-[0_2px_16px_rgba(183,138,89,0.3)]">
+          {t("portfolioTitle", lang).split("").map((char, i) => (
+            <motion.span
+              key={`${lang}-${i}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.04, delay: 0.4 + i * 0.06 }}
+            >
+              {char}
+            </motion.span>
+          ))}
+          <motion.span
+            className="inline-block w-[2px] h-[1.1em] bg-bronze/60 align-middle ml-0.5"
+            animate={{ opacity: [1, 0] }}
+            transition={{ repeat: Infinity, duration: 0.7, ease: "steps(1)" }}
+            initial={{ opacity: 1 }}
+          />
+        </h1>
+      </div>
+
+      {/* ── Scattered icons with touch parallax ── */}
+      {MOBILE_ICONS.map((icon, i) => (
+        <motion.button
+          key={icon.id}
+          type="button"
+          onClick={() => openSection(icon.id)}
+          className="absolute z-20 flex flex-col items-center gap-1.5 -translate-x-1/2 -translate-y-1/2 group"
+          style={{
+            left: icon.left,
+            top: icon.top,
+          }}
+          animate={{
+            x: parallax.x * (icon.depth / 40),
+            y: parallax.y * (icon.depth / 40),
+          }}
+          transition={{ type: "spring", stiffness: 120, damping: 20 }}
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <Image
+            src={icon.src}
+            alt={getIconLabel(icon.id, lang)}
+            width={72}
+            height={72}
+            className="h-[4.5rem] w-[4.5rem] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+          />
+          <span className="text-[9px] tracking-wide text-white/40 text-center max-w-[70px] leading-tight">
+            {getIconLabel(icon.id, lang)}
+          </span>
+        </motion.button>
       ))}
 
-      {/* ── Footer section ── */}
-      <div className="flex min-h-[40vh] flex-col items-center justify-center gap-4 px-6 py-12">
-        <h2 className="font-[var(--font-display)] text-lg font-semibold text-sand">
-          {t("getInTouch", lang)}
-        </h2>
-        <p className="max-w-xs text-center text-xs text-white/40">
-          {t("contactDesc", lang)}
+      {/* ── Bottom bar ── */}
+      <div className="absolute bottom-0 left-0 right-0 z-30 flex items-center justify-between px-3 pb-4 pt-8 bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent">
+        {/* Language switcher */}
+        <div className="flex items-center gap-1">
+          {LANG_ORDER.map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLang(l)}
+              className={`flex h-7 w-7 items-center justify-center rounded-full border text-xs transition-all ${
+                l === lang
+                  ? "border-bronze/40 bg-bronze/15"
+                  : "border-white/10 bg-white/5"
+              }`}
+            >
+              {FLAGS[l]}
+            </button>
+          ))}
+        </div>
+
+        {/* Click hint */}
+        <p className="text-[9px] tracking-[0.12em] text-white/25">
+          {t("clickToExplore", lang)}
         </p>
-        <div className="flex flex-col gap-2 w-full max-w-xs">
+
+        {/* Links */}
+        <div className="flex items-center gap-2">
           <a
-            href="mailto:lakhdarberache@gmail.com"
-            className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-xs text-sand transition-colors hover:border-bronze/30"
+            href="https://github.com/aminssutt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5"
           >
-            <svg
-              className="h-4 w-4 shrink-0 text-bronze"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-              />
+            <svg className="h-3.5 w-3.5 text-sand/70" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
             </svg>
-            lakhdarberache@gmail.com
-          </a>
-          <a
-            href="tel:+33781500771"
-            className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-xs text-sand transition-colors hover:border-bronze/30"
-          >
-            <svg
-              className="h-4 w-4 shrink-0 text-bronze"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-              />
-            </svg>
-            +33 7 81 50 07 71
           </a>
           <a
             href="https://www.linkedin.com/in/lakhdar-berache-62095426a/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-xs text-sand transition-colors hover:border-bronze/30"
+            className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/5"
           >
-            <svg
-              className="h-4 w-4 shrink-0 text-bronze"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="h-3.5 w-3.5 text-sand/70" fill="currentColor" viewBox="0 0 24 24">
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
             </svg>
-            Lakhdar Berache
           </a>
+          <button
+            type="button"
+            onClick={() => setShowContact(true)}
+            className="rounded-full border border-bronze/30 bg-bronze/10 px-3 py-1.5 text-[9px] font-medium tracking-wider text-bronze"
+          >
+            Freelance
+          </button>
         </div>
       </div>
+
+      {/* ── Section popup ── */}
+      <AnimatePresence>
+        {activeSection && activeSectionData && (
+          <motion.div
+            className="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setActiveSection(null)}
+          >
+            <motion.div
+              className="relative mx-3 w-full max-w-md max-h-[80vh] overflow-y-auto rounded-2xl border border-white/10 bg-obsidian p-5 shadow-2xl"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setActiveSection(null)}
+                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-sand z-10"
+              >
+                ✕
+              </button>
+              {/* Section header */}
+              <div className="mb-3 flex items-center gap-2">
+                <span className="text-[8px] text-bronze/50">◆</span>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-bronze">
+                  {getIconLabel(activeSectionData.iconId, lang)}
+                </p>
+              </div>
+              <h2 className="mb-4 font-[var(--font-display)] text-xl font-semibold text-sand">
+                {getIconLabel(activeSectionData.iconId, lang)}
+              </h2>
+              <div className="text-sm leading-relaxed text-white/60">
+                {activeSectionData.content}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Contact modal */}
       <AnimatePresence>

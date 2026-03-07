@@ -24,7 +24,7 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "cubes",
     src: "/scene/icon-cubes.png",
     alt: "Cubes",
-    className: "left-[0%] top-[14%] w-9 md:left-[6%] md:top-[15%] md:w-16 lg:left-[20%] lg:top-[16%] lg:w-24",
+    className: "left-[4%] top-[16%] w-10 md:left-[6%] md:top-[15%] md:w-14 lg:left-[20%] lg:top-[16%] lg:w-24",
     depth: 40,
     label: "Projects",
     side: "left"
@@ -33,7 +33,7 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "phone",
     src: "/scene/icon-phone.png",
     alt: "Phone",
-    className: "left-[0%] top-[30%] w-10 md:left-[4%] md:top-[32%] md:w-16 lg:left-[18%] lg:top-[34%] lg:w-28",
+    className: "left-[2%] top-[34%] w-11 md:left-[4%] md:top-[32%] md:w-14 lg:left-[18%] lg:top-[34%] lg:w-28",
     depth: 55,
     label: "Experience",
     side: "left"
@@ -42,7 +42,7 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "text-card",
     src: "/scene/icon-text-card.png",
     alt: "Text Card",
-    className: "left-[0%] top-[49%] w-10 md:left-[5%] md:top-[52%] md:w-20 lg:left-[20%] lg:top-[54%] lg:w-36",
+    className: "left-[6%] top-[52%] w-11 md:left-[5%] md:top-[52%] md:w-16 lg:left-[20%] lg:top-[54%] lg:w-36",
     depth: 35,
     label: "Education",
     side: "left"
@@ -51,7 +51,7 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "polyhedron",
     src: "/scene/icon-polyhedron.png",
     alt: "Polyhedron",
-    className: "left-1/2 top-[10%] w-9 -translate-x-1/2 md:top-[10%] md:w-14 lg:left-[60%] lg:top-[12%] lg:w-24",
+    className: "right-[12%] top-[18%] w-10 md:right-[18%] md:top-[14%] md:w-12 lg:left-[60%] lg:top-[12%] lg:w-24",
     depth: 25,
     label: "About",
     side: "right"
@@ -60,7 +60,7 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "toggle-stack",
     src: "/scene/icon-toggle-stack.png",
     alt: "Toggle Stack",
-    className: "right-[0%] top-[24%] w-10 md:right-[6%] md:top-[22%] md:w-16 lg:right-[20%] lg:top-[22%] lg:w-28",
+    className: "right-[2%] top-[26%] w-11 md:right-[6%] md:top-[22%] md:w-14 lg:right-[20%] lg:top-[22%] lg:w-28",
     depth: 50,
     label: "Tech Stack & Skills",
     side: "right"
@@ -69,7 +69,7 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "palette",
     src: "/scene/icon-palette.png",
     alt: "Palette",
-    className: "right-[0%] top-[40%] w-10 md:right-[5%] md:top-[40%] md:w-16 lg:right-[18%] lg:top-[40%] lg:w-28",
+    className: "right-[5%] top-[42%] w-11 md:right-[5%] md:top-[40%] md:w-14 lg:right-[18%] lg:top-[40%] lg:w-28",
     depth: 45,
     label: "Passions",
     side: "right"
@@ -78,7 +78,7 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "ai",
     src: "/scene/icon-ai.png",
     alt: "AI",
-    className: "right-[0%] top-[56%] w-10 md:right-[6%] md:top-[60%] md:w-16 lg:right-[20%] lg:top-[62%] lg:w-28",
+    className: "right-[3%] top-[58%] w-11 md:right-[6%] md:top-[60%] md:w-14 lg:right-[20%] lg:top-[62%] lg:w-28",
     depth: 60,
     label: "AI & Innovation",
     side: "right"
@@ -87,7 +87,7 @@ const SCENE_ICONS: SceneIcon[] = [
     id: "dots",
     src: "/scene/icon-color-dots.png",
     alt: "Color Dots",
-    className: "left-[2%] top-[69%] w-8 md:left-[8%] md:top-[72%] md:w-12 lg:left-[28%] lg:top-[70%] lg:w-20",
+    className: "left-[8%] top-[68%] w-9 md:left-[8%] md:top-[72%] md:w-11 lg:left-[28%] lg:top-[70%] lg:w-20",
     depth: 20,
     label: "Certifications",
     side: "left"
@@ -767,7 +767,7 @@ export default function HeroScene() {
             exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            <h1 className="font-[var(--font-display)] text-lg font-semibold tracking-[0.12em] text-bronze/80 drop-shadow-[0_2px_12px_rgba(183,138,89,0.25)] md:text-3xl lg:text-4xl">
+            <h1 className="font-[var(--font-display)] text-xl font-semibold tracking-[0.12em] text-bronze/80 drop-shadow-[0_2px_12px_rgba(183,138,89,0.25)] md:text-3xl lg:text-4xl">
               {t("portfolioTitle", lang)}
             </h1>
           </motion.div>
@@ -795,7 +795,7 @@ export default function HeroScene() {
       <AnimatePresence>
         {!isOpen && (
           <motion.div
-            className="absolute right-4 top-4 z-30 hidden md:block lg:hidden"
+            className="absolute right-4 top-4 z-30 lg:hidden"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}

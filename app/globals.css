@@ -60,6 +60,25 @@ h4 {
 
   .glass-panel {
     @apply rounded-2xl border border-white/10 bg-white/[0.035] backdrop-blur-xl;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(183, 138, 89, 0.35) transparent;
+  }
+
+  .glass-panel::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .glass-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .glass-panel::-webkit-scrollbar-thumb {
+    background: rgba(183, 138, 89, 0.35);
+    border-radius: 9999px;
+  }
+
+  .glass-panel::-webkit-scrollbar-thumb:hover {
+    background: rgba(183, 138, 89, 0.55);
   }
 }
 

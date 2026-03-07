@@ -61,7 +61,7 @@ const SCENE_ICONS: SceneIcon[] = [
     alt: "Toggle Stack",
     className: "right-[14%] top-[20%] w-20 md:right-[20%] md:top-[22%] md:w-24 lg:w-28",
     depth: 50,
-    label: "Tech Stack",
+    label: "Tech Stack & Skills",
     side: "right"
   },
   {
@@ -73,15 +73,7 @@ const SCENE_ICONS: SceneIcon[] = [
     label: "Design",
     side: "right"
   },
-  {
-    id: "toggle",
-    src: "/scene/icon-toggle.png",
-    alt: "Toggle",
-    className: "right-[20%] top-[50%] w-16 md:right-[24%] md:top-[50%] md:w-20 lg:w-[5.5rem]",
-    depth: 30,
-    label: "Skills",
-    side: "right"
-  },
+
   {
     id: "ai",
     src: "/scene/icon-ai.png",
@@ -97,219 +89,312 @@ const SCENE_ICONS: SceneIcon[] = [
     alt: "Color Dots",
     className: "left-[24%] top-[70%] w-14 md:left-[28%] md:top-[70%] md:w-[4.5rem] lg:w-20",
     depth: 20,
-    label: "Branding",
+    label: "Passion",
     side: "left"
   }
 ];
 
-/* ── Section content ── */
-const SECTION_CONTENT: Record<string, ReactNode> = {
-  polyhedron: (
-    <div className="space-y-4">
-      <p>
-        Hello! I&apos;m <span className="text-sand">Lakhdar Berache</span>, an engineering student passionate about technological innovation.
-        I develop projects combining <span className="text-bronze">AI, data science, and web development</span>.
-      </p>
-      <p>Curious and adaptable, I aim to apply my skills in a stimulating and collaborative environment.</p>
-      <div className="mt-6 flex flex-wrap gap-3">
-        <a href="https://github.com/aminssutt" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-sand transition-colors hover:bg-white/10">GitHub</a>
-        <a href="https://www.linkedin.com/in/lakhdar-berache-62095426a/" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-sand transition-colors hover:bg-white/10">LinkedIn</a>
+/* ── Section content (function to allow preview callbacks) ── */
+function getSectionContent(onPreview: (url: string) => void): Record<string, ReactNode> {
+  return {
+    polyhedron: (
+      <div className="space-y-4">
+        <p>
+          Hello! I&apos;m <span className="text-sand">Lakhdar Berache</span>, an engineering student passionate about technological innovation.
+          I develop projects combining <span className="text-bronze">AI, data science, and web development</span>.
+        </p>
+        <p className="text-base text-white/55">Curious and adaptable, I aim to apply my skills in a stimulating and collaborative environment.</p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href="https://github.com/aminssutt" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-sand transition-colors hover:bg-white/10">GitHub</a>
+          <a href="https://www.linkedin.com/in/lakhdar-berache-62095426a/" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-sand transition-colors hover:bg-white/10">LinkedIn</a>
+        </div>
+        <div className="mt-6 space-y-2">
+          <p className="text-sm uppercase tracking-[0.2em] text-bronze">Languages</p>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { lang: "French", pct: 100 }, { lang: "Arabic", pct: 95 },
+              { lang: "English", pct: 90 }, { lang: "Korean", pct: 30 }
+            ].map((l) => (
+              <div key={l.lang} className="space-y-1">
+                <span className="text-sm text-white/50">{l.lang}</span>
+                <div className="h-1 w-full rounded-full bg-white/10">
+                  <div className="h-full rounded-full bg-bronze/70" style={{ width: `${l.pct}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="mt-6 space-y-2">
-        <p className="text-xs uppercase tracking-[0.2em] text-bronze">Languages</p>
-        <div className="grid grid-cols-2 gap-2">
+    ),
+
+    phone: (
+      <div className="space-y-6">
+        {[
+          {
+            company: "Renault Korea",
+            logo: "R",
+            logoBg: "from-yellow-500/30 to-yellow-300/10",
+            logoText: "text-yellow-300",
+            role: "Software & AI Engineer Intern",
+            period: "Sep 2025 – Feb 2026 · South Korea",
+            bullets: [
+              "Connected health & fitness app with real-time 3D avatar and AI-driven recommendations (IoT data).",
+              "AI-powered podcast generation platform with NLP & TTS models.",
+              "In-car Theme Store app for dashboard personalization.",
+              "Personalized in-car AI assistant with LLM, RAG, multi-channel APIs (Spotify, calendar, email, calls).",
+            ]
+          },
+          {
+            company: "FabulousCreations Studio",
+            logo: "F",
+            logoBg: "from-pink-500/30 to-pink-300/10",
+            logoText: "text-pink-300",
+            role: "Web Developer",
+            period: "Jan 2025 – Ongoing · Paris",
+            bullets: [
+              "One-page website for an interior designer with portfolio & booking system.",
+            ]
+          },
+          {
+            company: "Columbus Café",
+            logo: "C",
+            logoBg: "from-amber-600/30 to-amber-400/10",
+            logoText: "text-amber-300",
+            role: "Internship",
+            period: "Jul 2024 – Aug 2024 · Paris",
+            bullets: [
+              "Team supervision, cost management, online promotion, website creation.",
+            ]
+          },
+        ].map((exp) => (
+          <div key={exp.company} className="flex items-start gap-4">
+            <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${exp.logoBg} text-base font-bold ${exp.logoText}`}>{exp.logo}</div>
+            <div className="flex-1 border-l-2 border-bronze/40 pl-4">
+              <h4 className="text-base font-semibold text-sand">{exp.role} — {exp.company}</h4>
+              <p className="mt-1 text-sm text-bronze">{exp.period}</p>
+              <ul className="mt-2 list-inside list-disc space-y-1 text-sm text-white/55">
+                {exp.bullets.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    ),
+
+    "text-card": (
+      <div className="space-y-6">
+        <div className="flex items-start gap-4 rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-sky-600/30 to-sky-400/10 text-lg font-bold text-sky-300">K</div>
+          <div>
+            <h4 className="text-lg font-semibold text-sand">Specialization in AI — KAIST</h4>
+            <p className="mt-1 text-sm text-bronze">Feb 2025 – Jul 2025 · Daejeon, South Korea</p>
+            <p className="mt-2 text-base text-white/60">Exchange semester focused on Data Science, AI/ML, and Start-Up Management at Korea&apos;s top science &amp; technology university.</p>
+          </div>
+        </div>
+        <div className="flex items-start gap-4 rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-700/30 to-blue-400/10 text-lg font-bold text-blue-300">U</div>
+          <div>
+            <h4 className="text-lg font-semibold text-sand">Engineering in Informatics &amp; Systems — UTT</h4>
+            <p className="mt-1 text-sm text-bronze">2024 – 2027 · Troyes, France</p>
+            <p className="mt-2 text-base text-white/60">Integrated preparatory program (2022–2024). Database management, Software Engineering, Systems Architecture.</p>
+          </div>
+        </div>
+        <div className="mt-2 space-y-3">
+          <p className="text-sm uppercase tracking-[0.2em] text-bronze">Certifications</p>
+          <div className="space-y-2">
+            {[
+              { name: "AI Generative", org: "Microsoft", year: "2024" },
+              { name: "Build a Computer Vision App with Azure", org: "Microsoft", year: "2024" },
+            ].map((cert) => (
+              <div key={cert.name} className="flex items-center gap-3 rounded-md border border-white/[0.06] bg-white/[0.02] px-3 py-2">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-[#00a4ef]/20 text-[10px] font-bold text-[#00a4ef]">MS</div>
+                <div>
+                  <p className="text-sm text-sand">{cert.name}</p>
+                  <p className="text-xs text-white/40">{cert.org} · {cert.year}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+
+    cubes: (
+      <div className="space-y-4">
+        {[
+          { name: "Hera Studio", desc: "AI platform to create personalized coloring books for kids.", tech: "React, Firebase, Stripe, OpenAI", link: "https://www.herastudio.art" },
+          { name: "Frelsi", desc: "Personal creative blog with interactive notebook system.", tech: "React, Supabase, Vercel", link: "https://frelsi.vercel.app" },
+          { name: "Fabulous Creations", desc: "One-page website for an interior designer with booking.", tech: "HTML, CSS, JavaScript", link: "https://aminssutt.github.io/Fabulous/" },
+          { name: "RePLY", desc: "Intelligent wearable device using ML for heart rate monitoring.", tech: "ML, IoT, Python, Hardware", link: null },
+          { name: "AI Adventure", desc: "Game-based learning platform for AI education at KAIST.", tech: "React, ML, Python, Gamification", link: null },
+          { name: "Great Teachers", desc: "Platform connecting students with AI assistant support.", tech: "AI, React, Node.js", link: null },
+        ].map((p) => (
+          <div
+            key={p.name}
+            className={`group rounded-lg border border-white/[0.06] bg-white/[0.02] p-5 transition-all duration-300 hover:border-bronze/40 hover:bg-bronze/[0.06] ${p.link ? "cursor-pointer" : ""}`}
+            onClick={() => p.link && onPreview(p.link)}
+            role={p.link ? "button" : undefined}
+            tabIndex={p.link ? 0 : undefined}
+            onKeyDown={(e) => { if (p.link && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onPreview(p.link); } }}
+          >
+            <div className="flex items-start justify-between">
+              <h4 className="text-base font-semibold text-sand group-hover:text-bronze transition-colors">{p.name}</h4>
+              {p.link && (
+                <a href={p.link} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="rounded-md border border-bronze/30 bg-bronze/10 px-3 py-1 text-xs text-bronze transition-colors hover:bg-bronze/25">
+                  Visit ↗
+                </a>
+              )}
+            </div>
+            <p className="mt-2 text-sm text-white/55">{p.desc}</p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {p.tech.split(", ").map((t) => (
+                <span key={t} className="rounded-full bg-white/[0.04] px-2.5 py-0.5 text-[10px] text-bronze/70">{t}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    ),
+
+    "toggle-stack": (
+      <div className="space-y-6">
+        <p className="text-sm text-white/50">Technologies, frameworks &amp; competencies I work with.</p>
+        {[
+          { category: "Frontend", techs: ["React", "Next.js", "TypeScript", "TailwindCSS", "Framer Motion", "GSAP"] },
+          { category: "Backend", techs: ["Node.js", "Firebase", "Supabase", "PostgreSQL", "Stripe"] },
+          { category: "AI & Data", techs: ["OpenAI API", "LangChain", "Python", "TensorFlow", "ML/DL", "NLP", "Computer Vision", "LLM / RAG"] },
+          { category: "Tools & DevOps", techs: ["Git", "Vercel", "Docker", "ROS2", "Figma"] },
+        ].map((cat) => (
+          <div key={cat.category}>
+            <h4 className="mb-2.5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.15em] text-bronze">
+              <span className="text-[8px] text-bronze/50">◆</span> {cat.category}
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {cat.techs.map((t) => (
+                <span key={t} className="rounded-md border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs text-sand/80 transition-colors hover:border-bronze/30 hover:bg-bronze/10">{t}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div className="border-t border-white/[0.06] pt-5">
+          <h4 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-bronze">Professional Skills</h4>
+          <div className="space-y-4">
+            {[
+              { area: "Web & Mobile", items: ["Full-Stack Development", "REST APIs", "Real-time Systems", "PWA", "SEO"] },
+              { area: "Data & Analytics", items: ["Data Pipelines", "Statistical Analysis", "Visualization", "SQL / NoSQL"] },
+              { area: "Soft Skills", items: ["Team Leadership", "Agile / Scrum", "Public Speaking", "Cross-cultural Collaboration"] },
+            ].map((group) => (
+              <div key={group.area}>
+                <h5 className="mb-2 text-xs font-medium uppercase tracking-[0.15em] text-sand/50">{group.area}</h5>
+                <div className="flex flex-wrap gap-1.5">
+                  {group.items.map((item) => (
+                    <span key={item} className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-xs text-white/60">{item}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="border-t border-white/[0.06] pt-4">
+          <a href="https://github.com/aminssutt" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-sand">
+            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            View my GitHub activity
+          </a>
+        </div>
+      </div>
+    ),
+
+    palette: (
+      <div className="space-y-5">
+        <p className="text-base text-white/60">I design with intent — every animation, color, and layout decision serves the user experience.</p>
+        <div className="space-y-3">
           {[
-            { lang: "French", pct: 100 }, { lang: "Arabic", pct: 95 },
-            { lang: "English", pct: 90 }, { lang: "Korean", pct: 30 }
-          ].map((l) => (
-            <div key={l.lang} className="space-y-1">
-              <span className="text-xs text-white/50">{l.lang}</span>
-              <div className="h-1 w-full rounded-full bg-white/10">
-                <div className="h-full rounded-full bg-bronze/70" style={{ width: `${l.pct}%` }} />
+            { principle: "Minimalism", desc: "Clean interfaces, clear hierarchy, no visual noise." },
+            { principle: "Motion Design", desc: "Purposeful animations that guide attention and delight." },
+            { principle: "Responsive First", desc: "Fluid layouts that feel native on any screen size." },
+          ].map((p) => (
+            <div key={p.principle} className="rounded-md border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+              <h4 className="text-base font-semibold text-sand">{p.principle}</h4>
+              <p className="mt-1 text-sm text-white/45">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <p className="mb-2 text-xs uppercase tracking-[0.15em] text-bronze">Tools</p>
+          <div className="flex flex-wrap gap-2">
+            {["Figma", "TailwindCSS", "Framer Motion", "GSAP", "Photoshop"].map((t) => (
+              <span key={t} className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-[11px] text-sand/70">{t}</span>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="mb-2 text-xs uppercase tracking-[0.15em] text-bronze">Palette</p>
+          <div className="flex gap-3">
+            {[
+              { color: "#0B0E0B", name: "Obsidian" },
+              { color: "#2E4830", name: "Forest" },
+              { color: "#6C7F56", name: "Olive" },
+              { color: "#B78A59", name: "Bronze" },
+              { color: "#EDE8DD", name: "Sand" },
+            ].map((c) => (
+              <div key={c.name} className="text-center">
+                <div className="mx-auto h-8 w-8 rounded-full border border-white/10" style={{ background: c.color }} />
+                <p className="mt-1 text-[9px] text-white/40">{c.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+
+
+
+    ai: (
+      <div className="space-y-4">
+        <p className="text-base text-white/60">Passionate about <span className="text-bronze">Artificial Intelligence</span>, Machine Learning, and emerging technologies.</p>
+        <div className="space-y-3">
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+            <h4 className="text-base font-semibold text-sand">AI at Renault</h4>
+            <p className="mt-1.5 text-sm text-white/55">Built an in-car AI assistant with LLM &amp; RAG, and an AI podcast platform with NLP &amp; TTS.</p>
+          </div>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+            <h4 className="text-base font-semibold text-sand">Hera Studio</h4>
+            <p className="mt-1.5 text-sm text-white/55">Created an AI-powered coloring book generator using OpenAI for children&apos;s education.</p>
+          </div>
+          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+            <h4 className="text-base font-semibold text-sand">AI Adventure</h4>
+            <p className="mt-1.5 text-sm text-white/55">Game-based learning platform tested by 30+ KAIST students, promoting active AI learning.</p>
+          </div>
+        </div>
+      </div>
+    ),
+
+    dots: (
+      <div className="space-y-5">
+        <p className="text-base text-white/60">Interests &amp; passions that shape who I am beyond code.</p>
+        <div className="space-y-4">
+          {[
+            { emoji: "⚽", title: "Football", desc: "Regional Champion Grand Est 2024. 11 years of competitive play at national level." },
+            { emoji: "🏐", title: "Volleyball", desc: "French National Championship participant. PRVB Plessis Robinson." },
+            { emoji: "🎨", title: "Art & Design", desc: "Drawing and creative visual expression — a lifelong pursuit." },
+            { emoji: "🚀", title: "Entrepreneurship", desc: "Building innovative solutions and exploring startup opportunities." },
+            { emoji: "🤝", title: "HumanLaw", desc: "Food distribution to homeless and students in need since 2023." },
+          ].map((item) => (
+            <div key={item.title} className="flex items-start gap-4">
+              <span className="text-2xl">{item.emoji}</span>
+              <div>
+                <h4 className="text-lg font-semibold text-sand">{item.title}</h4>
+                <p className="mt-0.5 text-base text-white/55">{item.desc}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
-  ),
-
-  phone: (
-    <div className="space-y-6">
-      <div className="border-l-2 border-bronze/40 pl-4">
-        <h4 className="text-sm font-semibold text-sand">Software & AI Engineer Intern — Renault Korea</h4>
-        <p className="mt-1 text-xs text-bronze">Sep 2025 – Feb 2026 · South Korea</p>
-        <ul className="mt-2 list-inside list-disc space-y-1 text-xs text-white/55">
-          <li>Connected health & fitness app with real-time 3D avatar and AI-driven recommendations (IoT data).</li>
-          <li>AI-powered podcast generation platform with NLP & TTS models.</li>
-          <li>In-car Theme Store app for dashboard personalization.</li>
-          <li>Personalized in-car AI assistant with LLM, RAG, multi-channel APIs (Spotify, calendar, email, calls).</li>
-        </ul>
-      </div>
-      <div className="border-l-2 border-bronze/40 pl-4">
-        <h4 className="text-sm font-semibold text-sand">Web Developer — FabulousCreations Studio</h4>
-        <p className="mt-1 text-xs text-bronze">Jan 2025 – Ongoing · Paris</p>
-        <ul className="mt-2 list-inside list-disc space-y-1 text-xs text-white/55">
-          <li>One-page website for an interior designer with portfolio & booking system.</li>
-        </ul>
-      </div>
-      <div className="border-l-2 border-bronze/40 pl-4">
-        <h4 className="text-sm font-semibold text-sand">Internship — Columbus Café</h4>
-        <p className="mt-1 text-xs text-bronze">Jul 2024 – Aug 2024 · Paris</p>
-        <ul className="mt-2 list-inside list-disc space-y-1 text-xs text-white/55">
-          <li>Team supervision, cost management, online promotion, website creation.</li>
-        </ul>
-      </div>
-    </div>
-  ),
-
-  "text-card": (
-    <div className="space-y-6">
-      <div className="border-l-2 border-olive/50 pl-4">
-        <h4 className="text-sm font-semibold text-sand">Specialization in AI — KAIST</h4>
-        <p className="mt-1 text-xs text-bronze">Feb 2025 – Jul 2025 · Daejeon, South Korea</p>
-        <p className="mt-2 text-xs text-white/55">Exchange semester. Data Science, AI/ML, Start-Up Management.</p>
-      </div>
-      <div className="border-l-2 border-olive/50 pl-4">
-        <h4 className="text-sm font-semibold text-sand">Engineering in Informatics & Systems — UTT</h4>
-        <p className="mt-1 text-xs text-bronze">2024 – 2027 · Troyes, France</p>
-        <p className="mt-2 text-xs text-white/55">Integrated preparatory program (2022–2024). Database management, Software Engineering.</p>
-      </div>
-      <div className="mt-4 space-y-2">
-        <p className="text-xs uppercase tracking-[0.2em] text-bronze">Certifications</p>
-        <ul className="list-inside list-disc text-xs text-white/55">
-          <li>AI Generative — Microsoft (2024)</li>
-          <li>Build a Computer Vision App with Azure — Microsoft (2024)</li>
-        </ul>
-      </div>
-    </div>
-  ),
-
-  cubes: (
-    <div className="space-y-5">
-      {[
-        { name: "Hera Studio", desc: "AI platform to create personalized coloring books for kids.", tech: "React, Firebase, Stripe, OpenAI", link: "https://www.herastudio.art" },
-        { name: "Frelsi", desc: "Personal creative blog with interactive notebook system.", tech: "React, Supabase, Vercel", link: "https://frelsi.vercel.app" },
-        { name: "Fabulous Creations", desc: "One-page website for an interior designer with booking.", tech: "HTML, CSS, JavaScript", link: "https://aminssutt.github.io/Fabulous/" },
-        { name: "RePLY", desc: "Intelligent wearable device using ML for heart rate monitoring.", tech: "ML, IoT, Python, Hardware", link: null },
-        { name: "AI Adventure", desc: "Game-based learning platform for AI education at KAIST.", tech: "React, ML, Python, Gamification", link: null },
-        { name: "Great Teachers", desc: "Platform connecting students with AI assistant support.", tech: "AI, React, Node.js", link: null },
-      ].map((p) => (
-        <div key={p.name} className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-          <div className="flex items-start justify-between">
-            <h4 className="text-sm font-semibold text-sand">{p.name}</h4>
-            {p.link && (
-              <a href={p.link} target="_blank" rel="noopener noreferrer" className="text-[10px] text-bronze hover:underline">Visit ↗</a>
-            )}
-          </div>
-          <p className="mt-1 text-xs text-white/55">{p.desc}</p>
-          <p className="mt-2 text-[10px] text-bronze/70">{p.tech}</p>
-        </div>
-      ))}
-    </div>
-  ),
-
-  "toggle-stack": (
-    <div className="space-y-4">
-      <p className="text-xs text-white/55">Technologies I work with daily.</p>
-      <div className="flex flex-wrap gap-2">
-        {["React", "Next.js", "TypeScript", "Python", "Node.js", "Firebase", "Supabase", "TailwindCSS", "Framer Motion", "GSAP", "OpenAI API", "LangChain", "ROS2", "PostgreSQL", "Stripe", "Vercel", "Git"].map((t) => (
-          <span key={t} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] text-sand/80">{t}</span>
-        ))}
-      </div>
-    </div>
-  ),
-
-  palette: (
-    <div className="space-y-4">
-      <p>UI/UX enthusiast with a focus on minimalist, modern aesthetics and smooth interactions.</p>
-      <p>I design with intent — every animation, color choice, and layout decision serves the user experience.</p>
-      <div className="mt-4 grid grid-cols-5 gap-2">
-        {[
-          { color: "#0B0E0B", name: "Obsidian" },
-          { color: "#2E4830", name: "Forest" },
-          { color: "#6C7F56", name: "Olive" },
-          { color: "#B78A59", name: "Bronze" },
-          { color: "#EDE8DD", name: "Sand" },
-        ].map((c) => (
-          <div key={c.name} className="text-center">
-            <div className="mx-auto h-8 w-8 rounded-full border border-white/10" style={{ background: c.color }} />
-            <p className="mt-1 text-[9px] text-white/40">{c.name}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  ),
-
-  toggle: (
-    <div className="space-y-4">
-      <p className="text-xs text-white/55">Core competencies and areas of expertise.</p>
-      <div className="grid grid-cols-2 gap-3">
-        {[
-          { skill: "AI / Machine Learning", level: 85 },
-          { skill: "Web Development", level: 90 },
-          { skill: "Data Science", level: 80 },
-          { skill: "IoT & Hardware", level: 65 },
-          { skill: "UI/UX Design", level: 75 },
-          { skill: "Project Management", level: 70 },
-        ].map((s) => (
-          <div key={s.skill} className="space-y-1">
-            <div className="flex justify-between text-xs">
-              <span className="text-white/60">{s.skill}</span>
-              <span className="text-bronze/60">{s.level}%</span>
-            </div>
-            <div className="h-1 w-full rounded-full bg-white/10">
-              <div className="h-full rounded-full bg-gradient-to-r from-olive to-bronze" style={{ width: `${s.level}%` }} />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  ),
-
-  ai: (
-    <div className="space-y-4">
-      <p>Passionate about <span className="text-bronze">Artificial Intelligence</span>, Machine Learning, and emerging technologies.</p>
-      <div className="space-y-3">
-        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-          <h4 className="text-sm font-semibold text-sand">AI at Renault</h4>
-          <p className="mt-1 text-xs text-white/55">Built an in-car AI assistant with LLM & RAG, and an AI podcast platform with NLP & TTS.</p>
-        </div>
-        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-          <h4 className="text-sm font-semibold text-sand">Hera Studio</h4>
-          <p className="mt-1 text-xs text-white/55">Created an AI-powered coloring book generator using OpenAI for children&apos;s education.</p>
-        </div>
-        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-          <h4 className="text-sm font-semibold text-sand">AI Adventure</h4>
-          <p className="mt-1 text-xs text-white/55">Game-based learning platform tested by 30+ KAIST students, promoting active AI learning.</p>
-        </div>
-      </div>
-    </div>
-  ),
-
-  dots: (
-    <div className="space-y-4">
-      <p>Interests & passions that shape who I am beyond code.</p>
-      <div className="space-y-3">
-        {[
-          { emoji: "⚽", title: "Football", desc: "Regional Champion Grand Est 2024. 11 years of competitive play." },
-          { emoji: "🏐", title: "Volleyball", desc: "French National Championship participant. PRVB Plessis Robinson." },
-          { emoji: "🎨", title: "Art & Design", desc: "Drawing and creative visual expression." },
-          { emoji: "🚀", title: "Entrepreneurship", desc: "Building innovative solutions and exploring startup opportunities." },
-          { emoji: "🤝", title: "HumanLaw", desc: "Food distribution to homeless and students in need since 2023." },
-        ].map((item) => (
-          <div key={item.title} className="flex items-start gap-3">
-            <span className="text-lg">{item.emoji}</span>
-            <div>
-              <h4 className="text-sm font-semibold text-sand">{item.title}</h4>
-              <p className="text-xs text-white/55">{item.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-};
+    )
+  };
+}
 
 /* ── Cross grid for the floor area ── */
 function CrossGrid() {
@@ -346,8 +431,8 @@ function CrossGrid() {
 
 const sceneVariants = {
   idle: { x: "0%", scale: 1 },
-  slideLeft: { x: "-42%", scale: 0.88 },
-  slideRight: { x: "42%", scale: 0.88 }
+  slideLeft: { x: "-30%", scale: 0.92 },
+  slideRight: { x: "30%", scale: 0.92 }
 };
 
 const panelVariants = {
@@ -368,7 +453,10 @@ export default function HeroScene() {
   const { x, y } = useMouseParallax(sectionRef, { enabled: true });
 
   const [activeIcon, setActiveIcon] = useState<SceneIcon | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const isOpen = !!activeIcon;
+
+  const sectionContent = getSectionContent(setPreviewUrl);
 
   const handleIconClick = useCallback((icon: SceneIcon) => {
     setActiveIcon(icon);
@@ -496,8 +584,8 @@ export default function HeroScene() {
                 </div>
               </div>
 
-              <div className="text-sm leading-relaxed text-white/60 md:text-base">
-                {SECTION_CONTENT[activeIcon.id] ?? (
+              <div className="text-base leading-relaxed text-white/60 md:text-lg">
+                {sectionContent[activeIcon.id] ?? (
                   <p>Contenu à venir pour <span className="text-sand">{activeIcon.label}</span>.</p>
                 )}
               </div>
@@ -517,6 +605,85 @@ export default function HeroScene() {
             transition={{ duration: 0.3 }}
             onClick={handleClose}
           />
+        )}
+      </AnimatePresence>
+
+      {/* Hint text — bottom center */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.p
+            className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 text-xs tracking-[0.15em] text-white/25"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            Click an icon to explore
+          </motion.p>
+        )}
+      </AnimatePresence>
+
+      {/* Social links — bottom right */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            className="absolute bottom-6 right-8 z-30 flex items-center gap-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
+            <a href="https://github.com/aminssutt" target="_blank" rel="noopener noreferrer" className="text-white/30 transition-colors hover:text-sand">
+              <svg className="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/lakhdar-berache-62095426a/" target="_blank" rel="noopener noreferrer" className="text-white/30 transition-colors hover:text-sand">
+              <svg className="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Project preview modal */}
+      <AnimatePresence>
+        {previewUrl && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setPreviewUrl(null)}
+          >
+            <motion.div
+              className="relative h-[80vh] w-[85vw] max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-obsidian shadow-2xl"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-red-500/70" />
+                  <div className="h-3 w-3 rounded-full bg-yellow-500/70" />
+                  <div className="h-3 w-3 rounded-full bg-green-500/70" />
+                </div>
+                <p className="text-xs text-white/40 select-all">{previewUrl}</p>
+                <div className="flex items-center gap-2">
+                  <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="rounded-md border border-white/10 bg-white/5 px-3 py-1 text-[10px] text-sand/70 transition-colors hover:bg-white/10">
+                    Open ↗
+                  </a>
+                  <button type="button" onClick={() => setPreviewUrl(null)} className="flex h-7 w-7 items-center justify-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-sand">✕</button>
+                </div>
+              </div>
+              <iframe
+                src={previewUrl}
+                title="Site preview"
+                className="h-[calc(100%-3rem)] w-full border-0 bg-white"
+                sandbox="allow-scripts allow-same-origin allow-popups"
+              />
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>

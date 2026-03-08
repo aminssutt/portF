@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { t, getIconLabel, type Lang } from "@/lib/i18n";
@@ -465,18 +465,13 @@ function buildSections(
               <div className="flex items-start justify-between">
                 <h4 className="text-sm font-semibold text-sand">{p.name}</h4>
                 {p.link && (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onPreview(p.link!);
-                    }}
+                  <button
+                    type="button"
+                    onClick={() => onPreview(p.link!)}
                     className="shrink-0 rounded-md border border-bronze/30 bg-bronze/10 px-2 py-0.5 text-[10px] text-bronze"
                   >
                     {t("proj_visit", lang)}
-                  </a>
+                  </button>
                 )}
               </div>
               <p className="mt-1.5 text-xs leading-relaxed text-white/55">
@@ -603,10 +598,45 @@ export default function MobileScrollView() {
   const [lang, setLang] = useState<Lang>("en");
   const [showContact, setShowContact] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewLoaded, setPreviewLoaded] = useState(false);
+  const [previewBlocked, setPreviewBlocked] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [activeIconId, setActiveIconId] = useState<string | null>(null);
 
-  const sections = buildSections(lang, setPreviewUrl);
+  const openPreview = (url: string) => {
+    setLangOpen(false);
+    setShowContact(false);
+    setActiveIconId(null);
+    setPreviewLoaded(false);
+    setPreviewBlocked(false);
+    setPreviewUrl(url);
+  };
+
+  const closePreview = () => {
+    setPreviewUrl(null);
+    setPreviewLoaded(false);
+    setPreviewBlocked(false);
+  };
+
+  const openExternal = (url: string) => {
+    if (typeof window === "undefined") return;
+    const popup = window.open(url, "_blank", "noopener,noreferrer");
+    if (!popup) {
+      window.location.assign(url);
+    }
+  };
+
+  useEffect(() => {
+    if (!previewUrl) return;
+    const timer = window.setTimeout(() => {
+      if (!previewLoaded) {
+        setPreviewBlocked(true);
+      }
+    }, 6000);
+    return () => window.clearTimeout(timer);
+  }, [previewUrl, previewLoaded]);
+
+  const sections = buildSections(lang, openPreview);
   const activeSection = sections.find((section) => section.iconId === activeIconId) ?? null;
   const activeIcon = MOBILE_ICONS.find((icon) => icon.id === activeIconId) ?? null;
 
@@ -925,7 +955,7 @@ export default function MobileScrollView() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            onClick={() => setPreviewUrl(null)}
+            onClick={closePreview}
           >
             <motion.div
               className="relative mx-2 h-[90vh] w-[96vw] overflow-hidden rounded-2xl border border-white/10 bg-obsidian shadow-2xl"
@@ -942,28 +972,46 @@ export default function MobileScrollView() {
                   <div className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
                 </div>
                 <div className="flex items-center gap-2">
-                  <a
-                    href={previewUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => openExternal(previewUrl)}
                     className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[9px] text-sand/70"
                   >
                     {t("proj_visit", lang)}
-                  </a>
+                  </button>
                   <button
                     type="button"
-                    onClick={() => setPreviewUrl(null)}
+                    onClick={closePreview}
                     className="flex h-6 w-6 items-center justify-center rounded-full text-white/40 hover:bg-white/10 hover:text-sand"
                   >
                     ✕
                   </button>
                 </div>
               </div>
+              {previewBlocked && (
+                <div className="absolute inset-x-0 top-10 z-20 flex h-[calc(100%-2.5rem)] flex-col items-center justify-center gap-3 bg-obsidian/95 px-6 text-center">
+                  <p className="text-xs text-white/55">
+                    Preview unavailable on this mobile browser.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => openExternal(previewUrl)}
+                    className="rounded-md border border-bronze/30 bg-bronze/10 px-3 py-1 text-[10px] text-bronze"
+                  >
+                    {t("proj_visit", lang)}
+                  </button>
+                </div>
+              )}
               <iframe
                 src={previewUrl}
                 title="Preview"
                 className="h-[calc(100%-2.5rem)] w-full border-0 bg-white"
-                sandbox="allow-scripts allow-same-origin allow-popups"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
+                onLoad={() => {
+                  setPreviewLoaded(true);
+                  setPreviewBlocked(false);
+                }}
+                onError={() => setPreviewBlocked(true)}
               />
             </motion.div>
           </motion.div>

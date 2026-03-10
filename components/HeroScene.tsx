@@ -94,6 +94,10 @@ const SCENE_ICONS: SceneIcon[] = [
   }
 ];
 
+const INTERNSHIP_CERTIFICATE_URL = "/Internship%20Certificate_Lakhdar%20BERACHE.pdf";
+const RESUME_EN_URL = "/CV_Berache_EN.pdf";
+const isPdfPreviewUrl = (url: string) => /\.pdf(?:$|[?#])/i.test(url);
+
 /* ── Section content ── */
 function getSectionContent(onPreview: (url: string) => void, lang: Lang): Record<string, ReactNode> {
   return {
@@ -138,11 +142,13 @@ function getSectionContent(onPreview: (url: string) => void, lang: Lang): Record
             logoClass: "h-12 w-12 md:h-20 md:w-20",
             role: t("exp_renault_role", lang),
             period: t("exp_renault_period", lang),
+            certificateUrl: INTERNSHIP_CERTIFICATE_URL,
             bullets: [
               t("exp_renault_b1", lang),
               t("exp_renault_b2", lang),
               t("exp_renault_b3", lang),
               t("exp_renault_b4", lang),
+              t("exp_renault_b5", lang),
             ]
           },
           {
@@ -176,6 +182,15 @@ function getSectionContent(onPreview: (url: string) => void, lang: Lang): Record
                   <li key={b}>{b}</li>
                 ))}
               </ul>
+              {exp.certificateUrl && (
+                <button
+                  type="button"
+                  onClick={() => onPreview(exp.certificateUrl)}
+                  className="mt-3 inline-flex rounded-md border border-bronze/30 bg-bronze/10 px-2.5 py-1 text-[11px] font-medium text-bronze transition-colors hover:bg-bronze/20"
+                >
+                  Certificate
+                </button>
+              )}
             </div>
           </div>
         ))}
@@ -540,6 +555,7 @@ export default function HeroScene() {
   const [showContact, setShowContact] = useState(false);
   const [lang, setLang] = useState<Lang>("en");
   const isOpen = !!activeIcon;
+  const isPdfPreview = !!previewUrl && isPdfPreviewUrl(previewUrl);
 
   useEffect(() => {
     const check = () => setIsWide(window.innerWidth > 1340);
@@ -889,6 +905,10 @@ export default function HeroScene() {
                   <svg className="h-5 w-5 shrink-0 text-bronze" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                   Lakhdar Berache
                 </a>
+                <a href={RESUME_EN_URL} download="Lakhdar_Berache_Resume_EN.pdf" className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-sand transition-colors hover:border-bronze/30 hover:bg-bronze/[0.06]">
+                  <svg className="h-5 w-5 shrink-0 text-bronze" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5A3.375 3.375 0 0010.125 2.25H8.25m5.25 9L9 15.75M9 15.75l-4.5-4.5M9 15.75V21M7.5 2.25H5.625A1.875 1.875 0 003.75 4.125v15.75c0 1.036.84 1.875 1.875 1.875h12.75a1.875 1.875 0 001.875-1.875V11.25a9 9 0 00-9-9z" /></svg>
+                  Resume (EN)
+                </a>
               </div>
             </motion.div>
           </motion.div>
@@ -928,12 +948,20 @@ export default function HeroScene() {
                   <button type="button" onClick={() => setPreviewUrl(null)} className="flex h-7 w-7 items-center justify-center rounded-full text-white/40 transition-colors hover:bg-white/10 hover:text-sand">✕</button>
                 </div>
               </div>
-              <iframe
-                src={previewUrl}
-                title="Site preview"
-                className="h-[calc(100%-3rem)] w-full border-0 bg-white"
-                sandbox="allow-scripts allow-same-origin allow-popups"
-              />
+              {isPdfPreview ? (
+                <iframe
+                  src={previewUrl}
+                  title="PDF preview"
+                  className="h-[calc(100%-3rem)] w-full border-0 bg-white"
+                />
+              ) : (
+                <iframe
+                  src={previewUrl}
+                  title="Site preview"
+                  className="h-[calc(100%-3rem)] w-full border-0 bg-white"
+                  sandbox="allow-scripts allow-same-origin allow-popups"
+                />
+              )}
             </motion.div>
           </motion.div>
         )}

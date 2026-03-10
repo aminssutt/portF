@@ -21,6 +21,10 @@ const MOBILE_ICONS = [
   { id: "palette", src: "/scene/icon-palette.png", sectionId: "passions", left: "72%", top: "76%", floatDelay: 1.0 },
 ];
 
+const INTERNSHIP_CERTIFICATE_URL = "/Internship%20Certificate_Lakhdar%20BERACHE.pdf";
+const RESUME_EN_URL = "/CV_Berache_EN.pdf";
+const isPdfPreviewUrl = (url: string) => /\.pdf(?:$|[?#])/i.test(url);
+
 /* ── Section definition ── */
 type SectionDef = {
   id: string;
@@ -146,11 +150,13 @@ function buildSections(
               logoSrc: "/scene/renault logo.webp",
               role: t("exp_renault_role", lang),
               period: t("exp_renault_period", lang),
+              certificateUrl: INTERNSHIP_CERTIFICATE_URL,
               bullets: [
                 t("exp_renault_b1", lang),
                 t("exp_renault_b2", lang),
                 t("exp_renault_b3", lang),
                 t("exp_renault_b4", lang),
+                t("exp_renault_b5", lang),
               ],
             },
             {
@@ -186,6 +192,15 @@ function buildSections(
                     <li key={b}>{b}</li>
                   ))}
                 </ul>
+                {exp.certificateUrl && (
+                  <button
+                    type="button"
+                    onClick={() => onPreview(exp.certificateUrl)}
+                    className="mt-2 inline-flex rounded-md border border-bronze/30 bg-bronze/10 px-2 py-0.5 text-[10px] font-medium text-bronze"
+                  >
+                    Certificate
+                  </button>
+                )}
               </div>
             </div>
           ))}
@@ -602,6 +617,7 @@ export default function MobileScrollView() {
   const [previewBlocked, setPreviewBlocked] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [activeIconId, setActiveIconId] = useState<string | null>(null);
+  const isPdfPreview = !!previewUrl && isPdfPreviewUrl(previewUrl);
 
   const openPreview = (url: string) => {
     setLangOpen(false);
@@ -627,7 +643,7 @@ export default function MobileScrollView() {
   };
 
   useEffect(() => {
-    if (!previewUrl) return;
+    if (!previewUrl || isPdfPreviewUrl(previewUrl)) return;
     const timer = window.setTimeout(() => {
       if (!previewLoaded) {
         setPreviewBlocked(true);
@@ -940,6 +956,13 @@ export default function MobileScrollView() {
                 >
                   +33 7 81 50 07 71
                 </a>
+                <a
+                  href={RESUME_EN_URL}
+                  download="Lakhdar_Berache_Resume_EN.pdf"
+                  className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-xs text-sand transition-colors hover:border-bronze/30"
+                >
+                  Resume (EN)
+                </a>
               </div>
             </motion.div>
           </motion.div>
@@ -988,7 +1011,7 @@ export default function MobileScrollView() {
                   </button>
                 </div>
               </div>
-              {previewBlocked && (
+              {previewBlocked && !isPdfPreview && (
                 <div className="absolute inset-x-0 top-10 z-20 flex h-[calc(100%-2.5rem)] flex-col items-center justify-center gap-3 bg-obsidian/95 px-6 text-center">
                   <p className="text-xs text-white/55">
                     Preview unavailable on this mobile browser.
@@ -1002,17 +1025,30 @@ export default function MobileScrollView() {
                   </button>
                 </div>
               )}
-              <iframe
-                src={previewUrl}
-                title="Preview"
-                className="h-[calc(100%-2.5rem)] w-full border-0 bg-white"
-                sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
-                onLoad={() => {
-                  setPreviewLoaded(true);
-                  setPreviewBlocked(false);
-                }}
-                onError={() => setPreviewBlocked(true)}
-              />
+              {isPdfPreview ? (
+                <iframe
+                  src={previewUrl}
+                  title="PDF preview"
+                  className="h-[calc(100%-2.5rem)] w-full border-0 bg-white"
+                  onLoad={() => {
+                    setPreviewLoaded(true);
+                    setPreviewBlocked(false);
+                  }}
+                  onError={() => setPreviewBlocked(true)}
+                />
+              ) : (
+                <iframe
+                  src={previewUrl}
+                  title="Preview"
+                  className="h-[calc(100%-2.5rem)] w-full border-0 bg-white"
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
+                  onLoad={() => {
+                    setPreviewLoaded(true);
+                    setPreviewBlocked(false);
+                  }}
+                  onError={() => setPreviewBlocked(true)}
+                />
+              )}
             </motion.div>
           </motion.div>
         )}

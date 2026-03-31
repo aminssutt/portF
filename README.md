@@ -55,7 +55,7 @@ sudo ufw --force enable
 
 ### Option A (recommandee): Nginx deja actif sur le serveur
 
-Deployer l'app sur `127.0.0.1:3001`:
+Deployer l'app sur `127.0.0.1:5030`:
 
 ```bash
 mkdir -p /home/lakhdar/apps
@@ -66,7 +66,7 @@ docker compose -f docker-compose.nginx.yml -p portf up -d --build
 docker compose -f docker-compose.nginx.yml -p portf ps
 ```
 
-Ensuite, dans Nginx, faire le `proxy_pass` de `lakhdarberache.fr` vers `http://127.0.0.1:3001`.
+Ensuite, dans Nginx, faire le `proxy_pass` de `lakhdarberache.fr` vers `http://127.0.0.1:5030`.
 
 ### Option B: Proxy global Traefik (si tu veux migrer plus tard)
 

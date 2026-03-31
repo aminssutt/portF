@@ -480,13 +480,14 @@ function buildSections(
               <div className="flex items-start justify-between">
                 <h4 className="text-sm font-semibold text-sand">{p.name}</h4>
                 {p.link && (
-                  <button
-                    type="button"
-                    onClick={() => onPreview(p.link!)}
+                  <a
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="shrink-0 rounded-md border border-bronze/30 bg-bronze/10 px-2 py-0.5 text-[10px] text-bronze"
                   >
                     {t("proj_visit", lang)}
-                  </button>
+                  </a>
                 )}
               </div>
               <p className="mt-1.5 text-xs leading-relaxed text-white/55">

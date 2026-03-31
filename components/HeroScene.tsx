@@ -230,16 +230,12 @@ function getSectionContent(onPreview: (url: string) => void, lang: Lang): Record
         ].map((p) => (
           <div
             key={p.name}
-            className={`group flex flex-col rounded-lg border border-white/[0.06] bg-white/[0.02] p-5 transition-all duration-300 hover:border-bronze/40 hover:bg-bronze/[0.06] ${p.link ? "cursor-pointer" : ""}`}
-            onClick={() => p.link && onPreview(p.link)}
-            role={p.link ? "button" : undefined}
-            tabIndex={p.link ? 0 : undefined}
-            onKeyDown={(e) => { if (p.link && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onPreview(p.link); } }}
+            className="group flex flex-col rounded-lg border border-white/[0.06] bg-white/[0.02] p-5 transition-all duration-300 hover:border-bronze/40 hover:bg-bronze/[0.06]"
           >
             <div className="flex items-start justify-between">
               <h4 className="text-base font-semibold text-sand group-hover:text-bronze transition-colors">{p.name}</h4>
               {p.link && (
-                <a href={p.link} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="shrink-0 rounded-md border border-bronze/30 bg-bronze/10 px-2.5 py-1 text-[11px] text-bronze transition-colors hover:bg-bronze/25">
+                <a href={p.link} target="_blank" rel="noopener noreferrer" className="shrink-0 rounded-md border border-bronze/30 bg-bronze/10 px-2.5 py-1 text-[11px] text-bronze transition-colors hover:bg-bronze/25">
                   {t("proj_visit", lang)}
                 </a>
               )}

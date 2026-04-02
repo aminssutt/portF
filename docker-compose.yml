@@ -10,3 +10,9 @@ services:
       PORT: 3000
     expose:
       - "3000"
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true

@@ -1,78 +1,37 @@
-﻿# Portfolio Landing (Next.js)
+# Portfolio de Lakhdar Berache
 
-Landing page portfolio immersive construite avec Next.js (App Router), Tailwind, Framer Motion et GSAP.
+Portfolio React construit avec Vite et déployé par Dokploy depuis GitHub.
 
-## Prerequis
+## Stack
 
-- Node.js `>= 20.11.1`
-- npm
-- Docker + Docker Compose (prod)
+- Node.js `20.19.0`
+- React 19 et Vite
+- Nginx dans Docker
+- Docker Compose sur Dokploy
 
-## Lancer en local
+## Développement local
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-## Verification avant deploy
+## Vérifications
 
 ```bash
-npm run lint
 npm run build
+docker compose config --quiet
+docker compose build
 ```
 
-## Deploiement IONOS multi-app (user `lakhdar`, sans root)
+Le conteneur Nginx s'exécute sans privilèges sur le port interne `3000` et expose un healthcheck sur `/healthz`.
 
-### 1) DNS (IONOS)
+## Déploiement
 
-Creer ou verifier:
+Dokploy déploie directement ce dépôt depuis la branche `main` avec `docker-compose.yml` :
 
-- `A` `@` -> `IP_PUBLIQUE_SERVEUR`
-- `A` `www` -> `IP_PUBLIQUE_SERVEUR`
+1. un push arrive sur `main` ;
+2. Dokploy récupère le commit et reconstruit l'image ;
+3. le domaine pointe vers le service `app` sur le port `3000`.
 
-Si le domaine utilise encore Cloudflare (nameservers Cloudflare), remettre les nameservers IONOS avant.
-
-### 2) Prerequis serveur (une seule fois)
-
-```bash
-sudo apt update
-sudo apt install -y docker.io docker-compose-plugin ufw
-sudo systemctl enable --now docker
-sudo usermod -aG docker lakhdar
-```
-
-Puis se reconnecter en SSH avec `lakhdar`.
-
-### 3) Ports firewall (une seule fois)
-
-```bash
-sudo ufw allow OpenSSH
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-sudo ufw --force enable
-```
-
-### Option A (recommandee): Nginx deja actif sur le serveur
-
-Deployer l'app sur `127.0.0.1:5030`:
-
-```bash
-mkdir -p /home/lakhdar/apps
-cd /home/lakhdar/apps
-git clone https://github.com/aminssutt/portF.git portF
-cd portF
-docker compose -f docker-compose.nginx.yml -p portf up -d --build
-docker compose -f docker-compose.nginx.yml -p portf ps
-```
-
-Ensuite, dans Nginx, faire le `proxy_pass` de `lakhdarberache.fr` vers `http://127.0.0.1:5030`.
-
-### Option B: Proxy global Traefik (si tu veux migrer plus tard)
-
-Lancer Traefik une seule fois (ports `80/443`) avec:
-
-- `infra/reverse-proxy/docker-compose.yml`
-- `infra/reverse-proxy/.env.example` -> `.env`
-
-Puis deployer ce repo avec `docker compose -p portf up -d --build`.
+Le workflow GitHub Actions vérifie le build applicatif et l'image Docker. Il ne déclenche pas lui-même le déploiement : l'auto-déploiement reste géré par l'intégration GitHub de Dokploy, comme pour ReBloom.

@@ -4,12 +4,20 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    environment:
-      NODE_ENV: production
-      HOSTNAME: 0.0.0.0
-      PORT: 3000
     expose:
       - "3000"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    security_opt:
+      - no-new-privileges:true
+    cpus: 0.5
+    mem_limit: 256m
+    mem_reservation: 64m
+    pids_limit: 128
     networks:
       - dokploy-network
 

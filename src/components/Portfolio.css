@@ -1258,23 +1258,69 @@
     width: 64px;
     height: 64px;
   }
+  /* Panels scroll from the top with room for the back button / notch, instead
+     of grid-centering (which pushed tall content off the top of the screen). */
+  .about,
+  .listing {
+    display: block;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .about__inner,
+  .listing__inner,
+  .listing__inner--wide,
+  .listing__inner--split {
+    margin-inline: auto;
+    padding-top: clamp(96px, 22vw, 132px);
+    padding-bottom: clamp(48px, 14vw, 76px);
+  }
+  /* About — everything centred under a centred portrait */
   .about__inner {
     flex-direction: column;
-    align-items: flex-start;
-    gap: clamp(24px, 5vw, 36px);
-    width: min(620px, calc(100% - 48px));
+    align-items: center;
+    gap: clamp(22px, 5vw, 34px);
+    width: min(540px, calc(100% - 48px));
+    text-align: center;
   }
   .about__photo {
-    width: clamp(140px, 30vw, 200px);
+    width: clamp(150px, 44vw, 210px);
+    margin: 0 auto;
+  }
+  .about__text {
+    width: 100%;
+  }
+  .about__links {
+    justify-content: center;
   }
   .listing__inner,
   .listing__inner--wide {
-    width: min(620px, calc(100% - 48px));
+    width: min(560px, calc(100% - 48px));
   }
   .listing__inner--split {
     grid-template-columns: 1fr;
-    gap: 4px;
-    width: min(620px, calc(100% - 48px));
+    gap: clamp(28px, 8vw, 40px);
+    width: min(560px, calc(100% - 48px));
+  }
+  /* Tighter, calmer list rows on phones */
+  .listing__title {
+    margin-bottom: 18px;
+  }
+  .listing__list li {
+    gap: 13px;
+    padding: 13px 0;
+  }
+  .listing__logo--big {
+    width: 74px;
+    height: 44px;
+  }
+  .listing__main {
+    font-size: 16px;
+  }
+  .listing__sub {
+    font-size: 13px;
+  }
+  .listing__note {
+    font-size: 12px;
   }
   .ipad {
     height: auto;

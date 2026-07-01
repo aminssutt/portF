@@ -5,7 +5,7 @@
   --apple: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3Cpath fill='%23000' d='M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z'/%3E%3C/svg%3E");
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   /* unified device footprint — iMac and MacBook share the same width */
-  --dev: clamp(360px, 33vw, 460px);
+  --dev: clamp(300px, 27vw, 390px);
   --dev-lg: clamp(440px, 46vw, 680px);
 }
 
@@ -40,10 +40,9 @@
   gap: 26px;
 }
 .preloader__mark {
-  font-size: 34px;
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  color: #111;
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
   animation: preloader-pulse 1.6s var(--ease) infinite;
 }
 @keyframes preloader-pulse {
@@ -125,7 +124,7 @@
 .site-header__right {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 22px;
   margin-right: 60px;
 }
@@ -300,13 +299,18 @@
 .project__visual {
   transform: scale(calc(0.965 + var(--focus, 1) * 0.035));
   opacity: calc(0.6 + var(--focus, 1) * 0.4);
+  perspective: 1100px;
   will-change: transform, opacity;
 }
+/* Lift (hover) and tilt (pointer) are composed through CSS vars so they never
+   overwrite each other. --rx/--ry are driven per-pointer-move from JS. */
 .df {
-  transition: transform 0.6s var(--ease);
+  transform: translateY(var(--lift, 0px)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.4s var(--ease);
 }
 .project__button:hover .df {
-  transform: translateY(-12px);
+  --lift: -12px;
 }
 
 /* ---------- Timeline end card ---------- */
@@ -383,16 +387,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  filter: drop-shadow(0 40px 50px rgba(0, 0, 0, 0.18));
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.12)) drop-shadow(0 42px 52px rgba(0, 0, 0, 0.20));
 }
 .imac__display {
   width: 100%;
-  background: var(--glass);
+  background: linear-gradient(155deg, #1d1d22 0%, #0b0b0d 42%, #050506 100%);
   border-radius: 18px;
   padding: 12px;
-  box-shadow: inset 0 0 0 1px #2a2a2e;
+  box-shadow: inset 0 0 0 1px #2a2a2e, inset 0 1px 1px rgba(255, 255, 255, 0.14);
 }
 .imac__screen {
+  position: relative;
   aspect-ratio: 16 / 10;
   border-radius: 4px;
   overflow: hidden;
@@ -433,16 +438,17 @@
 /* MacBook */
 .df--macbook .macbook {
   width: var(--dev);
-  filter: drop-shadow(0 34px 44px rgba(0, 0, 0, 0.17));
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.11)) drop-shadow(0 36px 46px rgba(0, 0, 0, 0.19));
 }
 .macbook__lid {
   position: relative;
-  background: var(--glass);
+  background: linear-gradient(155deg, #1d1d22 0%, #0b0b0d 42%, #050506 100%);
   border-radius: 14px 14px 5px 5px;
   padding: 11px;
-  box-shadow: inset 0 0 0 1px #2a2a2e;
+  box-shadow: inset 0 0 0 1px #2a2a2e, inset 0 1px 1px rgba(255, 255, 255, 0.14);
 }
 .macbook__screen {
+  position: relative;
   aspect-ratio: 16 / 10;
   border-radius: 3px;
   overflow: hidden;
@@ -473,10 +479,11 @@
   position: relative;
   width: calc(var(--dev) * 0.4);
   aspect-ratio: 9 / 19.3;
-  background: var(--glass);
+  background: linear-gradient(150deg, #24242a 0%, #0c0c0f 45%, #050506 100%);
   border-radius: 14% / 6.6%;
   padding: 10px;
-  box-shadow: inset 0 0 0 2px #2a2a2e, 0 40px 50px -28px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 0 2px #2a2a2e, inset 0 1px 1px rgba(255, 255, 255, 0.16),
+    0 8px 12px -6px rgba(0, 0, 0, 0.22), 0 42px 52px -28px rgba(0, 0, 0, 0.34);
 }
 .iphone__island {
   position: absolute;
@@ -491,11 +498,32 @@
   z-index: 2;
 }
 .iphone__screen {
+  position: relative;
   width: 100%;
   height: 100%;
   border-radius: 11% / 5.6%;
   overflow: hidden;
   background: #000;
+}
+
+/* Diagonal screen glare — a soft specular sheen so the panels read as glass
+   instead of a flat pasted screenshot. Sits above the image, ignores input. */
+.imac__screen::after,
+.macbook__screen::after,
+.iphone__screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    122deg,
+    rgba(255, 255, 255, 0.20) 0%,
+    rgba(255, 255, 255, 0.06) 16%,
+    rgba(255, 255, 255, 0) 38%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  mix-blend-mode: screen;
 }
 
 /* Phone duo — two ready-made mobile screenshots, staggered (no extra frame) */

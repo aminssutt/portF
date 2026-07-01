@@ -152,7 +152,8 @@ export default function Portfolio() {
     mx: 0,
     my: 0,
     cx: 0,
-    cy: 0
+    cy: 0,
+    inside: false
   })
 
   const [activeProject, setActiveProject] = useState(null)
@@ -328,8 +329,15 @@ export default function Portfolio() {
     return () => window.removeEventListener('keydown', onKey)
   }, [overlayOpen])
 
+  // Drive cursor visibility off overlay state directly. Hiding on open is
+  // obvious; the important half is RESTORING on close — if the pointer is still
+  // over the timeline but stationary, no pointerEnter fires, so without this the
+  // cursor would stay invisible until the mouse happens to move out and back in.
   useEffect(() => {
-    if (cursorRef.current && overlayOpen) cursorRef.current.style.opacity = '0'
+    const cu = cursorRef.current
+    if (!cu) return
+    if (overlayOpen) cu.style.opacity = '0'
+    else if (s.current.inside && !isMobile()) cu.style.opacity = '1'
   }, [overlayOpen])
 
   // Lock background scroll while any overlay (panel / project / pdf) is open,
@@ -398,6 +406,10 @@ export default function Portfolio() {
 
   const onMoveWin = useCallback((e) => {
     const st = s.current
+    // keep the custom cursor glued to the pointer even when a drag carries it
+    // outside the timeline (viewport pointermove stops firing out there)
+    st.mx = e.clientX
+    st.my = e.clientY
     if (!st.dragging) return
     const dx = e.clientX - st.startX
     if (Math.abs(dx) > 6) st.moved = true
@@ -405,9 +417,13 @@ export default function Portfolio() {
   }, [])
 
   const onUpWin = useCallback(() => {
-    s.current.dragging = false
-    s.current.down = false
+    const st = s.current
+    st.dragging = false
+    st.down = false
     window.removeEventListener('pointermove', onMoveWin)
+    // if the drag ended with the pointer outside the timeline, hide now — the
+    // leave event was swallowed while dragging so the cursor stayed visible
+    if (!st.inside && cursorRef.current) cursorRef.current.style.opacity = '0'
   }, [onMoveWin])
 
   const onPointerDown = (e) => {
@@ -427,10 +443,23 @@ export default function Portfolio() {
     s.current.my = e.clientY
   }
 
-  const showCursor = () => {
+  const showCursor = (e) => {
+    const st = s.current
+    st.inside = true
+    // snap to the entry point so it doesn't slide in from the top-left corner
+    if (e) {
+      st.mx = e.clientX
+      st.my = e.clientY
+      st.cx = e.clientX
+      st.cy = e.clientY
+    }
     if (cursorRef.current && !isMobile() && !overlayOpen) cursorRef.current.style.opacity = '1'
   }
   const hideCursor = () => {
+    s.current.inside = false
+    // don't hide mid-drag: the pointer may briefly leave the timeline while
+    // dragging; onUpWin re-evaluates visibility when the drag ends
+    if (s.current.dragging) return
     if (cursorRef.current) cursorRef.current.style.opacity = '0'
   }
 
@@ -519,6 +548,24 @@ export default function Portfolio() {
     setPanel(name)
   }
 
+  // Pointer parallax: tilt the hovered device toward the cursor. Vars are read
+  // by `.df` in CSS (composed with the hover lift); the 0.4s transition there
+  // smooths the follow and the return-to-flat on leave. Desktop pointers only.
+  const onTilt = (e) => {
+    if (isMobile()) return
+    const el = e.currentTarget
+    const r = el.getBoundingClientRect()
+    const px = (e.clientX - r.left) / r.width - 0.5
+    const py = (e.clientY - r.top) / r.height - 0.5
+    const MAX = 9
+    el.style.setProperty('--ry', `${(px * MAX).toFixed(2)}deg`)
+    el.style.setProperty('--rx', `${(-py * MAX).toFixed(2)}deg`)
+  }
+  const resetTilt = (e) => {
+    e.currentTarget.style.setProperty('--rx', '0deg')
+    e.currentTarget.style.setProperty('--ry', '0deg')
+  }
+
   const navItems = [
     { key: 'about', label: T.about, onClick: () => openPanel('about') },
     { key: 'work', label: T.work, onClick: () => openPanel('work') },
@@ -531,7 +578,7 @@ export default function Portfolio() {
       {/* First-load preloader — waits for device screenshots to decode */}
       <div className={`preloader${booting ? '' : ' preloader--done'}`} aria-hidden={!booting}>
         <div className="preloader__inner">
-          <span className="preloader__mark">LB</span>
+          <img className="preloader__mark" src="/logo.png" alt="Lakhdar Berache" />
           <div className="preloader__bar">
             <span style={{ width: `${progress}%` }} />
           </div>
@@ -585,7 +632,13 @@ export default function Portfolio() {
           <div className="timeline__spacer" aria-hidden="true" />
           {projectsData.map((project, index) => (
             <article className="project" key={project.id} data-year={project.year} style={{ '--i': index }}>
-              <button className="project__button" onClick={openProject(project)} aria-label={`${T.open} ${project.title}`}>
+              <button
+                className="project__button"
+                onClick={openProject(project)}
+                onMouseMove={onTilt}
+                onMouseLeave={resetTilt}
+                aria-label={`${T.open} ${project.title}`}
+              >
                 <div className="project__visual">
                   <DeviceFrame project={project} />
                 </div>

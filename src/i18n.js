@@ -1,9 +1,10 @@
 // Lightweight i18n: translatable data fields are `{ en, fr, ko }` objects
 // (values may be strings or arrays). `pick` resolves one for the active lang,
 // falling back to English, and passes plain values through untouched.
-export const LANGS = ['en', 'fr', 'ko']
+// Display order of the language switcher (FR · KR · EN).
+export const LANGS = ['fr', 'ko', 'en']
 
-export const langLabels = { en: 'EN', fr: 'FR', ko: 'KO' }
+export const langLabels = { en: 'EN', fr: 'FR', ko: 'KR' }
 
 export function pick(value, lang) {
   if (

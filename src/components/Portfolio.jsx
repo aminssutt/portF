@@ -32,7 +32,7 @@ function Logo({ src, name, big }) {
   )
 }
 
-function Screen({ project }) {
+function Screen({ project, eager }) {
   if (project.screenshot) {
     return (
       <img
@@ -40,7 +40,8 @@ function Screen({ project }) {
         src={project.screenshot}
         alt={`${project.title} preview`}
         draggable="false"
-        loading="lazy"
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
       />
     )
   }
@@ -51,8 +52,9 @@ function Screen({ project }) {
   )
 }
 
-function DeviceFrame({ project }) {
+function DeviceFrame({ project, eager }) {
   const type = DEVICE[project.id] || 'macbook'
+  const imgLoading = eager ? 'eager' : 'lazy'
 
   if (type === 'iphone-duo' && project.screens?.length >= 2) {
     return (
@@ -63,14 +65,16 @@ function DeviceFrame({ project }) {
             src={project.screens[0]}
             alt={`${project.title} preview 1`}
             draggable="false"
-            loading="lazy"
+            loading={imgLoading}
+            decoding="async"
           />
           <img
             className="phone-duo__shot phone-duo__shot--front"
             src={project.screens[1]}
             alt={`${project.title} preview 2`}
             draggable="false"
-            loading="lazy"
+            loading={imgLoading}
+            decoding="async"
           />
         </div>
       </div>
@@ -83,7 +87,7 @@ function DeviceFrame({ project }) {
         <div className="iphone">
           <span className="iphone__island" />
           <div className="iphone__screen">
-            <Screen project={project} />
+            <Screen project={project} eager={eager} />
           </div>
         </div>
       </div>
@@ -96,7 +100,7 @@ function DeviceFrame({ project }) {
         <div className="imac">
           <div className="imac__display">
             <div className="imac__screen">
-              <Screen project={project} />
+              <Screen project={project} eager={eager} />
             </div>
             <div className="imac__chin">
               <span className="imac__logo" aria-hidden="true" />
@@ -114,7 +118,7 @@ function DeviceFrame({ project }) {
       <div className="macbook">
         <div className="macbook__lid">
           <div className="macbook__screen">
-            <Screen project={project} />
+            <Screen project={project} eager={eager} />
           </div>
         </div>
         <div className="macbook__base">
@@ -203,10 +207,50 @@ export default function Portfolio() {
   const [previewPdf, setPreviewPdf] = useState(null)
   const [closing, setClosing] = useState(false)
   const [ready, setReady] = useState(false)
+  const [booting, setBooting] = useState(true)
+  const [progress, setProgress] = useState(0)
   const overlayOpen = Boolean(activeProject) || Boolean(panel)
 
   const liquidText = useLiquid('liquid-text', 11)
   const liquidPhoto = useLiquid('liquid-photo', 24)
+
+  // Preload every device screenshot + the portrait up front so nothing pops
+  // in ugly. Progress drives the loader bar; a safety timeout guarantees the
+  // site always reveals even if an image stalls.
+  useEffect(() => {
+    const urls = []
+    projectsData.forEach((p) => {
+      if (p.screenshot) urls.push(p.screenshot)
+      if (p.screens) urls.push(...p.screens)
+    })
+    if (profile.photo) urls.push(profile.photo)
+
+    let done = false
+    const finish = () => {
+      if (done) return
+      done = true
+      setProgress(100)
+      setBooting(false)
+    }
+    if (!urls.length) {
+      finish()
+      return
+    }
+    let loaded = 0
+    urls.forEach((src) => {
+      const img = new Image()
+      const bump = () => {
+        loaded += 1
+        setProgress(Math.round((loaded / urls.length) * 100))
+        if (loaded >= urls.length) finish()
+      }
+      img.onload = bump
+      img.onerror = bump
+      img.src = src
+    })
+    const safety = setTimeout(finish, 6000)
+    return () => clearTimeout(safety)
+  }, [])
 
   const isMobile = () => window.innerWidth <= 980 || window.matchMedia('(pointer: coarse)').matches
 
@@ -324,13 +368,35 @@ export default function Portfolio() {
   }, [overlayOpen])
 
   // Lock background scroll while any overlay (panel / project / pdf) is open,
-  // so the timeline underneath can't be seen scrolling behind it.
+  // so the timeline underneath can't be seen scrolling behind it. A plain
+  // overflow:hidden is ignored by mobile Safari for touch scrolling, so we
+  // pin the body with position:fixed and restore the exact scroll on close.
   useEffect(() => {
     if (!overlayOpen) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    const { body } = document
+    const scrollY = window.scrollY || window.pageYOffset || 0
+    const prev = {
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      overflow: body.style.overflow
+    }
+    body.style.position = 'fixed'
+    body.style.top = `-${scrollY}px`
+    body.style.left = '0'
+    body.style.right = '0'
+    body.style.width = '100%'
+    body.style.overflow = 'hidden'
     return () => {
-      document.body.style.overflow = prev
+      body.style.position = prev.position
+      body.style.top = prev.top
+      body.style.left = prev.left
+      body.style.right = prev.right
+      body.style.width = prev.width
+      body.style.overflow = prev.overflow
+      window.scrollTo(0, scrollY)
     }
   }, [overlayOpen])
 
@@ -497,6 +563,16 @@ export default function Portfolio() {
 
   return (
     <main className="portfolio">
+      {/* First-load preloader — waits for device screenshots to decode */}
+      <div className={`preloader${booting ? '' : ' preloader--done'}`} aria-hidden={!booting}>
+        <div className="preloader__inner">
+          <span className="preloader__mark">LB</span>
+          <div className="preloader__bar">
+            <span style={{ width: `${progress}%` }} />
+          </div>
+        </div>
+      </div>
+
       {/* Liquid hover filters (water-bubble distortion for About) */}
       <svg className="liquid-defs" aria-hidden="true" focusable="false">
         <defs>
@@ -597,7 +673,7 @@ export default function Portfolio() {
               )}
             </div>
             <div className="project-detail__visual" ref={detailVisualRef}>
-              <DeviceFrame project={activeProject} />
+              <DeviceFrame project={activeProject} eager />
             </div>
           </div>
         </section>

@@ -18,6 +18,53 @@
   isolation: isolate;
 }
 
+/* ---------- Preloader ---------- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  transition: opacity 0.6s var(--ease), visibility 0s linear 0.6s;
+}
+.preloader--done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.preloader__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+.preloader__mark {
+  font-size: 34px;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  color: #111;
+  animation: preloader-pulse 1.6s var(--ease) infinite;
+}
+@keyframes preloader-pulse {
+  50% { opacity: 0.38; }
+}
+.preloader__bar {
+  width: 160px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.preloader__bar span {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  background: #111;
+  border-radius: 2px;
+  transition: width 0.35s var(--ease);
+}
+
 /* ---------- Custom cursor ---------- */
 .cursor {
   position: fixed;
@@ -472,6 +519,13 @@
 }
 @keyframes dismiss {
   to { opacity: 0; transform: scale(1.01); }
+}
+/* Mobile-only entrance/exit for the project detail (no desktop FLIP there) */
+@keyframes detail-in-mobile {
+  from { opacity: 0; transform: translateY(26px); }
+}
+@keyframes detail-out-mobile {
+  to { opacity: 0; transform: translateY(26px); }
 }
 .back {
   position: fixed;
@@ -1121,6 +1175,25 @@
   }
   .project-info__stack {
     justify-content: center;
+  }
+  /* The whole detail overlay slides+fades in and out on touch, so the device
+     and copy animate together instead of popping in place. */
+  .overlay.project-detail {
+    animation: detail-in-mobile 0.5s var(--ease) both;
+  }
+  .overlay.project-detail::before {
+    animation: none;
+  }
+  .overlay.project-detail.is-closing {
+    animation: detail-out-mobile 0.34s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  .overlay.project-detail.is-closing::before,
+  .overlay.project-detail.is-closing .project-info,
+  .overlay.project-detail.is-closing .back {
+    animation: none;
+  }
+  .project-detail .project-info {
+    animation: none;
   }
   .back {
     width: 64px;

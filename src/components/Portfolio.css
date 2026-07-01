@@ -139,9 +139,9 @@
 .site-header nav a,
 .site-header nav button {
   width: fit-content;
-  color: rgba(0, 0, 0, 0.55);
+  color: rgba(0, 0, 0, 0.38);
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 1.4;
   transition: color 0.2s var(--ease);
 }
@@ -1205,6 +1205,7 @@
   }
   .project-detail__visual {
     width: 100%;
+    order: -1; /* device/tablet on top, copy below on mobile */
   }
   .project-detail .df--imac .imac,
   .project-detail .df--macbook .macbook {
@@ -1230,12 +1231,17 @@
     justify-content: center;
   }
   /* The whole detail overlay slides+fades in and out on touch, so the device
-     and copy animate together instead of popping in place. */
+     and copy animate together instead of popping in place. On mobile we drop
+     the FLIP veil and paint the opaque background straight on the fixed overlay
+     so nothing behind (timeline / scroll) shows through while scrolling. */
   .overlay.project-detail {
+    background: rgba(250, 250, 252, 0.985);
+    backdrop-filter: blur(34px) saturate(1.35);
+    -webkit-backdrop-filter: blur(34px) saturate(1.35);
     animation: detail-in-mobile 0.5s var(--ease) both;
   }
   .overlay.project-detail::before {
-    animation: none;
+    display: none;
   }
   .overlay.project-detail.is-closing {
     animation: detail-out-mobile 0.34s cubic-bezier(0.4, 0, 0.2, 1) both;

@@ -1,10 +1,10 @@
 // Lightweight i18n: translatable data fields are `{ en, fr, ko }` objects
 // (values may be strings or arrays). `pick` resolves one for the active lang,
 // falling back to English, and passes plain values through untouched.
-// Display order of the language switcher (FR · KR · EN).
-export const LANGS = ['fr', 'ko', 'en']
+// Display order of the language switcher (EN · KR).
+export const LANGS = ['en', 'ko']
 
-export const langLabels = { en: 'EN', fr: 'FR', ko: 'KR' }
+export const langLabels = { en: 'EN', ko: 'KR' }
 
 export function pick(value, lang) {
   if (
@@ -27,7 +27,6 @@ export function detectLang() {
     /* localStorage may be unavailable */
   }
   const n = (navigator.language || 'en').toLowerCase()
-  if (n.startsWith('fr')) return 'fr'
   if (n.startsWith('ko')) return 'ko'
   return 'en'
 }
@@ -51,24 +50,6 @@ export const ui = {
     open: 'Open',
     back: 'Back',
     language: 'Language'
-  },
-  fr: {
-    about: 'À propos',
-    work: 'Expérience',
-    education: 'Formation',
-    certifications: 'Certifications',
-    mentions: 'Presse',
-    scrollHint: 'Faites défiler ou glissez',
-    origin: 'Là où tout a commencé',
-    visitSite: 'Voir le site',
-    resume: 'CV',
-    download: 'Télécharger',
-    close: 'Fermer',
-    readArticle: "Lire l'article",
-    viewCertificate: 'Voir le certificat',
-    open: 'Ouvrir',
-    back: 'Retour',
-    language: 'Langue'
   },
   ko: {
     about: '소개',

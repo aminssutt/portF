@@ -662,7 +662,7 @@
   background: rgba(250, 250, 252, 0.985);
   backdrop-filter: blur(34px) saturate(1.35);
   -webkit-backdrop-filter: blur(34px) saturate(1.35);
-  animation: reveal 0.6s var(--ease) both;
+  animation: reveal 0.42s var(--ease) both;
 }
 @keyframes reveal {
   from {
@@ -672,7 +672,7 @@
 }
 .overlay.is-closing {
   pointer-events: none;
-  animation: dismiss 0.34s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: dismiss 0.26s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 @keyframes dismiss {
   to { opacity: 0; transform: scale(1.01); }
@@ -721,9 +721,10 @@
   justify-content: center;
   will-change: transform;
   transform-origin: center center;
+  cursor: pointer; /* click the device to go back (like the top-left arrow) */
 }
 .project-detail .project-info {
-  animation: detail-copy-in 0.85s 0.22s cubic-bezier(0.45, 0, 0.18, 1) both;
+  animation: detail-copy-in 0.5s 0.1s cubic-bezier(0.45, 0, 0.18, 1) both;
 }
 @keyframes detail-copy-in {
   from { opacity: 0; transform: translateX(-26px); }
@@ -745,17 +746,17 @@
   background: rgba(250, 250, 252, 0.985);
   backdrop-filter: blur(32px) saturate(1.35);
   -webkit-backdrop-filter: blur(32px) saturate(1.35);
-  animation: veil-in 0.6s ease both;
+  animation: veil-in 0.42s ease both;
 }
 .overlay.project-detail.is-closing {
   animation: none;
 }
 .overlay.project-detail.is-closing::before {
-  animation: veil-out 0.5s ease both;
+  animation: veil-out 0.34s ease both;
 }
 .overlay.project-detail.is-closing .project-info,
 .overlay.project-detail.is-closing .back {
-  animation: detail-fade-out 0.45s ease both;
+  animation: detail-fade-out 0.3s ease both;
 }
 @keyframes veil-in { from { opacity: 0; } }
 @keyframes veil-out { to { opacity: 0; } }
@@ -1189,6 +1190,28 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+/* Embedded video mention (YouTube) */
+.mention--embed {
+  display: block;
+}
+.mention-embed {
+  position: relative;
+  width: 100%;
+  margin-top: 12px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 10px 26px -12px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+.mention-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 /* =========================================================
    Touch / tablet / mobile (vertical layout)
    Applies to narrow screens AND any touch device (no wheel).
@@ -1397,13 +1420,13 @@
     background: rgba(250, 250, 252, 0.985);
     backdrop-filter: blur(34px) saturate(1.35);
     -webkit-backdrop-filter: blur(34px) saturate(1.35);
-    animation: detail-in-mobile 0.5s var(--ease) both;
+    animation: detail-in-mobile 0.4s var(--ease) both;
   }
   .overlay.project-detail::before {
     display: none;
   }
   .overlay.project-detail.is-closing {
-    animation: detail-out-mobile 0.34s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: detail-out-mobile 0.26s cubic-bezier(0.4, 0, 0.2, 1) both;
   }
   .overlay.project-detail.is-closing::before,
   .overlay.project-detail.is-closing .project-info,

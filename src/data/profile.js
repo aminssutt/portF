@@ -10,7 +10,7 @@ export const profile = {
   cv: '/cv_lakhdar_berache.pdf',
   bio: {
     en: [
-      'I’m an engineering student and software engineer working at the intersection of artificial intelligence, data science and web development.',
+      'I’m an engineering student working at the intersection of artificial intelligence, data science and web development.',
       'I design AI systems, build useful products and turn ambitious ideas into clean, thoughtful experiences.'
     ],
     fr: [
@@ -18,7 +18,7 @@ export const profile = {
       "Je conçois des systèmes d'IA, je construis des produits utiles et je transforme des idées ambitieuses en expériences claires et soignées."
     ],
     ko: [
-      '저는 인공지능, 데이터 사이언스, 웹 개발이 만나는 지점에서 일하는 공학도이자 소프트웨어 엔지니어입니다.',
+      '저는 인공지능, 데이터 사이언스, 웹 개발이 만나는 지점에서 일하는 공학도입니다.',
       '저는 AI 시스템을 설계하고 유용한 제품을 만들며, 야심 찬 아이디어를 깔끔하고 사려 깊은 경험으로 구현합니다.'
     ]
   },
@@ -133,6 +133,16 @@ export const education = [
 ]
 
 export const mentions = [
+  {
+    embed: 'u3n9GbQS-Go',
+    title: {
+      en: 'AI Orchestrator — the first contextual in-car AI agent',
+      fr: 'AI Orchestrator — le premier agent IA embarqué contextuel',
+      ko: 'AI 오케스트레이터 — 최초의 상황 인식 차량 내 AI 에이전트'
+    },
+    outlet: 'Renault Korea', year: '2026',
+    link: 'https://youtu.be/u3n9GbQS-Go'
+  },
   {
     title: 'Quand EDF vient chercher des solutions à l’université de Troyes pour ses centrales nucléaires',
     outlet: 'Le Parisien', year: '2026',

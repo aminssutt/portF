@@ -492,7 +492,7 @@ export default function Portfolio() {
     // force reflow so the start transform is committed before transitioning
     void el.offsetWidth
     requestAnimationFrame(() => {
-      el.style.transition = `transform 0.9s ${FLIP_EASE}`
+      el.style.transition = `transform 0.55s ${FLIP_EASE}`
       el.style.transform = 'translate(0px, 0px) scale(1)'
     })
   }, [activeProject])
@@ -623,11 +623,11 @@ export default function Portfolio() {
       // swap exactly when the device finishes settling — not on a timer that
       // can fire a frame early/late and cause a tiny jump
       el.addEventListener('transitionend', settle)
-      window.setTimeout(settle, 900) // safety fallback
-      el.style.transition = `transform 0.8s ${FLIP_EASE}`
+      window.setTimeout(settle, 620) // safety fallback
+      el.style.transition = `transform 0.5s ${FLIP_EASE}`
       el.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`
     } else {
-      window.setTimeout(finish, 380)
+      window.setTimeout(finish, 300)
     }
   }
 
@@ -784,7 +784,15 @@ export default function Portfolio() {
                 </a>
               )}
             </div>
-            <div className="project-detail__visual" ref={detailVisualRef}>
+            <div
+              className="project-detail__visual"
+              ref={detailVisualRef}
+              onClick={closeAll}
+              role="button"
+              tabIndex={0}
+              aria-label={T.back}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && closeAll()}
+            >
               <DeviceFrame project={activeProject} eager />
             </div>
           </div>
@@ -899,18 +907,38 @@ export default function Portfolio() {
               <h3 className="listing__title">{T.mentions}</h3>
               <ul className="listing__list">
                 {mentions.map((m) => (
-                  <li key={m.title}>
-                    <Logo src={m.logo} name={m.outlet} big />
-                    <div className="listing__body">
-                      <a className="listing__main listing__main--link" href={m.link} target="_blank" rel="noreferrer">
-                        {m.outlet} <span aria-hidden="true">↗</span>
-                      </a>
-                      <span className="listing__note">{m.title}</span>
-                      <span className="listing__meta">{m.year}</span>
-                      <a className="listing__cta" href={m.link} target="_blank" rel="noreferrer">
-                        {T.readArticle} <span aria-hidden="true">↗</span>
-                      </a>
-                    </div>
+                  <li key={m.link} className={m.embed ? 'mention--embed' : undefined}>
+                    {m.embed ? (
+                      <div className="listing__body">
+                        <span className="listing__main">{m.outlet}</span>
+                        <span className="listing__note">{t(m.title)}</span>
+                        <span className="listing__meta">{m.year}</span>
+                        <div className="mention-embed">
+                          <iframe
+                            src={`https://www.youtube-nocookie.com/embed/${m.embed}`}
+                            title={t(m.title)}
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <Logo src={m.logo} name={m.outlet} big />
+                        <div className="listing__body">
+                          <a className="listing__main listing__main--link" href={m.link} target="_blank" rel="noreferrer">
+                            {m.outlet} <span aria-hidden="true">↗</span>
+                          </a>
+                          <span className="listing__note">{t(m.title)}</span>
+                          <span className="listing__meta">{m.year}</span>
+                          <a className="listing__cta" href={m.link} target="_blank" rel="noreferrer">
+                            {T.readArticle} <span aria-hidden="true">↗</span>
+                          </a>
+                        </div>
+                      </>
+                    )}
                   </li>
                 ))}
               </ul>

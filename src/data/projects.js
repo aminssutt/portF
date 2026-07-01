@@ -45,22 +45,25 @@ export const projectsData = [
     },
     highlights: {
       en: [
-        'Conversational interface that cuts documentation search time with verified sources.',
-        'RAG workflow with LangChain indexes manuals by car model and retrieves the most relevant sections.',
-        'Multilingual answers grounded in the official manual.'
+        'Indexes 40+ owner manuals across 16 car brands (Renault, Hyundai, Kia, Peugeot, BMW, Tesla, Mercedes…), each isolated in its own per-vehicle session.',
+        'Hybrid retrieval — FAISS (semantic) + BM25 (lexical) — with intelligent section-based chunking and parallel PDF extraction.',
+        'Answers generated with Google Gemini, grounded in the official manual and backed by verified source passages.',
+        'Multilingual conversational interface that cuts documentation search from minutes to seconds.'
       ],
       fr: [
-        'Interface conversationnelle qui réduit le temps de recherche dans la documentation, avec des sources vérifiées.',
-        'Un pipeline RAG avec LangChain indexe les manuels par modèle et récupère les sections les plus pertinentes.',
-        'Des réponses multilingues fondées sur le manuel officiel.'
+        'Indexe plus de 40 manuels d’utilisation sur 16 marques (Renault, Hyundai, Kia, Peugeot, BMW, Tesla, Mercedes…), chacun isolé dans sa propre session véhicule.',
+        'Recherche hybride — FAISS (sémantique) + BM25 (lexicale) — avec chunking intelligent par sections et extraction PDF parallèle.',
+        'Réponses générées avec Google Gemini, fondées sur le manuel officiel et appuyées par des passages sources vérifiés.',
+        'Interface conversationnelle multilingue qui réduit la recherche documentaire de plusieurs minutes à quelques secondes.'
       ],
       ko: [
-        '검증된 출처와 함께 문서 검색 시간을 줄여 주는 대화형 인터페이스입니다.',
-        'LangChain 기반 RAG 워크플로가 차량 모델별로 설명서를 색인하고 가장 관련성 높은 부분을 검색합니다.',
-        '공식 설명서에 근거한 다국어 답변을 제공합니다.'
+        '16개 브랜드(르노, 현대, 기아, 푸조, BMW, 테슬라, 메르세데스…)의 40개 이상 사용 설명서를 색인하며, 각 차량은 독립된 세션으로 분리됩니다.',
+        '하이브리드 검색 — FAISS(의미) + BM25(어휘) — 과 섹션 기반 지능형 청킹, 병렬 PDF 추출을 사용합니다.',
+        'Google Gemini로 답변을 생성하고, 공식 설명서에 근거해 검증된 출처 구절로 뒷받침합니다.',
+        '문서 검색 시간을 몇 분에서 몇 초로 줄이는 다국어 대화형 인터페이스입니다.'
       ]
     },
-    technologies: ['RAG', 'LangChain', 'LLM', 'React', 'Python'],
+    technologies: ['RAG', 'FAISS', 'BM25', 'Gemini', 'React', 'Python'],
     link: 'https://carchat.online', screenshot: '/images/carchat.png'
   },
   {

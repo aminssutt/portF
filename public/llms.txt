@@ -1,0 +1,42 @@
+# Lakhdar Berache
+
+> Software & AI Engineer based in Paris, France. I design AI systems, build useful
+> products and turn ambitious ideas into clean, thoughtful experiences. Focus areas:
+> Artificial Intelligence, Retrieval-Augmented Generation (RAG), Agentic AI, Model
+> Context Protocol (MCP) and full-stack web development.
+
+## Profile
+- Name: Lakhdar Berache
+- Role: Software & AI Engineer
+- Location: Paris, France
+- Website: https://lakhdarberache.fr
+- GitHub: https://github.com/aminssutt
+- LinkedIn: https://www.linkedin.com/in/lakhdar-berache/
+- Email: lakhdarberache@gmail.com
+
+## Experience
+- ArcherMind Technology — Consultant Software & AI Engineer (Mar 2026 – present): builds and improves AI agents for client projects; leads technical analysis and documentation.
+- Renault Korea — Software & AI Engineer Intern (Sep 2025 – Feb 2026): in-car conversational assistant on LangGraph with MCP servers and a RAG pipeline over vehicle manuals; connected health & fitness app; AI podcast platform (NLP + text-to-speech).
+- Fabulous Creations Studio — Web Developer (Jan 2025 – present): interior-design portfolio with database-backed booking.
+
+## Education
+- KAIST — Specialization in Informatics & Artificial Intelligence (2025)
+- University of Technology of Troyes (UTT) — Informatics & Systems (2024 – 2027)
+
+## Selected projects
+- Rebloom (2026): anti-waste floral marketplace connecting florists and customers around discounted unsold bouquets. Founder & CEO. https://re-bloom.fr
+- CarChat (2026): AI assistant for vehicle owner manuals with instant, source-backed answers (RAG, LangChain). Founder. https://carchat.online
+- Megawatt'UTT — SimuPont (2026): mobile training simulator for nuclear bridge-crane fuel handling, built for EDF's Megawatt'UTT challenge — 2nd place and Public's Prize; featured in Le Parisien.
+- Hera Studio (2025): AI platform for personalized children's coloring books. Founder. https://www.herastudio.art
+- AI Adventure (2025): student learning platform turning research-paper databases into accessible knowledge (KAIST).
+- RePLY (2025): intelligent wearable using machine learning to optimize exercise sessions (KAIST).
+- Fabulous Creations (2025): one-page portfolio for an interior designer. https://www.fabulousdesign.online/
+- Scout Mini Robot (2024): user guide and autonomous navigation with ROS2.
+- HumanLaw (2023): volunteer logistics for food distribution.
+
+## Skills
+Artificial Intelligence, Machine Learning, RAG, Agentic AI, MCP, LangChain, Large Language Models, React, Python, Full-stack development, Data Science, Unity, ROS2.
+
+## Recognition
+- Le Parisien (2026): article on the EDF × UTT nuclear-plant project.
+- Certifications: Microsoft (Generative AI), AWS (Generative AI), IBM (RAG Applications), Board Infinity (Intelligent Agents).

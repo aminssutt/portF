@@ -313,6 +313,18 @@
   --lift: -12px;
 }
 
+.df--mockup {
+  display: flex;
+  justify-content: center;
+}
+.mockup-img {
+  display: block;
+  width: calc(var(--dev) * 1.12);
+  height: auto;
+  border-radius: 12px;
+  filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.12));
+}
+
 /* ---------- Timeline end card ---------- */
 .timeline__end {
   display: flex;
@@ -510,7 +522,8 @@
    instead of a flat pasted screenshot. Sits above the image, ignores input. */
 .imac__screen::after,
 .macbook__screen::after,
-.iphone__screen::after {
+.iphone__screen::after,
+.framed__screen::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -558,6 +571,83 @@
   transform: translateX(34%) rotate(-12deg) scale(0.95);
 }
 .project__button:hover .phone-duo__shot--front {
+  transform: translateX(-34%) translateY(5%) rotate(11deg);
+}
+
+/* =========================================================
+   Image device frames (photoreal — Apple Design Resources, via Figma)
+   One transparent WebP per type, reused across all projects. The screen area is
+   knocked out (transparent) in the asset, so the screenshot sits behind and
+   shows through; the frame's own soft shadow is baked into the PNG. Screen rects
+   (--sx/--sy/--sw/--sh) are auto-detected from each asset — do not hand-edit.
+   ========================================================= */
+.df--framed {
+  display: flex;
+  justify-content: center;
+}
+/* --fwm = width multiplier vs the shared device footprint. Size flows from one
+   base var so gallery (--dev), detail (--dev-lg) and mobile all reuse it. */
+.framed {
+  position: relative;
+  width: calc(var(--dev) * var(--fwm, 1));
+}
+.framed__frame {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  /* shadow follows the cut-out silhouette (assets are transparent-background) */
+  filter: drop-shadow(0 6px 9px rgba(0, 0, 0, 0.08)) drop-shadow(0 26px 40px rgba(0, 0, 0, 0.16));
+}
+.framed__screen {
+  position: absolute;
+  z-index: 1;
+  top: var(--sy);
+  left: var(--sx);
+  width: var(--sw);
+  height: var(--sh);
+  overflow: hidden;
+  background: #000;
+}
+/* Per-device: width multiplier + screen rectangle (auto-detected, pixel-exact). */
+.framed--imac    { --fwm: 1;    --sx: 2.92%;  --sy: 3.93%;  --sw: 94.17%; --sh: 62.38%; }
+.framed--imac27  { --fwm: 1.02; --sx: 4.58%;  --sy: 5.49%;  --sw: 90.83%; --sh: 63.46%; }
+.framed--macbook { --fwm: 1.06; --sx: 12.83%; --sy: 8.72%;  --sw: 74.17%; --sh: 78.2%; }
+.framed--mbp14   { --fwm: 1.05; --sx: 11.67%; --sy: 11.79%; --sw: 76.67%; --sh: 76.41%; }
+.framed--mbp16   { --fwm: 1.12; --sx: 10.17%; --sy: 11%;    --sw: 79.67%; --sh: 78%; }
+.framed--ipad    { --fwm: 0.92; --sx: 4.27%;  --sy: 5.9%;   --sw: 91.45%; --sh: 88.21%; }
+.framed--iphone  { --fwm: 0.42; --sx: 7.31%;  --sy: 3.66%;  --sw: 85.38%; --sh: 92.67%; }
+.framed--iphone11{ --fwm: 0.42; --sx: 9.04%;  --sy: 4.17%;  --sw: 81.92%; --sh: 91.66%; }
+
+/* reply — two iPhone 11 frames, staggered like a hero shot */
+.df--framed-duo {
+  display: flex;
+  justify-content: center;
+}
+.framed-duo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.framed-duo .framed {
+  --fwm: 0.34;
+  transition: transform 0.5s var(--ease);
+}
+.framed-duo__back {
+  z-index: 1;
+  transform: translateX(24%) rotate(-9deg) scale(0.95);
+}
+.framed-duo__front {
+  z-index: 2;
+  transform: translateX(-24%) translateY(5%) rotate(8deg);
+}
+.project__button:hover .framed-duo__back {
+  transform: translateX(34%) rotate(-12deg) scale(0.95);
+}
+.project__button:hover .framed-duo__front {
   transform: translateX(-34%) translateY(5%) rotate(11deg);
 }
 
@@ -681,6 +771,19 @@
 }
 .project-detail .df--phone-duo .phone-duo__shot {
   width: min(calc(var(--dev-lg) * 0.42), 34vh);
+}
+/* image frames in the expanded detail view — same multiplier, larger base */
+.project-detail .framed {
+  width: min(calc(var(--dev-lg) * var(--fwm, 1)), 84vh);
+}
+.project-detail .framed--phone {
+  width: min(calc(var(--dev-lg) * var(--fwm, 1)), 46vh);
+}
+.project-detail .framed-duo .framed {
+  width: min(calc(var(--dev-lg) * 0.34), 40vh);
+}
+.project-detail .mockup-img {
+  width: min(calc(var(--dev-lg) * 1.06), 82vh);
 }
 .project-info--expanded {
   width: 300px;
@@ -1222,6 +1325,22 @@
     width: 44%;
     max-width: 190px;
   }
+  .df--framed .framed {
+    width: 100%;
+    max-width: 460px;
+  }
+  .mockup-img {
+    width: 100%;
+    max-width: 480px;
+  }
+  .df--framed .framed--phone {
+    width: 58%;
+    max-width: 240px;
+  }
+  .framed-duo .framed {
+    width: 44%;
+    max-width: 200px;
+  }
   .project-detail__inner {
     display: flex;
     flex-direction: column;
@@ -1243,6 +1362,18 @@
     width: min(58%, 240px);
   }
   .project-detail .df--phone-duo .phone-duo__shot {
+    width: min(44%, 200px);
+  }
+  .project-detail .df--framed .framed {
+    width: min(100%, 460px);
+  }
+  .project-detail .mockup-img {
+    width: min(100%, 480px);
+  }
+  .project-detail .df--framed .framed--phone {
+    width: min(58%, 240px);
+  }
+  .project-detail .framed-duo .framed {
     width: min(44%, 200px);
   }
   .project-info--expanded {

@@ -8,16 +8,17 @@ const PRESENT_YEAR = '2026'
 const LATEST_YEAR = 2026
 const BIRTH_YEAR = 2004
 
+// Per-project device — a spread of real Apple mockups for variety.
 const DEVICE = {
   rebloom: 'imac',
-  carchat: 'macbook',
+  carchat: 'mbp16',
   'hera-studio': 'iphone',
   'fabulous-creations': 'macbook',
-  'ai-adventure': 'imac',
-  'reply-heart-monitor': 'iphone-duo',
-  'megawatt-utt': 'macbook',
-  'scout-mini-robot': 'imac',
-  'humanlaw-association': 'macbook'
+  'ai-adventure': 'imac27',
+  'reply-heart-monitor': 'duo',
+  'megawatt-utt': 'mbp14',
+  'crunch-ugv': 'ipad',
+  'humanlaw-association': 'mbp16'
 }
 
 function Logo({ src, name, big }) {
@@ -53,8 +54,99 @@ function Screen({ project, eager }) {
   )
 }
 
+// Transparent Apple device frames (real mockups from Figma). The screen area is
+// knocked out in each asset, so the screenshot sits behind and shows through;
+// the screen rectangle is defined per key in CSS (--sx/--sy/--sw/--sh).
+const FRAME_SRC = {
+  imac: '/images/frames/imac.webp',
+  imac27: '/images/frames/imac27.webp',
+  macbook: '/images/frames/macbook.webp',
+  mbp14: '/images/frames/mbp14.webp',
+  mbp16: '/images/frames/mbp16.webp',
+  ipad: '/images/frames/ipad.webp',
+  iphone: '/images/frames/iphone.webp',
+  iphone11: '/images/frames/iphone11.webp'
+}
+
+// Phones tilt narrower and size differently; flag them for CSS.
+const PHONE_KEYS = new Set(['iphone', 'iphone11'])
+
+// Coarse family used only for the CSS fallback if a frame asset fails to load.
+const coarseType = (key) => {
+  if (key.startsWith('imac')) return 'imac'
+  if (key.startsWith('iphone')) return 'iphone'
+  if (key === 'duo') return 'iphone-duo'
+  return 'macbook'
+}
+
+function FramedScreen({ src, alt, eager }) {
+  return (
+    <img
+      className="screen-img"
+      src={src}
+      alt={alt}
+      draggable="false"
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+    />
+  )
+}
+
+function FrameImg({ src, onError, eager }) {
+  return (
+    <img
+      className="framed__frame"
+      src={src}
+      alt=""
+      aria-hidden="true"
+      draggable="false"
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      onError={onError}
+    />
+  )
+}
+
 function DeviceFrame({ project, eager }) {
-  const type = DEVICE[project.id] || 'macbook'
+  const key = DEVICE[project.id] || 'macbook'
+  const [frameBroken, setFrameBroken] = useState(false)
+
+  // reply-style two-phone layout, each screenshot in its own iPhone 11 frame
+  if (key === 'duo' && project.screens?.length >= 2 && !frameBroken) {
+    return (
+      <div className="df df--framed df--framed-duo">
+        <div className="framed-duo">
+          {[0, 1].map((i) => (
+            <div key={i} className={`framed framed--iphone11 framed--phone framed-duo__${i === 0 ? 'back' : 'front'}`}>
+              <div className="framed__screen">
+                <FramedScreen src={project.screens[i]} alt={`${project.title} preview ${i + 1}`} eager={eager} />
+              </div>
+              <FrameImg src={FRAME_SRC.iphone11} eager={eager} onError={() => setFrameBroken(true)} />
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  const useImageFrame = FRAME_SRC[key] && project.screenshot && !frameBroken
+  if (useImageFrame) {
+    return (
+      <div className={`df df--framed df--framed-${key}`}>
+        <div className={`framed framed--${key}${PHONE_KEYS.has(key) ? ' framed--phone' : ''}`}>
+          <div className="framed__screen">
+            <FramedScreen src={project.screenshot} alt={`${project.title} preview`} eager={eager} />
+          </div>
+          <FrameImg src={FRAME_SRC[key]} eager={eager} onError={() => setFrameBroken(true)} />
+        </div>
+      </div>
+    )
+  }
+
+  return <CssDeviceFrame project={project} eager={eager} type={coarseType(key)} />
+}
+
+function CssDeviceFrame({ project, eager, type }) {
   const imgLoading = eager ? 'eager' : 'lazy'
 
   if (type === 'iphone-duo' && project.screens?.length >= 2) {
@@ -190,6 +282,7 @@ export default function Portfolio() {
       if (p.screens) urls.push(...p.screens)
     })
     if (profile.photo) urls.push(profile.photo)
+    urls.push(...Object.values(FRAME_SRC))
 
     let done = false
     const finish = () => {
@@ -687,7 +780,7 @@ export default function Portfolio() {
               </div>
               {activeProject.link && (
                 <a className="project-info__link" href={activeProject.link} target="_blank" rel="noreferrer">
-                  {T.visitSite} <span aria-hidden="true">↗</span>
+                  {t(activeProject.linkLabel) || T.visitSite} <span aria-hidden="true">↗</span>
                 </a>
               )}
             </div>

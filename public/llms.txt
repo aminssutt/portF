@@ -31,7 +31,7 @@
 - AI Adventure (2025): student learning platform turning research-paper databases into accessible knowledge (KAIST).
 - RePLY (2025): intelligent wearable using machine learning to optimize exercise sessions (KAIST).
 - Fabulous Creations (2025): one-page portfolio for an interior designer. https://www.fabulousdesign.online/
-- Scout Mini Robot (2024): user guide and autonomous navigation with ROS2.
+- Autonomous UGV — CRUNCH (2026): off-road ROS 2 simulation with Gazebo, Nav2 and dynamic traversability maps; four routing strategies benchmarked across 600 deterministic missions.
 - HumanLaw (2023): volunteer logistics for food distribution.
 
 ## Skills

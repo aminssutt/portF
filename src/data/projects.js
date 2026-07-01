@@ -99,6 +99,42 @@ export const projectsData = [
     link: 'https://megawatt-simupont-rvmyoc-820e18-212-227-88-180.sslip.io/', screenshot: '/images/megawatt.png'
   },
   {
+    id: 'crunch-ugv', title: 'Autonomous UGV — CRUNCH', year: '2026',
+    role: {
+      en: 'Robotics & Simulation · CRUNCH UTT',
+      fr: 'Robotique & Simulation · CRUNCH UTT',
+      ko: '로보틱스 & 시뮬레이션 · CRUNCH UTT'
+    },
+    description: {
+      en: 'Off-road autonomous vehicle simulation developed during CRUNCH UTT Innovation Time to plan safe, energy-aware routes across challenging terrain.',
+      fr: "Simulation d'un véhicule autonome hors-route développée pendant le CRUNCH UTT Innovation Time pour planifier des trajectoires sûres et sobres en énergie sur des terrains difficiles.",
+      ko: 'CRUNCH UTT Innovation Time에서 개발한 오프로드 자율주행 차량 시뮬레이션으로, 험지에서 안전하고 에너지 효율적인 경로를 계획합니다.'
+    },
+    highlights: {
+      en: [
+        'Built the complete ROS 2 Jazzy stack with Gazebo Harmonic, Nav2 and RViz for autonomous payload transport.',
+        'Generated dynamic traversability maps combining obstacles, slope, mud, water, roughness, payload stability and energy cost.',
+        'Created seven fixed worlds, randomized scenarios and a web dashboard to launch, monitor and compare missions.',
+        'Benchmarked four routing strategies across 600 deterministic missions, reaching a 100% planning success rate.'
+      ],
+      fr: [
+        "Développement de la pile ROS 2 Jazzy complète avec Gazebo Harmonic, Nav2 et RViz pour le transport autonome d'une charge utile.",
+        "Génération de cartes de traversabilité dynamiques combinant obstacles, pente, boue, eau, rugosité, stabilité de la charge et coût énergétique.",
+        "Création de sept mondes fixes, de scénarios aléatoires et d'un dashboard web pour lancer, suivre et comparer les missions.",
+        "Benchmark de quatre stratégies de routage sur 600 missions déterministes, avec 100 % de succès de planification."
+      ],
+      ko: [
+        'Gazebo Harmonic, Nav2, RViz를 결합한 ROS 2 Jazzy 전체 스택으로 자율 화물 운송을 구현했습니다.',
+        '장애물, 경사, 진흙, 물, 노면 거칠기, 적재 안정성, 에너지 비용을 결합한 동적 주행 가능성 지도를 생성했습니다.',
+        '7개의 고정 월드와 무작위 시나리오, 미션 실행·모니터링·비교용 웹 대시보드를 제작했습니다.',
+        '600개의 결정론적 미션에서 4가지 경로 전략을 벤치마크해 100% 계획 성공률을 달성했습니다.'
+      ]
+    },
+    technologies: ['ROS 2', 'Gazebo', 'Nav2', 'Python', 'RViz'],
+    linkLabel: { en: 'View source code', fr: 'Voir le code source', ko: '소스 코드 보기' },
+    link: 'https://github.com/aminssutt/crunchUTT', screenshot: '/images/crunch-ugv.png'
+  },
+  {
     id: 'hera-studio', title: 'Hera Studio', year: '2025',
     role: {
       en: 'Founder · Full-stack & AI',
@@ -219,34 +255,6 @@ export const projectsData = [
     },
     technologies: ['JavaScript', 'CSS', 'Database', 'Booking'],
     link: 'https://www.fabulousdesign.online/', screenshot: '/images/fabulous.png'
-  },
-  {
-    id: 'scout-mini-robot', title: 'Scout Mini Robot', year: '2024', short: 'S', tone: 'slate',
-    role: {
-      en: 'Robotics · ROS2',
-      fr: 'Robotique · ROS2',
-      ko: '로보틱스 · ROS2'
-    },
-    description: {
-      en: 'User guide and autonomous navigation experiment for the AgileX Scout Mini robot.',
-      fr: "Guide d'utilisation et expérimentation de navigation autonome pour le robot AgileX Scout Mini.",
-      ko: 'AgileX Scout Mini 로봇을 위한 사용 가이드와 자율 주행 실험입니다.'
-    },
-    highlights: {
-      en: [
-        'Co-developed a comprehensive user guide for the robot.',
-        'Leveraged ROS2 for robot operation and automation workflows.'
-      ],
-      fr: [
-        "Co-rédaction d'un guide d'utilisation complet pour le robot.",
-        "Utilisation de ROS2 pour le pilotage du robot et les workflows d'automatisation."
-      ],
-      ko: [
-        '로봇을 위한 종합 사용 가이드를 공동 개발했습니다.',
-        'ROS2를 활용해 로봇 운용과 자동화 워크플로를 구현했습니다.'
-      ]
-    },
-    technologies: ['ROS2', 'Robotics', 'Python', 'Automation']
   },
   {
     id: 'humanlaw-association', title: 'HumanLaw', year: '2023',

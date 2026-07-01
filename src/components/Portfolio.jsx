@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { projectsData } from '../data/projects'
 import { profile, experience, education, certifications, mentions } from '../data/profile'
+import { ui, pick, LANGS, langLabels, detectLang } from '../i18n'
 import './Portfolio.css'
 
 const PRESENT_YEAR = '2026'
@@ -129,54 +130,6 @@ function DeviceFrame({ project, eager }) {
   )
 }
 
-// Liquid / water-bubble hover: drives an SVG feTurbulence + feDisplacementMap
-// filter. On hover the displacement scale eases up and the turbulence flows,
-// so the target (text or photo) ripples like it's seen through water. The
-// filter is only attached while active, so there's zero cost at rest.
-function useLiquid(filterId, maxScale) {
-  const turbRef = useRef(null)
-  const dispRef = useRef(null)
-  const elRef = useRef(null)
-  const raf = useRef(0)
-  const st = useRef({ scale: 0, target: 0, t: 0 })
-
-  useEffect(() => () => cancelAnimationFrame(raf.current), [])
-
-  const loop = () => {
-    const a = st.current
-    a.scale += (a.target - a.scale) * 0.12
-    a.t += 0.016
-    if (dispRef.current) dispRef.current.setAttribute('scale', a.scale.toFixed(2))
-    if (turbRef.current) {
-      const bf = 0.013 + Math.sin(a.t * 1.3) * 0.005
-      turbRef.current.setAttribute('baseFrequency', `${bf.toFixed(4)} ${(bf * 1.5).toFixed(4)}`)
-    }
-    if (a.target === 0 && a.scale < 0.06) {
-      a.scale = 0
-      if (dispRef.current) dispRef.current.setAttribute('scale', '0')
-      if (elRef.current) elRef.current.style.filter = ''
-      raf.current = 0
-      return
-    }
-    raf.current = requestAnimationFrame(loop)
-  }
-
-  const start = () => {
-    if (!raf.current) raf.current = requestAnimationFrame(loop)
-  }
-  const onEnter = (e) => {
-    elRef.current = e.currentTarget
-    elRef.current.style.filter = `url(#${filterId})`
-    st.current.target = maxScale
-    start()
-  }
-  const onLeave = () => {
-    st.current.target = 0
-    start()
-  }
-  return { turbRef, dispRef, onEnter, onLeave }
-}
-
 export default function Portfolio() {
   const viewportRef = useRef(null)
   const trackRef = useRef(null)
@@ -209,10 +162,22 @@ export default function Portfolio() {
   const [ready, setReady] = useState(false)
   const [booting, setBooting] = useState(true)
   const [progress, setProgress] = useState(0)
+  const [lang, setLang] = useState(detectLang)
   const overlayOpen = Boolean(activeProject) || Boolean(panel)
 
-  const liquidText = useLiquid('liquid-text', 11)
-  const liquidPhoto = useLiquid('liquid-photo', 24)
+  // Resolve a translatable value for the active language; T = UI chrome strings.
+  const t = (value) => pick(value, lang)
+  const T = ui[lang]
+
+  // Persist the language choice and reflect it on <html> for a11y / SEO.
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('lang', lang)
+    } catch {
+      /* ignore */
+    }
+    document.documentElement.lang = lang
+  }, [lang])
 
   // Preload every device screenshot + the portrait up front so nothing pops
   // in ugly. Progress drives the loader bar; a safety timeout guarantees the
@@ -555,10 +520,10 @@ export default function Portfolio() {
   }
 
   const navItems = [
-    { label: 'About', onClick: () => openPanel('about') },
-    { label: 'Work', onClick: () => openPanel('work') },
-    { label: 'Education', onClick: () => openPanel('edu') },
-    { label: 'Certifications', onClick: () => openPanel('certs') }
+    { key: 'about', label: T.about, onClick: () => openPanel('about') },
+    { key: 'work', label: T.work, onClick: () => openPanel('work') },
+    { key: 'edu', label: T.education, onClick: () => openPanel('edu') },
+    { key: 'certs', label: T.certifications, onClick: () => openPanel('certs') }
   ]
 
   return (
@@ -573,19 +538,6 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* Liquid hover filters (water-bubble distortion for About) */}
-      <svg className="liquid-defs" aria-hidden="true" focusable="false">
-        <defs>
-          <filter id="liquid-text" x="-20%" y="-30%" width="140%" height="160%">
-            <feTurbulence ref={liquidText.turbRef} type="fractalNoise" baseFrequency="0.013 0.02" numOctaves="2" seed="4" result="noise" />
-            <feDisplacementMap ref={liquidText.dispRef} in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-          <filter id="liquid-photo" x="-20%" y="-20%" width="140%" height="140%">
-            <feTurbulence ref={liquidPhoto.turbRef} type="fractalNoise" baseFrequency="0.013 0.02" numOctaves="2" seed="7" result="noise" />
-            <feDisplacementMap ref={liquidPhoto.dispRef} in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-      </svg>
 
       <div className="cursor" ref={cursorRef} aria-hidden="true">
         <span className="cursor__dot" />
@@ -598,13 +550,27 @@ export default function Portfolio() {
             {PRESENT_YEAR}
           </span>
         </div>
-        <nav aria-label="Sections">
-          {navItems.map((item) => (
-            <button key={item.label} onClick={item.onClick}>
-              {item.label}
-            </button>
-          ))}
-        </nav>
+        <div className="site-header__right">
+          <nav aria-label="Sections">
+            {navItems.map((item) => (
+              <button key={item.key} onClick={item.onClick}>
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <div className="lang-switch" role="group" aria-label={T.language}>
+            {LANGS.map((l) => (
+              <button
+                key={l}
+                className={l === lang ? 'is-active' : ''}
+                onClick={() => setLang(l)}
+                aria-pressed={l === lang}
+              >
+                {langLabels[l]}
+              </button>
+            ))}
+          </div>
+        </div>
       </header>
 
       <div
@@ -619,7 +585,7 @@ export default function Portfolio() {
           <div className="timeline__spacer" aria-hidden="true" />
           {projectsData.map((project, index) => (
             <article className="project" key={project.id} data-year={project.year} style={{ '--i': index }}>
-              <button className="project__button" onClick={openProject(project)} aria-label={`Open ${project.title}`}>
+              <button className="project__button" onClick={openProject(project)} aria-label={`${T.open} ${project.title}`}>
                 <div className="project__visual">
                   <DeviceFrame project={project} />
                 </div>
@@ -630,33 +596,33 @@ export default function Portfolio() {
             </article>
           ))}
           <div className="timeline__end">
-            <span>Where it all began</span>
+            <span>{T.origin}</span>
             <strong>2004</strong>
           </div>
         </div>
       </div>
 
       <p className="scroll-hint">
-        Scroll or drag <span>→</span>
+        {T.scrollHint} <span>→</span>
       </p>
 
       {/* Project detail */}
       {activeProject && (
         <section className={`overlay project-detail${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label={activeProject.title}>
-          <button className="back" onClick={closeAll} aria-label="Back">
+          <button className="back" onClick={closeAll} aria-label={T.back}>
             <span />
           </button>
           <div className="project-detail__inner">
             <div className="project-info project-info--expanded">
               <h2>{activeProject.title}</h2>
-              <p className="project-info__role">{activeProject.role}</p>
+              <p className="project-info__role">{t(activeProject.role)}</p>
               <p className="project-info__year">{activeProject.year}</p>
               {activeProject.description && (
-                <p className="project-info__description">{activeProject.description}</p>
+                <p className="project-info__description">{t(activeProject.description)}</p>
               )}
               {activeProject.highlights && (
                 <ul className="project-info__highlights">
-                  {activeProject.highlights.map((point) => (
+                  {t(activeProject.highlights).map((point) => (
                     <li key={point}>{point}</li>
                   ))}
                 </ul>
@@ -668,7 +634,7 @@ export default function Portfolio() {
               </div>
               {activeProject.link && (
                 <a className="project-info__link" href={activeProject.link} target="_blank" rel="noreferrer">
-                  Visit live site <span aria-hidden="true">↗</span>
+                  {T.visitSite} <span aria-hidden="true">↗</span>
                 </a>
               )}
             </div>
@@ -681,27 +647,19 @@ export default function Portfolio() {
 
       {/* About */}
       {panel === 'about' && (
-        <section className={`overlay about${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label="About">
-          <button className="back" onClick={closeAll} aria-label="Close">
+        <section className={`overlay about${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label={T.about}>
+          <button className="back" onClick={closeAll} aria-label={T.close}>
             <span />
           </button>
           <div className="about__inner">
             {profile.photo && (
-              <div
-                className="about__photo"
-                onMouseEnter={liquidPhoto.onEnter}
-                onMouseLeave={liquidPhoto.onLeave}
-              >
+              <div className="about__photo">
                 <img src={profile.photo} alt={profile.name} />
               </div>
             )}
             <div className="about__text">
-              <p
-                className="about__bio"
-                onMouseEnter={liquidText.onEnter}
-                onMouseLeave={liquidText.onLeave}
-              >
-                {profile.bio.join(' ')}
+              <p className="about__bio">
+                {t(profile.bio).join(' ')}
               </p>
               <div className="about__links">
                 {profile.socials.map((social) => (
@@ -711,11 +669,11 @@ export default function Portfolio() {
                 ))}
                 {profile.cv && (
                   <button className="about__links-btn" onClick={() => setPreviewPdf(profile.cv)}>
-                    Resume
+                    {T.resume}
                   </button>
                 )}
               </div>
-              <small>{profile.location}</small>
+              <small>{t(profile.location)}</small>
             </div>
           </div>
         </section>
@@ -723,12 +681,12 @@ export default function Portfolio() {
 
       {/* Work experience */}
       {panel === 'work' && (
-        <section className={`overlay listing${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label="Work">
-          <button className="back" onClick={closeAll} aria-label="Close">
+        <section className={`overlay listing${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label={T.work}>
+          <button className="back" onClick={closeAll} aria-label={T.close}>
             <span />
           </button>
           <div className="listing__inner listing__inner--wide">
-            <h3 className="listing__title">Work</h3>
+            <h3 className="listing__title">{T.work}</h3>
             <ul className="listing__list">
               {experience.map((item) => (
                 <li key={item.company}>
@@ -741,17 +699,17 @@ export default function Portfolio() {
                     ) : (
                       <span className="listing__main">{item.company}</span>
                     )}
-                    <span className="listing__sub">{item.position}</span>
-                    <span className="listing__meta">{item.location} <em>{item.period}</em></span>
-                    <span className="listing__note">{item.note}</span>
+                    <span className="listing__sub">{t(item.position)}</span>
+                    <span className="listing__meta">{t(item.location)} <em>{t(item.period)}</em></span>
+                    <span className="listing__note">{t(item.note)}</span>
                     {item.certificate && (
                       <button className="listing__cta" onClick={() => setPreviewPdf(item.certificate)}>
-                        {item.certificateLabel || 'View certificate'} <span aria-hidden="true">↗</span>
+                        {t(item.certificateLabel) || T.viewCertificate} <span aria-hidden="true">↗</span>
                       </button>
                     )}
                     {item.link && item.linkLabel && (
                       <a className="listing__cta" href={item.link} target="_blank" rel="noreferrer">
-                        {item.linkLabel} <span aria-hidden="true">↗</span>
+                        {t(item.linkLabel)} <span aria-hidden="true">↗</span>
                       </a>
                     )}
                   </div>
@@ -764,13 +722,13 @@ export default function Portfolio() {
 
       {/* Certifications */}
       {panel === 'certs' && (
-        <section className={`overlay listing${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label="Certifications">
-          <button className="back" onClick={closeAll} aria-label="Close">
+        <section className={`overlay listing${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label={T.certifications}>
+          <button className="back" onClick={closeAll} aria-label={T.close}>
             <span />
           </button>
           <div className="listing__inner listing__inner--split">
             <div className="listing__col">
-              <h3 className="listing__title">Certifications</h3>
+              <h3 className="listing__title">{T.certifications}</h3>
               <ul className="listing__list">
                 {certifications.map((c) => (
                   <li key={c.title}>
@@ -792,7 +750,7 @@ export default function Portfolio() {
               </ul>
             </div>
             <div className="listing__col">
-              <h3 className="listing__title">Mentions</h3>
+              <h3 className="listing__title">{T.mentions}</h3>
               <ul className="listing__list">
                 {mentions.map((m) => (
                   <li key={m.title}>
@@ -804,7 +762,7 @@ export default function Portfolio() {
                       <span className="listing__note">{m.title}</span>
                       <span className="listing__meta">{m.year}</span>
                       <a className="listing__cta" href={m.link} target="_blank" rel="noreferrer">
-                        Read the article <span aria-hidden="true">↗</span>
+                        {T.readArticle} <span aria-hidden="true">↗</span>
                       </a>
                     </div>
                   </li>
@@ -817,23 +775,23 @@ export default function Portfolio() {
 
       {/* Education */}
       {panel === 'edu' && (
-        <section className={`overlay listing${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label="Education">
-          <button className="back" onClick={closeAll} aria-label="Close">
+        <section className={`overlay listing${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-label={T.education}>
+          <button className="back" onClick={closeAll} aria-label={T.close}>
             <span />
           </button>
           <div className="listing__inner">
-            <h3 className="listing__title">Education</h3>
+            <h3 className="listing__title">{T.education}</h3>
             <ul className="listing__list">
               {education.map((e) => (
                 <li key={e.school}>
                   <Logo src={e.logo} name={e.school} big />
                   <div className="listing__body">
                     <span className="listing__main">{e.school}</span>
-                    <span className="listing__sub">{e.degree}</span>
+                    <span className="listing__sub">{t(e.degree)}</span>
                     <span className="listing__meta">
-                      {e.location} <em>{e.period}</em>
+                      {t(e.location)} <em>{t(e.period)}</em>
                     </span>
-                    <span className="listing__note">{e.note}</span>
+                    <span className="listing__note">{t(e.note)}</span>
                   </div>
                 </li>
               ))}
@@ -854,10 +812,10 @@ export default function Portfolio() {
             </div>
             <div className="cv-modal__actions">
               <a className="about__cv-btn" href={previewPdf} download>
-                Download <span aria-hidden="true">↓</span>
+                {T.download} <span aria-hidden="true">↓</span>
               </a>
               <button className="about__cv-btn about__cv-btn--ghost" onClick={() => setPreviewPdf(null)}>
-                Close
+                {T.close}
               </button>
             </div>
           </div>

@@ -1,105 +1,279 @@
 export const projectsData = [
   {
     id: 'rebloom', title: 'Rebloom', year: '2026',
-    role: 'Founder & CEO · Full-stack',
-    description: 'Anti-waste floral marketplace connecting florists with customers around discounted unsold bouquets.',
-    highlights: [
-      'Florists publish unsold bouquets at reduced prices; customers reserve and pick them up in shop.',
-      'End-to-end payment processing on a scalable, multi-platform architecture.',
-      'Pitched at startup competitions and investor events, with a full deck, business model and go-to-market.'
-    ],
+    role: {
+      en: 'Founder & CEO · Full-stack',
+      fr: 'Fondateur & CEO · Full-stack',
+      ko: '창업자 & CEO · 풀스택'
+    },
+    description: {
+      en: 'Anti-waste floral marketplace connecting florists with customers around discounted unsold bouquets.',
+      fr: 'Place de marché anti-gaspillage qui met en relation les fleuristes et les clients autour des bouquets invendus à prix réduit.',
+      ko: '남은 꽃다발을 할인가로 연결해 낭비를 줄이는, 플로리스트와 고객을 잇는 마켓플레이스입니다.'
+    },
+    highlights: {
+      en: [
+        'Florists publish unsold bouquets at reduced prices; customers reserve and pick them up in shop.',
+        'End-to-end payment processing on a scalable, multi-platform architecture.',
+        'Pitched at startup competitions and investor events, with a full deck, business model and go-to-market.'
+      ],
+      fr: [
+        'Les fleuristes publient leurs invendus à prix réduit ; les clients réservent et récupèrent en boutique.',
+        'Traitement des paiements de bout en bout sur une architecture multi-plateforme et évolutive.',
+        "Présenté lors de concours de startups et d'événements investisseurs, avec un pitch deck complet, un business model et une stratégie de lancement."
+      ],
+      ko: [
+        '플로리스트가 남은 꽃다발을 할인가로 등록하면, 고객이 예약하고 매장에서 수령합니다.',
+        '확장 가능한 멀티플랫폼 아키텍처 위에서 결제를 처음부터 끝까지 처리합니다.',
+        '스타트업 대회와 투자자 행사에서 피치덱, 비즈니스 모델, 시장 진입 전략과 함께 발표했습니다.'
+      ]
+    },
     technologies: ['React', 'Supabase', 'Stripe', 'Vercel'],
     link: 'https://re-bloom.fr', screenshot: '/images/rebloom.png'
   },
   {
     id: 'carchat', title: 'CarChat', year: '2026',
-    role: 'Founder · AI Engineer',
-    description: 'AI assistant for vehicle owner manuals delivering instant, source-backed answers.',
-    highlights: [
-      'Conversational interface that cuts documentation search time with verified sources.',
-      'RAG workflow with LangChain indexes manuals by car model and retrieves the most relevant sections.',
-      'Multilingual answers grounded in the official manual.'
-    ],
+    role: {
+      en: 'Founder · AI Engineer',
+      fr: 'Fondateur · Ingénieur IA',
+      ko: '창업자 · AI 엔지니어'
+    },
+    description: {
+      en: 'AI assistant for vehicle owner manuals delivering instant, source-backed answers.',
+      fr: "Assistant IA pour les manuels d'utilisation de véhicules, offrant des réponses instantanées et sourcées.",
+      ko: '차량 사용 설명서를 위한 AI 어시스턴트로, 출처가 확인된 답변을 즉시 제공합니다.'
+    },
+    highlights: {
+      en: [
+        'Conversational interface that cuts documentation search time with verified sources.',
+        'RAG workflow with LangChain indexes manuals by car model and retrieves the most relevant sections.',
+        'Multilingual answers grounded in the official manual.'
+      ],
+      fr: [
+        'Interface conversationnelle qui réduit le temps de recherche dans la documentation, avec des sources vérifiées.',
+        'Un pipeline RAG avec LangChain indexe les manuels par modèle et récupère les sections les plus pertinentes.',
+        'Des réponses multilingues fondées sur le manuel officiel.'
+      ],
+      ko: [
+        '검증된 출처와 함께 문서 검색 시간을 줄여 주는 대화형 인터페이스입니다.',
+        'LangChain 기반 RAG 워크플로가 차량 모델별로 설명서를 색인하고 가장 관련성 높은 부분을 검색합니다.',
+        '공식 설명서에 근거한 다국어 답변을 제공합니다.'
+      ]
+    },
     technologies: ['RAG', 'LangChain', 'LLM', 'React', 'Python'],
     link: 'https://carchat.online', screenshot: '/images/carchat.png'
   },
   {
     id: 'megawatt-utt', title: "Megawatt'UTT — SimuPont", year: '2026',
-    role: 'Innovation · EDF × UTT',
-    description: "Mobile training simulator for nuclear bridge-crane fuel handling, built for EDF's Megawatt'UTT national challenge.",
-    highlights: [
-      "Won 2nd place and the Public's Prize, judged on risk-taking, feasibility and implementation.",
-      'Real-time 4-axis Unity 3D simulation paired with a web learning and progress-tracking platform.',
-      'Reproduces the industrial HMI (Magelis / SOMDEL) to teach precise CM, CMA and CSA handling gestures.',
-      'Featured in Le Parisien with a dedicated article on the team and prototype.'
-    ],
+    role: {
+      en: 'Innovation · EDF × UTT',
+      fr: 'Innovation · EDF × UTT',
+      ko: '혁신 · EDF × UTT'
+    },
+    description: {
+      en: "Mobile training simulator for nuclear bridge-crane fuel handling, built for EDF's Megawatt'UTT national challenge.",
+      fr: "Simulateur de formation mobile pour la manutention du combustible au pont roulant en centrale nucléaire, réalisé pour le challenge national Megawatt'UTT d'EDF.",
+      ko: "EDF의 Megawatt'UTT 전국 챌린지를 위해 만든, 원자력 천장 크레인 연료 취급 훈련용 모바일 시뮬레이터입니다."
+    },
+    highlights: {
+      en: [
+        "Won 2nd place and the Public's Prize, judged on risk-taking, feasibility and implementation.",
+        'Real-time 4-axis Unity 3D simulation paired with a web learning and progress-tracking platform.',
+        'Reproduces the industrial HMI (Magelis / SOMDEL) to teach precise CM, CMA and CSA handling gestures.',
+        'Featured in Le Parisien with a dedicated article on the team and prototype.'
+      ],
+      fr: [
+        '2ᵉ prix et Prix du public, sur des critères de prise de risque, de faisabilité et de réalisation.',
+        'Simulation 3D Unity 4 axes en temps réel, couplée à une plateforme web de formation et de suivi de progression.',
+        "Reproduit l'IHM industrielle (Magelis / SOMDEL) pour enseigner les gestes précis de manutention CM, CMA et CSA.",
+        "Sujet d'un article dédié dans Le Parisien sur l'équipe et le prototype."
+      ],
+      ko: [
+        '위험 감수, 실현 가능성, 완성도를 기준으로 심사받아 2위와 관객상을 수상했습니다.',
+        '실시간 4축 Unity 3D 시뮬레이션과 웹 학습·진도 추적 플랫폼을 결합했습니다.',
+        '산업용 HMI(Magelis / SOMDEL)를 재현해 CM, CMA, CSA의 정밀한 취급 동작을 교육합니다.',
+        '팀과 시제품을 다룬 Le Parisien 기사에 소개되었습니다.'
+      ]
+    },
     technologies: ['Unity', 'React', '3D Simulation', 'EDF'],
     link: 'https://megawatt-simupont-rvmyoc-820e18-212-227-88-180.sslip.io/', screenshot: '/images/megawatt.png'
   },
   {
     id: 'hera-studio', title: 'Hera Studio', year: '2025',
-    role: 'Founder · Full-stack & AI',
-    description: 'AI platform for creating personalized coloring books for children.',
-    highlights: [
-      'Users pick a theme and visual style, then generate a unique book.',
-      'Download instantly or order a printed edition.',
-      'Built end-to-end with image generation, auth and payments.'
-    ],
+    role: {
+      en: 'Founder · Full-stack & AI',
+      fr: 'Fondateur · Full-stack & IA',
+      ko: '창업자 · 풀스택 & AI'
+    },
+    description: {
+      en: 'AI platform for creating personalized coloring books for children.',
+      fr: 'Plateforme IA pour créer des livres de coloriage personnalisés pour enfants.',
+      ko: '아이들을 위한 맞춤형 컬러링북을 만드는 AI 플랫폼입니다.'
+    },
+    highlights: {
+      en: [
+        'Users pick a theme and visual style, then generate a unique book.',
+        'Download instantly or order a printed edition.',
+        'Built end-to-end with image generation, auth and payments.'
+      ],
+      fr: [
+        'Les utilisateurs choisissent un thème et un style visuel, puis génèrent un livre unique.',
+        'Téléchargement instantané ou commande en version imprimée.',
+        "Développé de bout en bout, avec génération d'images, authentification et paiements."
+      ],
+      ko: [
+        '사용자가 테마와 비주얼 스타일을 고르면 고유한 책이 생성됩니다.',
+        '즉시 다운로드하거나 인쇄본으로 주문할 수 있습니다.',
+        '이미지 생성, 인증, 결제까지 처음부터 끝까지 구축했습니다.'
+      ]
+    },
     technologies: ['React', 'Firebase', 'Supabase', 'Stripe', 'OpenAI'],
     link: 'https://www.herastudio.art', screenshot: '/images/hera-mobile.png'
   },
   {
     id: 'ai-adventure', title: 'AI Adventure', year: '2025',
-    role: 'Product & ML · KAIST',
-    description: 'Student-focused learning platform that turns research-paper databases into accessible knowledge.',
-    highlights: [
-      'Generates summaries, learning guidance and source-based study support from papers.',
-      'Gamified through quiz duels, research quests and professor-guided challenges.',
-      'Framed with a Y Combinator startup approach and tested with 30+ KAIST students.'
-    ],
+    role: {
+      en: 'Product & ML · KAIST',
+      fr: 'Produit & ML · KAIST',
+      ko: '프로덕트 & ML · KAIST'
+    },
+    description: {
+      en: 'Student-focused learning platform that turns research-paper databases into accessible knowledge.',
+      fr: "Plateforme d'apprentissage pour étudiants qui transforme des bases de données d'articles de recherche en savoir accessible.",
+      ko: '연구 논문 데이터베이스를 이해하기 쉬운 지식으로 바꿔 주는 학생 중심 학습 플랫폼입니다.'
+    },
+    highlights: {
+      en: [
+        'Generates summaries, learning guidance and source-based study support from papers.',
+        'Gamified through quiz duels, research quests and professor-guided challenges.',
+        'Framed with a Y Combinator startup approach and tested with 30+ KAIST students.'
+      ],
+      fr: [
+        "Génère des résumés, un accompagnement pédagogique et un soutien à l'étude fondé sur les sources, à partir des articles.",
+        'Ludifiée par des duels de quiz, des quêtes de recherche et des défis encadrés par des professeurs.',
+        'Pensée avec une approche startup à la Y Combinator et testée avec plus de 30 étudiants de KAIST.'
+      ],
+      ko: [
+        '논문에서 요약, 학습 가이드, 출처 기반 학습 지원을 생성합니다.',
+        '퀴즈 대결, 연구 퀘스트, 교수 지도 챌린지로 게임화했습니다.',
+        'Y Combinator식 스타트업 접근으로 기획하고 30명 이상의 KAIST 학생과 함께 테스트했습니다.'
+      ]
+    },
     technologies: ['React', 'Machine Learning', 'Python', 'Gamification'],
     screenshot: '/images/ai-adventure.jpg'
   },
   {
     id: 'reply-heart-monitor', title: 'RePLY', year: '2025', short: 'R', tone: 'red',
     screens: ['/images/reply-1.png', '/images/reply-2.png'],
-    role: 'ML & Hardware · KAIST',
-    description: 'Intelligent wearable that helps people optimize their exercise sessions.',
-    highlights: [
-      'Machine learning to monitor heart rate and estimate calorie expenditure.',
-      'Haptic feedback guides effort during a session in real time.'
-    ],
+    role: {
+      en: 'ML & Hardware · KAIST',
+      fr: 'ML & Hardware · KAIST',
+      ko: 'ML & 하드웨어 · KAIST'
+    },
+    description: {
+      en: 'Intelligent wearable that helps people optimize their exercise sessions.',
+      fr: 'Wearable intelligent qui aide à optimiser ses séances de sport.',
+      ko: '운동 세션을 최적화하도록 돕는 지능형 웨어러블입니다.'
+    },
+    highlights: {
+      en: [
+        'Machine learning to monitor heart rate and estimate calorie expenditure.',
+        'Haptic feedback guides effort during a session in real time.'
+      ],
+      fr: [
+        'Machine learning pour suivre la fréquence cardiaque et estimer les calories dépensées.',
+        "Un retour haptique guide l'effort en temps réel pendant la séance."
+      ],
+      ko: [
+        '머신러닝으로 심박수를 모니터링하고 칼로리 소모를 추정합니다.',
+        '햅틱 피드백이 세션 중 실시간으로 운동 강도를 안내합니다.'
+      ]
+    },
     technologies: ['Machine Learning', 'IoT', 'Python', 'Signal Processing']
   },
   {
     id: 'fabulous-creations', title: 'Fabulous Creations', year: '2025',
-    role: 'Freelance · Web Design & Dev',
-    description: 'Polished one-page portfolio for an interior designer.',
-    highlights: [
-      'Showcases selected work with smooth, considered motion.',
-      'Database-backed appointment booking flow.'
-    ],
+    role: {
+      en: 'Freelance · Web Design & Dev',
+      fr: 'Freelance · Design & Développement web',
+      ko: '프리랜서 · 웹 디자인 & 개발'
+    },
+    description: {
+      en: 'Polished one-page portfolio for an interior designer.',
+      fr: "Portfolio one-page soigné pour une architecte d'intérieur.",
+      ko: '인테리어 디자이너를 위한 세련된 원페이지 포트폴리오입니다.'
+    },
+    highlights: {
+      en: [
+        'Showcases selected work with smooth, considered motion.',
+        'Database-backed appointment booking flow.'
+      ],
+      fr: [
+        'Met en valeur une sélection de projets avec des animations fluides et maîtrisées.',
+        'Parcours de prise de rendez-vous adossé à une base de données.'
+      ],
+      ko: [
+        '선별된 작업을 부드럽고 정제된 모션으로 보여 줍니다.',
+        '데이터베이스 기반 예약 흐름을 갖췄습니다.'
+      ]
+    },
     technologies: ['JavaScript', 'CSS', 'Database', 'Booking'],
     link: 'https://www.fabulousdesign.online/', screenshot: '/images/fabulous.png'
   },
   {
     id: 'scout-mini-robot', title: 'Scout Mini Robot', year: '2024', short: 'S', tone: 'slate',
-    role: 'Robotics · ROS2',
-    description: 'User guide and autonomous navigation experiment for the AgileX Scout Mini robot.',
-    highlights: [
-      'Co-developed a comprehensive user guide for the robot.',
-      'Leveraged ROS2 for robot operation and automation workflows.'
-    ],
+    role: {
+      en: 'Robotics · ROS2',
+      fr: 'Robotique · ROS2',
+      ko: '로보틱스 · ROS2'
+    },
+    description: {
+      en: 'User guide and autonomous navigation experiment for the AgileX Scout Mini robot.',
+      fr: "Guide d'utilisation et expérimentation de navigation autonome pour le robot AgileX Scout Mini.",
+      ko: 'AgileX Scout Mini 로봇을 위한 사용 가이드와 자율 주행 실험입니다.'
+    },
+    highlights: {
+      en: [
+        'Co-developed a comprehensive user guide for the robot.',
+        'Leveraged ROS2 for robot operation and automation workflows.'
+      ],
+      fr: [
+        "Co-rédaction d'un guide d'utilisation complet pour le robot.",
+        "Utilisation de ROS2 pour le pilotage du robot et les workflows d'automatisation."
+      ],
+      ko: [
+        '로봇을 위한 종합 사용 가이드를 공동 개발했습니다.',
+        'ROS2를 활용해 로봇 운용과 자동화 워크플로를 구현했습니다.'
+      ]
+    },
     technologies: ['ROS2', 'Robotics', 'Python', 'Automation']
   },
   {
     id: 'humanlaw-association', title: 'HumanLaw', year: '2023',
-    role: 'Volunteer · Logistics',
-    description: 'Community work supporting food distribution for people in need.',
-    highlights: [
-      'Food distribution for homeless people and students facing financial hardship.',
-      'Organized donation drives and handled logistics.'
-    ],
+    role: {
+      en: 'Volunteer · Logistics',
+      fr: 'Bénévole · Logistique',
+      ko: '자원봉사 · 물류'
+    },
+    description: {
+      en: 'Community work supporting food distribution for people in need.',
+      fr: 'Action associative de soutien à la distribution alimentaire pour les personnes dans le besoin.',
+      ko: '도움이 필요한 사람들을 위한 식료품 배급을 지원하는 지역 봉사 활동입니다.'
+    },
+    highlights: {
+      en: [
+        'Food distribution for homeless people and students facing financial hardship.',
+        'Organized donation drives and handled logistics.'
+      ],
+      fr: [
+        'Distribution alimentaire pour les personnes sans-abri et les étudiants en difficulté financière.',
+        'Organisation de collectes de dons et gestion de la logistique.'
+      ],
+      ko: [
+        '노숙인과 경제적으로 어려운 학생들을 위한 식료품 배급.',
+        '기부 캠페인을 기획하고 물류를 담당했습니다.'
+      ]
+    },
     technologies: ['Logistics', 'Community', 'Organization'],
     screenshot: '/images/humanlaw.webp'
   }

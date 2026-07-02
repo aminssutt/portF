@@ -18,6 +18,13 @@
   isolation: isolate;
 }
 
+/* Custom cursor is global on desktop — hide the native one everywhere
+   (page + overlays). Reset to native on touch/narrow via the media query. */
+.portfolio,
+.portfolio * {
+  cursor: none;
+}
+
 /* ---------- Preloader ---------- */
 .preloader {
   position: fixed;
@@ -81,8 +88,17 @@
   background: rgba(175, 175, 175, 0.56);
   backdrop-filter: invert(18%) blur(9px);
   -webkit-backdrop-filter: invert(18%) blur(9px);
-  transition: opacity 0.3s var(--ease);
-  will-change: transform;
+  transition: opacity 0.3s var(--ease), width 0.22s var(--ease),
+    height 0.22s var(--ease), background 0.22s var(--ease);
+  will-change: transform, width, height;
+}
+/* Over any clickable target — shrink + darken to signal a click affordance.
+   Size animates via width/height (not transform) so it never fights the
+   translate/scale the rAF loop writes to .cursor's transform. */
+.cursor--clickable {
+  width: 26px;
+  height: 26px;
+  background: rgba(70, 70, 78, 0.62);
 }
 .cursor__dot {
   display: none;
@@ -186,10 +202,6 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  cursor: none;
-}
-.timeline * {
-  cursor: none;
 }
 .timeline__track {
   display: flex;
@@ -1276,9 +1288,10 @@
     position: static;
     height: auto;
     overflow: visible;
-    cursor: auto;
   }
-  .timeline * {
+  /* Native cursor everywhere on touch / narrow — custom cursor is disabled. */
+  .portfolio,
+  .portfolio * {
     cursor: auto;
   }
   .timeline__track {

@@ -18,6 +18,7 @@ const DEVICE = {
   'reply-heart-monitor': 'duo',
   'megawatt-utt': 'mbp14',
   'crunch-ugv': 'ipad',
+  'ecu-testing': 'mbp16',
   'humanlaw-association': 'mbp16'
 }
 
@@ -244,8 +245,7 @@ export default function Portfolio() {
     mx: 0,
     my: 0,
     cx: 0,
-    cy: 0,
-    inside: false
+    cy: 0
   })
 
   const [activeProject, setActiveProject] = useState(null)
@@ -422,16 +422,50 @@ export default function Portfolio() {
     return () => window.removeEventListener('keydown', onKey)
   }, [overlayOpen])
 
-  // Drive cursor visibility off overlay state directly. Hiding on open is
-  // obvious; the important half is RESTORING on close — if the pointer is still
-  // over the timeline but stationary, no pointerEnter fires, so without this the
-  // cursor would stay invisible until the mouse happens to move out and back in.
+  // Global custom cursor. The custom dot follows the pointer across the WHOLE
+  // document — page and overlays alike — instead of only inside the timeline.
+  // It shows on any pointer move, hides only when the pointer leaves the window,
+  // and gains .cursor--clickable (shrink + darken) over interactive targets.
+  // Desktop pointers only; on touch/narrow the effect bails and the native
+  // cursor is used (the .cursor node is display:none there via CSS).
   useEffect(() => {
+    if (isMobile()) return
     const cu = cursorRef.current
     if (!cu) return
-    if (overlayOpen) cu.style.opacity = '0'
-    else if (s.current.inside && !isMobile()) cu.style.opacity = '1'
-  }, [overlayOpen])
+    const CLICKABLE = 'a, button, [role="button"], input, textarea, select, label'
+    let positioned = false
+
+    const onMove = (e) => {
+      const st = s.current
+      st.mx = e.clientX
+      st.my = e.clientY
+      // snap to the entry point on the first move so it doesn't slide in from
+      // the top-left corner where cx/cy start
+      if (!positioned) {
+        st.cx = e.clientX
+        st.cy = e.clientY
+        positioned = true
+      }
+      cu.style.opacity = '1'
+    }
+    const onOver = (e) => {
+      const clickable = e.target?.closest?.(CLICKABLE)
+      cu.classList.toggle('cursor--clickable', Boolean(clickable))
+    }
+    const onOut = (e) => {
+      // relatedTarget null == the pointer left the window entirely
+      if (!e.relatedTarget) cu.style.opacity = '0'
+    }
+
+    document.addEventListener('pointermove', onMove)
+    document.addEventListener('pointerover', onOver)
+    document.addEventListener('pointerout', onOut)
+    return () => {
+      document.removeEventListener('pointermove', onMove)
+      document.removeEventListener('pointerover', onOver)
+      document.removeEventListener('pointerout', onOut)
+    }
+  }, [])
 
   // Lock background scroll while any overlay (panel / project / pdf) is open,
   // so the timeline underneath can't be seen scrolling behind it. A plain
@@ -514,9 +548,6 @@ export default function Portfolio() {
     st.dragging = false
     st.down = false
     window.removeEventListener('pointermove', onMoveWin)
-    // if the drag ended with the pointer outside the timeline, hide now — the
-    // leave event was swallowed while dragging so the cursor stayed visible
-    if (!st.inside && cursorRef.current) cursorRef.current.style.opacity = '0'
   }, [onMoveWin])
 
   const onPointerDown = (e) => {
@@ -529,31 +560,6 @@ export default function Portfolio() {
     st.startTarget = st.target
     window.addEventListener('pointermove', onMoveWin)
     window.addEventListener('pointerup', onUpWin, { once: true })
-  }
-
-  const onPointerMove = (e) => {
-    s.current.mx = e.clientX
-    s.current.my = e.clientY
-  }
-
-  const showCursor = (e) => {
-    const st = s.current
-    st.inside = true
-    // snap to the entry point so it doesn't slide in from the top-left corner
-    if (e) {
-      st.mx = e.clientX
-      st.my = e.clientY
-      st.cx = e.clientX
-      st.cy = e.clientY
-    }
-    if (cursorRef.current && !isMobile() && !overlayOpen) cursorRef.current.style.opacity = '1'
-  }
-  const hideCursor = () => {
-    s.current.inside = false
-    // don't hide mid-drag: the pointer may briefly leave the timeline while
-    // dragging; onUpWin re-evaluates visibility when the drag ends
-    if (s.current.dragging) return
-    if (cursorRef.current) cursorRef.current.style.opacity = '0'
   }
 
   const openProject = (project) => (e) => {
@@ -717,9 +723,6 @@ export default function Portfolio() {
         className="timeline"
         ref={viewportRef}
         onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerEnter={showCursor}
-        onPointerLeave={hideCursor}
       >
         <div className={`timeline__track${ready ? ' is-ready' : ''}`} ref={trackRef}>
           <div className="timeline__spacer" aria-hidden="true" />

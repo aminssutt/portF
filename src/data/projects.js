@@ -138,6 +138,42 @@ export const projectsData = [
     link: 'https://github.com/aminssutt/crunchUTT', screenshot: '/images/crunch-ugv.png'
   },
   {
+    id: 'ecu-testing', title: 'ECU Testing Framework', year: '2026', short: 'EC', tone: 'slate', screenshot: '/images/ecu.png',
+    role: {
+      en: 'Software Testing & Engineering · Academic project',
+      fr: 'Test & Ingénierie logicielle · Projet académique',
+      ko: '소프트웨어 테스트 & 엔지니어링 · 학술 프로젝트'
+    },
+    description: {
+      en: 'A testing framework that models a simulated automotive ECU as a deterministic finite-state machine and validates it end-to-end — scenario testing, fault injection, safety rules and coverage — in a web dashboard.',
+      fr: 'Un framework de test qui modélise un calculateur automobile (ECU) simulé en machine à états finis déterministe et le valide de bout en bout — scénarios, injection de fautes, règles de sûreté et couverture — dans un tableau de bord web.',
+      ko: '시뮬레이션된 차량용 ECU를 결정론적 유한 상태 기계로 모델링하고, 시나리오 테스트, 폴트 주입, 안전 규칙, 커버리지까지 웹 대시보드에서 엔드투엔드로 검증하는 테스트 프레임워크입니다.'
+    },
+    highlights: {
+      en: [
+        'Deterministic ECU model: 5 states, 10 events, a full transition table.',
+        '12 built-in scenarios (normal, error and fault paths) with 6 injectable fault types.',
+        '4 safety rules verified after each run, with state and transition coverage metrics.',
+        'Web dashboard for simulation, testing, fault injection and reporting.'
+      ],
+      fr: [
+        'Modèle ECU déterministe : 5 états, 10 événements, table de transitions complète.',
+        '12 scénarios intégrés (chemins normaux, erreurs et fautes) avec 6 types de fautes injectables.',
+        '4 règles de sûreté vérifiées après chaque exécution, avec métriques de couverture d’états et de transitions.',
+        'Tableau de bord web pour simulation, tests, injection de fautes et reporting.'
+      ],
+      ko: [
+        '결정론적 ECU 모델: 5개 상태, 10개 이벤트, 완전한 전이 테이블.',
+        '12개의 내장 시나리오(정상·오류·폴트 경로)와 주입 가능한 6가지 폴트 유형.',
+        '실행마다 검증되는 4개의 안전 규칙과 상태·전이 커버리지 지표.',
+        '시뮬레이션, 테스트, 폴트 주입, 리포팅을 위한 웹 대시보드.'
+      ]
+    },
+    technologies: ['Python', 'FastAPI', 'React', 'TypeScript', 'pytest', 'Tailwind'],
+    linkLabel: { en: 'View source code', fr: 'Voir le code source', ko: '소스 코드 보기' },
+    link: 'https://github.com/aminssutt/ECU-Testing'
+  },
+  {
     id: 'hera-studio', title: 'Hera Studio', year: '2025',
     role: {
       en: 'Founder · Full-stack & AI',

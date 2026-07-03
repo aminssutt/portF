@@ -134,7 +134,7 @@ export const projectsData = [
       ]
     },
     technologies: ['LangGraph', 'Gemini', 'FastAPI', 'React', 'SSE', 'Docker'],
-    link: 'https://lakhdar-ecutesting-fzvvx6-3472d8-212-227-88-180.sslip.io/'
+    link: 'https://lakhdar-ecutesting-fzvvx6-3f9d32-212-227-88-180.sslip.io/'
   },
   {
     id: 'crunch-ugv', title: 'Autonomous UGV — CRUNCH', year: '2026',

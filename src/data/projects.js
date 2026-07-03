@@ -102,6 +102,41 @@ export const projectsData = [
     link: 'https://megawatt-simupont-rvmyoc-820e18-212-227-88-180.sslip.io/', screenshot: '/images/megawatt.png'
   },
   {
+    id: 'ecu-testing', title: 'ECU Testing — Autonomous Agents', year: '2026', short: 'EC', tone: 'slate', screenshot: '/images/ecu.png',
+    role: {
+      en: 'Agentic AI · Software Testing',
+      fr: 'IA agentique · Test logiciel',
+      ko: '에이전틱 AI · 소프트웨어 테스트'
+    },
+    description: {
+      en: 'A supervised team of tool-calling LLM agents (LangGraph) that autonomously stress-tests a safety-critical automotive ECU — generating scenarios, injecting faults and checking safety rules in a live, auditable loop.',
+      fr: "Une équipe supervisée d'agents LLM tool-calling (LangGraph) qui stress-teste en autonomie un calculateur automobile (ECU) critique pour la sûreté — scénarios, injection de fautes et vérification des règles de sûreté, dans une boucle live et auditable.",
+      ko: '안전이 중요한 차량용 ECU를 자율적으로 스트레스 테스트하는 감독형 툴 콜링 LLM 에이전트 팀(LangGraph)입니다 — 시나리오 생성, 폴트 주입, 안전 규칙 검증을 실시간 감사 가능한 루프에서 수행합니다.'
+    },
+    highlights: {
+      en: [
+        'A supervised team of six tool-calling LLM agents (LangGraph) autonomously explores the ECU — generating scenarios, injecting faults, checking safety rules and chasing the remaining coverage.',
+        'Two modes on one graph: a keyless, seeded deterministic policy for reproducible baselines, and live Google Gemini decisions with automatic fallback.',
+        'Every decision, tool call, transition and safety finding is streamed live over SSE to a React interface, keeping each campaign fully auditable.',
+        'Deterministic ECU state machine — 5 states, 10 events, 18 transitions, 4 safety rules — driven through 7 narrow tools; the measured baseline hits 100% fault-to-safe correctness and 100% root-cause accuracy.'
+      ],
+      fr: [
+        "Une équipe supervisée de six agents LLM tool-calling (LangGraph) explore l'ECU de façon autonome — génération de scénarios, injection de fautes, vérification des règles de sûreté et chasse à la couverture restante.",
+        'Deux modes sur un même graphe : une politique déterministe seedée et sans clé pour des baselines reproductibles, et des décisions live via Google Gemini avec fallback automatique.',
+        "Chaque décision, appel d'outil, transition et constat de sûreté est streamé en direct via SSE vers une interface React, gardant chaque campagne entièrement auditable.",
+        'Machine à états ECU déterministe — 5 états, 10 événements, 18 transitions, 4 règles de sûreté — pilotée par 7 outils ciblés ; la baseline mesurée atteint 100 % de correction faute→état sûr et 100 % de précision de cause racine.'
+      ],
+      ko: [
+        '여섯 개의 툴 콜링 LLM 에이전트로 구성된 감독형 팀(LangGraph)이 ECU를 자율적으로 탐색합니다 — 시나리오 생성, 폴트 주입, 안전 규칙 검증, 남은 커버리지 추적.',
+        '하나의 그래프에서 두 가지 모드: 재현 가능한 기준선을 위한 키 없는 시드 결정론적 정책과, 자동 폴백을 갖춘 Google Gemini 실시간 결정.',
+        '모든 결정, 툴 호출, 전이, 안전 관련 발견을 SSE로 React 인터페이스에 실시간 스트리밍하여 각 캠페인을 완전히 감사 가능하게 유지합니다.',
+        '결정론적 ECU 상태 기계 — 5개 상태, 10개 이벤트, 18개 전이, 4개 안전 규칙 — 를 7개의 좁은 툴로 구동하며, 측정된 기준선은 폴트→안전 상태 정확도 100%와 근본 원인 정확도 100%를 달성합니다.'
+      ]
+    },
+    technologies: ['LangGraph', 'Gemini', 'FastAPI', 'React', 'SSE', 'Docker'],
+    link: 'https://lakhdar-ecutesting-fzvvx6-3472d8-212-227-88-180.sslip.io/'
+  },
+  {
     id: 'crunch-ugv', title: 'Autonomous UGV — CRUNCH', year: '2026',
     role: {
       en: 'Robotics & Simulation · CRUNCH UTT',
@@ -136,41 +171,6 @@ export const projectsData = [
     technologies: ['ROS 2', 'Gazebo', 'Nav2', 'Python', 'RViz'],
     linkLabel: { en: 'View source code', fr: 'Voir le code source', ko: '소스 코드 보기' },
     link: 'https://github.com/aminssutt/crunchUTT', screenshot: '/images/crunch-ugv.png'
-  },
-  {
-    id: 'ecu-testing', title: 'ECU Testing — Autonomous Agents', year: '2026', short: 'EC', tone: 'slate', screenshot: '/images/ecu.png',
-    role: {
-      en: 'Agentic AI · Software Testing',
-      fr: 'IA agentique · Test logiciel',
-      ko: '에이전틱 AI · 소프트웨어 테스트'
-    },
-    description: {
-      en: 'A supervised team of tool-calling LLM agents (LangGraph) that autonomously explores a safety-critical automotive ECU instead of just confirming it — generating scenarios, injecting adversarial faults, verifying safety rules and chasing structural coverage, with every decision streamed live to an auditable research interface.',
-      fr: "Une équipe supervisée d'agents LLM tool-calling (LangGraph) qui explore de façon autonome un calculateur automobile (ECU) critique pour la sûreté, au lieu de simplement le valider — génération de scénarios, injection de fautes adverses, vérification des règles de sûreté et recherche de couverture structurelle, chaque décision étant streamée en direct dans une interface de recherche auditable.",
-      ko: '안전이 중요한 차량용 ECU를 단순히 확인하는 대신 자율적으로 탐색하는 감독형 툴 콜링 LLM 에이전트 팀(LangGraph)입니다 — 시나리오 생성, 적대적 폴트 주입, 안전 규칙 검증, 구조적 커버리지 추적을 수행하며 모든 결정을 감사 가능한 리서치 인터페이스로 실시간 스트리밍합니다.'
-    },
-    highlights: {
-      en: [
-        'A supervised team of six tool-calling LLM agents (LangGraph) autonomously explores the ECU — generating scenarios, injecting faults, checking safety rules and chasing the remaining coverage.',
-        'Two modes on one graph: a keyless, seeded deterministic policy for reproducible baselines, and live Google Gemini decisions with automatic fallback.',
-        'Every decision, tool call, transition and safety finding is streamed live over SSE to a React interface, keeping each campaign fully auditable.',
-        'Deterministic ECU state machine — 5 states, 10 events, 18 transitions, 4 safety rules — driven through 7 narrow tools; the measured baseline hits 100% fault-to-safe correctness and 100% root-cause accuracy.'
-      ],
-      fr: [
-        "Une équipe supervisée de six agents LLM tool-calling (LangGraph) explore l'ECU de façon autonome — génération de scénarios, injection de fautes, vérification des règles de sûreté et chasse à la couverture restante.",
-        'Deux modes sur un même graphe : une politique déterministe seedée et sans clé pour des baselines reproductibles, et des décisions live via Google Gemini avec fallback automatique.',
-        "Chaque décision, appel d'outil, transition et constat de sûreté est streamé en direct via SSE vers une interface React, gardant chaque campagne entièrement auditable.",
-        'Machine à états ECU déterministe — 5 états, 10 événements, 18 transitions, 4 règles de sûreté — pilotée par 7 outils ciblés ; la baseline mesurée atteint 100 % de correction faute→état sûr et 100 % de précision de cause racine.'
-      ],
-      ko: [
-        '여섯 개의 툴 콜링 LLM 에이전트로 구성된 감독형 팀(LangGraph)이 ECU를 자율적으로 탐색합니다 — 시나리오 생성, 폴트 주입, 안전 규칙 검증, 남은 커버리지 추적.',
-        '하나의 그래프에서 두 가지 모드: 재현 가능한 기준선을 위한 키 없는 시드 결정론적 정책과, 자동 폴백을 갖춘 Google Gemini 실시간 결정.',
-        '모든 결정, 툴 호출, 전이, 안전 관련 발견을 SSE로 React 인터페이스에 실시간 스트리밍하여 각 캠페인을 완전히 감사 가능하게 유지합니다.',
-        '결정론적 ECU 상태 기계 — 5개 상태, 10개 이벤트, 18개 전이, 4개 안전 규칙 — 를 7개의 좁은 툴로 구동하며, 측정된 기준선은 폴트→안전 상태 정확도 100%와 근본 원인 정확도 100%를 달성합니다.'
-      ]
-    },
-    technologies: ['LangGraph', 'Gemini', 'FastAPI', 'React', 'SSE', 'Docker'],
-    link: 'https://lakhdar-ecutesting-fzvvx6-3472d8-212-227-88-180.sslip.io/'
   },
   {
     id: 'hera-studio', title: 'Hera Studio', year: '2025',

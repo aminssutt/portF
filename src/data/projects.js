@@ -109,28 +109,28 @@ export const projectsData = [
       ko: '에이전틱 AI · 소프트웨어 테스트'
     },
     description: {
-      en: 'A supervised team of LLM agents that stress-tests a safety-critical car ECU on its own. Built on LangGraph, it writes the test scenarios, injects faults and checks the safety rules, and streams every decision live so you can audit the whole run.',
-      fr: "Une équipe supervisée d'agents LLM qui stress-teste toute seule un calculateur automobile (ECU) critique pour la sûreté. Construite avec LangGraph, elle écrit les scénarios de test, injecte des fautes et vérifie les règles de sûreté, et diffuse chaque décision en direct pour que toute l'exécution reste auditable.",
-      ko: '안전이 중요한 차량용 ECU를 스스로 스트레스 테스트하는 감독형 LLM 에이전트 팀입니다. LangGraph로 만들었으며, 테스트 시나리오를 작성하고 폴트를 주입하며 안전 규칙을 확인하고, 모든 결정을 실시간으로 보여줘 전체 실행을 감사할 수 있습니다.'
+      en: 'A team of LLM agents that stress-tests a safety-critical car ECU on its own, injecting faults and checking the safety rules live.',
+      fr: "Une équipe d'agents LLM qui stress-teste toute seule un calculateur (ECU) automobile critique, en injectant des fautes et en vérifiant les règles de sûreté en direct.",
+      ko: '안전이 중요한 차량용 ECU를 스스로 스트레스 테스트하는 LLM 에이전트 팀으로, 폴트를 주입하고 안전 규칙을 실시간으로 확인합니다.'
     },
     highlights: {
       en: [
-        'Six specialist agents work under a supervisor, coordinated with LangGraph: they write scenarios, inject faults, check the safety rules and keep going after whatever coverage is still missing.',
-        'It runs two ways on the same graph. A seeded deterministic mode needs no API key and reproduces exactly, and a live mode lets Google Gemini make the calls, falling back automatically if it is unavailable.',
-        'Every decision, tool call, transition and safety check is streamed over SSE to a React interface, so you can watch a campaign unfold and see exactly what happened.',
-        'The ECU itself is a fixed state machine with 5 states, 10 events, 18 transitions and 4 safety rules, driven through 7 narrow tools. On the measured baseline the agents bring every faulted run back to a safe state and pin the right root cause every time.'
+        'Six specialist agents under a supervisor (LangGraph) write scenarios, inject faults and chase the missing coverage.',
+        'Runs deterministic and keyless, or live with Google Gemini and an automatic fallback.',
+        'Every decision streams over SSE to a React interface, so a whole campaign stays auditable.',
+        'ECU modelled as a fixed state machine: 5 states, 10 events, 18 transitions, 4 safety rules.'
       ],
       fr: [
-        "Six agents spécialisés travaillent sous la houlette d'un superviseur, coordonnés avec LangGraph : ils écrivent des scénarios, injectent des fautes, vérifient les règles de sûreté et vont chercher la couverture qui manque encore.",
-        "Le projet tourne de deux façons sur le même graphe. Un mode déterministe seedé ne demande aucune clé et se reproduit à l'identique, et un mode live laisse Google Gemini décider, avec un repli automatique si le service est indisponible.",
-        "Chaque décision, appel d'outil, transition et vérification de sûreté est diffusé en SSE vers une interface React, si bien qu'on peut suivre une campagne en direct et voir exactement ce qui s'est passé.",
-        "L'ECU lui-même est une machine à états figée avec 5 états, 10 événements, 18 transitions et 4 règles de sûreté, pilotée par 7 outils ciblés. Sur la baseline mesurée, les agents ramènent chaque exécution fautée vers un état sûr et retrouvent la bonne cause racine à chaque fois."
+        'Six agents spécialisés sous un superviseur (LangGraph) écrivent des scénarios, injectent des fautes et vont chercher la couverture manquante.',
+        'Tourne en déterministe et sans clé, ou en live avec Google Gemini et un repli automatique.',
+        "Chaque décision est diffusée en SSE vers une interface React, donc toute la campagne reste auditable.",
+        'ECU modélisé en machine à états figée : 5 états, 10 événements, 18 transitions, 4 règles de sûreté.'
       ],
       ko: [
-        '여섯 개의 전문 에이전트가 감독자 아래에서 LangGraph로 함께 움직입니다. 시나리오를 작성하고 폴트를 주입하며 안전 규칙을 확인하고, 아직 덮지 못한 커버리지를 계속 찾아갑니다.',
-        '같은 그래프에서 두 가지 방식으로 돌아갑니다. 시드 결정론 모드는 키가 필요 없고 똑같이 재현되며, 라이브 모드는 Google Gemini가 판단을 맡되 사용할 수 없을 때 자동으로 대체됩니다.',
-        '모든 결정, 툴 호출, 전이, 안전 점검이 SSE로 React 인터페이스에 전달되어, 캠페인이 진행되는 모습을 지켜보고 무슨 일이 있었는지 정확히 확인할 수 있습니다.',
-        'ECU 자체는 5개 상태, 10개 이벤트, 18개 전이, 4개 안전 규칙을 갖춘 고정된 상태 기계이며, 7개의 좁은 툴로 구동됩니다. 측정된 기준선에서 에이전트는 폴트가 발생한 실행을 매번 안전한 상태로 되돌리고 올바른 근본 원인을 찾아냅니다.'
+        '감독자 아래 여섯 개의 전문 에이전트(LangGraph)가 시나리오를 작성하고 폴트를 주입하며 부족한 커버리지를 채웁니다.',
+        '키 없이 결정론으로 돌거나, Google Gemini로 라이브 실행하며 자동으로 대체됩니다.',
+        '모든 결정이 SSE로 React 인터페이스에 전달되어 캠페인 전체가 감사 가능하게 유지됩니다.',
+        'ECU는 고정 상태 기계로 모델링: 5개 상태, 10개 이벤트, 18개 전이, 4개 안전 규칙.'
       ]
     },
     technologies: ['LangGraph', 'Gemini', 'FastAPI', 'React', 'SSE', 'Docker'],

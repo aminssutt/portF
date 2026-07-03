@@ -138,40 +138,39 @@ export const projectsData = [
     link: 'https://github.com/aminssutt/crunchUTT', screenshot: '/images/crunch-ugv.png'
   },
   {
-    id: 'ecu-testing', title: 'ECU Testing Framework', year: '2026', short: 'EC', tone: 'slate', screenshot: '/images/ecu.png',
+    id: 'ecu-testing', title: 'ECU Testing — Autonomous Agents', year: '2026', short: 'EC', tone: 'slate', screenshot: '/images/ecu.png',
     role: {
-      en: 'Software Testing & Engineering · Academic project',
-      fr: 'Test & Ingénierie logicielle · Projet académique',
-      ko: '소프트웨어 테스트 & 엔지니어링 · 학술 프로젝트'
+      en: 'Agentic AI · Software Testing',
+      fr: 'IA agentique · Test logiciel',
+      ko: '에이전틱 AI · 소프트웨어 테스트'
     },
     description: {
-      en: 'A testing framework that models a simulated automotive ECU as a deterministic finite-state machine and validates it end-to-end — scenario testing, fault injection, safety rules and coverage — in a web dashboard.',
-      fr: 'Un framework de test qui modélise un calculateur automobile (ECU) simulé en machine à états finis déterministe et le valide de bout en bout — scénarios, injection de fautes, règles de sûreté et couverture — dans un tableau de bord web.',
-      ko: '시뮬레이션된 차량용 ECU를 결정론적 유한 상태 기계로 모델링하고, 시나리오 테스트, 폴트 주입, 안전 규칙, 커버리지까지 웹 대시보드에서 엔드투엔드로 검증하는 테스트 프레임워크입니다.'
+      en: 'A supervised team of tool-calling LLM agents (LangGraph) that autonomously explores a safety-critical automotive ECU instead of just confirming it — generating scenarios, injecting adversarial faults, verifying safety rules and chasing structural coverage, with every decision streamed live to an auditable research interface.',
+      fr: "Une équipe supervisée d'agents LLM tool-calling (LangGraph) qui explore de façon autonome un calculateur automobile (ECU) critique pour la sûreté, au lieu de simplement le valider — génération de scénarios, injection de fautes adverses, vérification des règles de sûreté et recherche de couverture structurelle, chaque décision étant streamée en direct dans une interface de recherche auditable.",
+      ko: '안전이 중요한 차량용 ECU를 단순히 확인하는 대신 자율적으로 탐색하는 감독형 툴 콜링 LLM 에이전트 팀(LangGraph)입니다 — 시나리오 생성, 적대적 폴트 주입, 안전 규칙 검증, 구조적 커버리지 추적을 수행하며 모든 결정을 감사 가능한 리서치 인터페이스로 실시간 스트리밍합니다.'
     },
     highlights: {
       en: [
-        'Deterministic ECU model: 5 states, 10 events, a full transition table.',
-        '12 built-in scenarios (normal, error and fault paths) with 6 injectable fault types.',
-        '4 safety rules verified after each run, with state and transition coverage metrics.',
-        'Web dashboard for simulation, testing, fault injection and reporting.'
+        'A supervised team of six tool-calling LLM agents (LangGraph) autonomously explores the ECU — generating scenarios, injecting faults, checking safety rules and chasing the remaining coverage.',
+        'Two modes on one graph: a keyless, seeded deterministic policy for reproducible baselines, and live Google Gemini decisions with automatic fallback.',
+        'Every decision, tool call, transition and safety finding is streamed live over SSE to a React interface, keeping each campaign fully auditable.',
+        'Deterministic ECU state machine — 5 states, 10 events, 18 transitions, 4 safety rules — driven through 7 narrow tools; the measured baseline hits 100% fault-to-safe correctness and 100% root-cause accuracy.'
       ],
       fr: [
-        'Modèle ECU déterministe : 5 états, 10 événements, table de transitions complète.',
-        '12 scénarios intégrés (chemins normaux, erreurs et fautes) avec 6 types de fautes injectables.',
-        '4 règles de sûreté vérifiées après chaque exécution, avec métriques de couverture d’états et de transitions.',
-        'Tableau de bord web pour simulation, tests, injection de fautes et reporting.'
+        "Une équipe supervisée de six agents LLM tool-calling (LangGraph) explore l'ECU de façon autonome — génération de scénarios, injection de fautes, vérification des règles de sûreté et chasse à la couverture restante.",
+        'Deux modes sur un même graphe : une politique déterministe seedée et sans clé pour des baselines reproductibles, et des décisions live via Google Gemini avec fallback automatique.',
+        "Chaque décision, appel d'outil, transition et constat de sûreté est streamé en direct via SSE vers une interface React, gardant chaque campagne entièrement auditable.",
+        'Machine à états ECU déterministe — 5 états, 10 événements, 18 transitions, 4 règles de sûreté — pilotée par 7 outils ciblés ; la baseline mesurée atteint 100 % de correction faute→état sûr et 100 % de précision de cause racine.'
       ],
       ko: [
-        '결정론적 ECU 모델: 5개 상태, 10개 이벤트, 완전한 전이 테이블.',
-        '12개의 내장 시나리오(정상·오류·폴트 경로)와 주입 가능한 6가지 폴트 유형.',
-        '실행마다 검증되는 4개의 안전 규칙과 상태·전이 커버리지 지표.',
-        '시뮬레이션, 테스트, 폴트 주입, 리포팅을 위한 웹 대시보드.'
+        '여섯 개의 툴 콜링 LLM 에이전트로 구성된 감독형 팀(LangGraph)이 ECU를 자율적으로 탐색합니다 — 시나리오 생성, 폴트 주입, 안전 규칙 검증, 남은 커버리지 추적.',
+        '하나의 그래프에서 두 가지 모드: 재현 가능한 기준선을 위한 키 없는 시드 결정론적 정책과, 자동 폴백을 갖춘 Google Gemini 실시간 결정.',
+        '모든 결정, 툴 호출, 전이, 안전 관련 발견을 SSE로 React 인터페이스에 실시간 스트리밍하여 각 캠페인을 완전히 감사 가능하게 유지합니다.',
+        '결정론적 ECU 상태 기계 — 5개 상태, 10개 이벤트, 18개 전이, 4개 안전 규칙 — 를 7개의 좁은 툴로 구동하며, 측정된 기준선은 폴트→안전 상태 정확도 100%와 근본 원인 정확도 100%를 달성합니다.'
       ]
     },
-    technologies: ['Python', 'FastAPI', 'React', 'TypeScript', 'pytest', 'Tailwind'],
-    linkLabel: { en: 'View source code', fr: 'Voir le code source', ko: '소스 코드 보기' },
-    link: 'https://github.com/aminssutt/ECU-Testing'
+    technologies: ['LangGraph', 'Gemini', 'FastAPI', 'React', 'SSE', 'Docker'],
+    link: 'https://lakhdar-ecutesting-fzvvx6-3472d8-212-227-88-180.sslip.io/'
   },
   {
     id: 'hera-studio', title: 'Hera Studio', year: '2025',

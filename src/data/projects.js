@@ -102,41 +102,6 @@ export const projectsData = [
     link: 'https://megawatt-simupont-rvmyoc-820e18-212-227-88-180.sslip.io/', screenshot: '/images/megawatt.png'
   },
   {
-    id: 'ecu-testing', title: 'ECU Testing — Autonomous Agents', year: '2026', short: 'EC', tone: 'slate', screenshot: '/images/ecu.png',
-    role: {
-      en: 'Agentic AI · Software Testing',
-      fr: 'IA agentique · Test logiciel',
-      ko: '에이전틱 AI · 소프트웨어 테스트'
-    },
-    description: {
-      en: 'A team of LLM agents that stress-tests a safety-critical car ECU on its own, injecting faults and checking the safety rules live.',
-      fr: "Une équipe d'agents LLM qui stress-teste toute seule un calculateur (ECU) automobile critique, en injectant des fautes et en vérifiant les règles de sûreté en direct.",
-      ko: '안전이 중요한 차량용 ECU를 스스로 스트레스 테스트하는 LLM 에이전트 팀으로, 폴트를 주입하고 안전 규칙을 실시간으로 확인합니다.'
-    },
-    highlights: {
-      en: [
-        'Six specialist agents under a supervisor (LangGraph) write scenarios, inject faults and chase the missing coverage.',
-        'Runs deterministic and keyless, or live with Google Gemini and an automatic fallback.',
-        'Every decision streams over SSE to a React interface, so a whole campaign stays auditable.',
-        'ECU modelled as a fixed state machine: 5 states, 10 events, 18 transitions, 4 safety rules.'
-      ],
-      fr: [
-        'Six agents spécialisés sous un superviseur (LangGraph) écrivent des scénarios, injectent des fautes et vont chercher la couverture manquante.',
-        'Tourne en déterministe et sans clé, ou en live avec Google Gemini et un repli automatique.',
-        "Chaque décision est diffusée en SSE vers une interface React, donc toute la campagne reste auditable.",
-        'ECU modélisé en machine à états figée : 5 états, 10 événements, 18 transitions, 4 règles de sûreté.'
-      ],
-      ko: [
-        '감독자 아래 여섯 개의 전문 에이전트(LangGraph)가 시나리오를 작성하고 폴트를 주입하며 부족한 커버리지를 채웁니다.',
-        '키 없이 결정론으로 돌거나, Google Gemini로 라이브 실행하며 자동으로 대체됩니다.',
-        '모든 결정이 SSE로 React 인터페이스에 전달되어 캠페인 전체가 감사 가능하게 유지됩니다.',
-        'ECU는 고정 상태 기계로 모델링: 5개 상태, 10개 이벤트, 18개 전이, 4개 안전 규칙.'
-      ]
-    },
-    technologies: ['LangGraph', 'Gemini', 'FastAPI', 'React', 'SSE', 'Docker'],
-    link: 'https://lakhdar-ecutesting-fzvvx6-3f9d32-212-227-88-180.sslip.io/'
-  },
-  {
     id: 'crunch-ugv', title: 'Autonomous UGV — CRUNCH', year: '2026',
     role: {
       en: 'Robotics & Simulation · CRUNCH UTT',

@@ -18,7 +18,6 @@ const DEVICE = {
   'reply-heart-monitor': 'duo',
   'megawatt-utt': 'mbp14',
   'crunch-ugv': 'ipad',
-  'ecu-testing': 'mbp16',
   'humanlaw-association': 'mbp16'
 }
 

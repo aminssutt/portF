@@ -10,6 +10,7 @@ const BIRTH_YEAR = 2004
 
 // Per-project device — a spread of real Apple mockups for variety.
 const DEVICE = {
+  arc: 'imac27',
   rebloom: 'imac',
   carchat: 'mbp16',
   'hera-studio': 'iphone',

@@ -1,5 +1,40 @@
 export const projectsData = [
   {
+    id: 'arc', title: 'Arc', year: '2026',
+    role: {
+      en: 'Raise Hackathon Winner',
+      fr: 'Raise Hackathon Winner',
+      ko: 'Raise 해커톤 우승'
+    },
+    description: {
+      en: 'Multi-agent system for factory maintenance and operations, presented on the main stage in front of 6,000 builders at the RAISE Summit.',
+      fr: "Système multi-agents pour la maintenance et l'organisation des usines, présenté sur la grande scène devant 6000 builders au RAISE Summit.",
+      ko: '공장 유지보수와 운영을 위한 멀티 에이전트 시스템으로, RAISE Summit 메인 무대에서 6,000명의 빌더 앞에서 발표했습니다.'
+    },
+    highlights: {
+      en: [
+        'Multi-agent orchestrator that routes specialist agents through diagnose-then-act phases around a human validation loop.',
+        'Field validation loop: the on-site operator confirms or refuses with a counter-measurement, and the agents pivot and re-diagnose live.',
+        'Document-grounded reasoning — every cause and every step cites the source technical docs, down to the page, with a clickable trail.',
+        'Native iOS app and web control room driven live by a single server-sent event stream, running on Vultr serverless inference.'
+      ],
+      fr: [
+        "Orchestrateur multi-agents qui enchaîne des agents spécialisés en deux phases — diagnostic puis action — autour d'une boucle de validation humaine.",
+        "Boucle de validation terrain : l'opérateur sur site confirme ou refuse avec une contre-mesure, et les agents pivotent et re-diagnostiquent en direct.",
+        "Raisonnement fondé sur les documents — chaque cause et chaque étape cite la documentation technique source, jusqu'à la page, avec une trace cliquable.",
+        "Application iOS native et control room web alimentées en direct par un unique flux d'événements SSE, sur inférence serverless Vultr."
+      ],
+      ko: [
+        '전문 에이전트를 진단→조치 두 단계로 라우팅하고, 사람 검증 루프를 중심에 둔 멀티 에이전트 오케스트레이터.',
+        '현장 검증 루프: 현장 작업자가 확인하거나 반대 측정값과 함께 거부하면, 에이전트가 즉시 방향을 바꿔 다시 진단합니다.',
+        '문서 기반 추론 — 모든 원인과 단계가 원본 기술 문서를 페이지 단위까지 인용하며, 클릭 가능한 출처를 제공합니다.',
+        'Vultr 서버리스 추론 위에서 단일 SSE 이벤트 스트림으로 구동되는 네이티브 iOS 앱과 웹 컨트롤 룸.'
+      ]
+    },
+    technologies: ['Multi-Agent', 'FastAPI', 'Next.js', 'Swift · iOS', 'RAG', 'Vultr'],
+    link: 'https://arc.vgtray.fr', screenshot: '/images/arc.png'
+  },
+  {
     id: 'rebloom', title: 'Rebloom', year: '2026',
     role: {
       en: 'Founder & CEO · Full-stack',

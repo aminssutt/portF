@@ -32,7 +32,169 @@ export const projectsData = [
       ]
     },
     technologies: ['Multi-Agent', 'FastAPI', 'Next.js', 'Swift · iOS', 'RAG', 'Vultr'],
-    link: 'https://arc.vgtray.fr', screenshot: '/images/arc.png'
+    link: 'https://arc.vgtray.fr', screenshot: '/images/arc.png',
+    caseStudy: {
+      award: {
+        en: 'Podium · RAISE Summit 2026 · Vultr track',
+        fr: 'Podium · RAISE Summit 2026 · Track Vultr',
+        ko: '포디움 · RAISE Summit 2026 · Vultr 트랙'
+      },
+      tagline: {
+        en: 'Six specialized agents that detect, diagnose, dispatch and remediate telecom site outages — every claim cited to the operator’s own documentation, with a field technician kept in the loop.',
+        fr: 'Six agents spécialisés qui détectent, diagnostiquent, dispatchent et corrigent les pannes de sites télécom — chaque affirmation citée dans la documentation de l’opérateur, avec un technicien terrain dans la boucle.',
+        ko: '통신 사이트 장애를 감지·진단·배정·복구하는 6개의 전문 에이전트 — 모든 주장은 통신사 자체 문서를 인용하고, 현장 기술자가 검증 루프에 참여합니다.'
+      },
+      meta: [
+        { label: { en: 'Role', fr: 'Rôle', ko: '역할' }, value: { en: 'Team Lead · Agentic AI & Software', fr: 'Team Lead · IA agentique & Software', ko: '팀 리드 · 에이전트 AI & 소프트웨어' } },
+        { label: { en: 'Team', fr: 'Équipe', ko: '팀' }, value: { en: '5 people · hackathon', fr: '5 personnes · hackathon', ko: '5인 · 해커톤' } },
+        { label: { en: 'Type', fr: 'Type', ko: '유형' }, value: { en: 'Incident response · multi-agent', fr: 'Réponse aux incidents · multi-agents', ko: '인시던트 대응 · 멀티 에이전트' } },
+        { label: { en: 'Year', fr: 'Année', ko: '연도' }, value: '2026' }
+      ],
+      links: [
+        { label: { en: 'Live site', fr: 'Voir en ligne', ko: '라이브 사이트' }, href: 'https://arc.vgtray.fr' },
+        { label: { en: 'Source code', fr: 'Code source', ko: '소스 코드' }, href: 'https://github.com/aminssutt/Arc' },
+        { label: { en: '60-second demo', fr: 'Démo 60 s', ko: '60초 데모' }, href: 'https://youtu.be/ohvx1NQniWc' }
+      ],
+      sections: [
+        {
+          n: '01',
+          kicker: { en: 'Context', fr: 'Contexte', ko: '배경' },
+          title: {
+            en: 'An alarm never arrives alone',
+            fr: 'Une alarme n’arrive jamais seule',
+            ko: '경보는 결코 혼자 오지 않는다'
+          },
+          body: [
+            {
+              en: 'On a telecom network, a site alarm drowns in an event stream the NOC has to sort, correlate and diagnose — before dispatching someone, often by broadcasting to a whole team for lack of knowing who is right.',
+              fr: 'Sur un réseau télécom, une alarme de site se noie dans un flux d’événements que le NOC doit trier, corréler puis diagnostiquer — avant de dépêcher quelqu’un, souvent en diffusant à toute une équipe faute de savoir qui est le bon.',
+              ko: '통신 네트워크에서 사이트 경보는 NOC가 분류·상관·진단해야 하는 이벤트 스트림에 묻힙니다. 그리고 누가 적임자인지 몰라 팀 전체에 브로드캐스트하는 경우가 많습니다.'
+            },
+            {
+              en: 'The RAISE Summit hackathon (Vultr track) demanded a true multi-agent system, not a RAG chatbot. Arc answers with a full chain — detection → diagnosis → human validation → action — where the LLM never decides alone and every claim cites the operator’s docs to the page.',
+              fr: 'Le hackathon RAISE Summit (track Vultr) exigeait un vrai système multi-agents, pas un chatbot RAG. Arc répond par une chaîne complète — détection → diagnostic → validation humaine → action — où le LLM ne décide jamais seul et chaque affirmation cite la doc de l’opérateur à la page.',
+              ko: 'RAISE Summit 해커톤(Vultr 트랙)은 RAG 챗봇이 아닌 진정한 멀티 에이전트 시스템을 요구했습니다. Arc는 감지 → 진단 → 사람 검증 → 조치의 완전한 체인으로 답하며, LLM은 결코 혼자 결정하지 않고 모든 주장은 통신사 문서를 페이지 단위로 인용합니다.'
+            }
+          ]
+        },
+        {
+          n: '02',
+          kicker: { en: 'Approach', fr: 'Approche', ko: '접근' },
+          title: {
+            en: 'A human in the loop',
+            fr: 'Un humain dans la boucle',
+            ko: '루프 안의 사람'
+          },
+          body: [
+            {
+              en: 'A deterministic watchdog detects, a state-machine orchestrator routes without ever diagnosing, and the field technician stays the source of truth — a single on-site measurement can pivot the entire diagnosis and trigger a live re-run.',
+              fr: 'Un watchdog déterministe détecte, un orchestrateur en machine à états route sans jamais diagnostiquer, et le technicien terrain reste la source de vérité — une seule mesure sur site peut faire pivoter tout le diagnostic et relancer une analyse en direct.',
+              ko: '결정론적 워치독이 감지하고, 상태 머신 오케스트레이터는 진단 없이 라우팅만 하며, 현장 기술자가 진실의 원천으로 남습니다 — 현장의 측정값 하나가 전체 진단을 뒤집고 실시간 재진단을 촉발할 수 있습니다.'
+            }
+          ]
+        }
+      ],
+      flow: [
+        {
+          tag: { en: 'Detection · zero LLM', fr: 'Détection · zéro LLM', ko: '감지 · LLM 없음' },
+          nodes: [
+            { title: { en: 'Watchdog', fr: 'Watchdog', ko: 'Watchdog' }, desc: { en: 'Debounces the alarm stream and triggers.', fr: 'Débounce le flux d’alarmes et déclenche.', ko: '경보 스트림을 디바운스하고 트리거합니다.' } }
+          ]
+        },
+        {
+          tag: { en: 'Orchestration · state machine', fr: 'Orchestration · machine à états', ko: '오케스트레이션 · 상태 머신' },
+          nodes: [
+            { title: { en: 'Orchestrator', fr: 'Orchestrateur', ko: '오케스트레이터' }, desc: { en: 'Routes only — never diagnoses.', fr: 'Route uniquement — ne diagnostique jamais.', ko: '라우팅만 — 절대 진단하지 않습니다.' } }
+          ]
+        },
+        {
+          tag: { en: 'Phase 1 · Diagnose', fr: 'Phase 1 · Diagnostic', ko: '1단계 · 진단' },
+          nodes: [
+            { title: { en: 'Correlation', fr: 'Corrélation', ko: '상관분석' }, desc: { en: 'Traces the site topology.', fr: 'Retrace la topologie du site.', ko: '사이트 토폴로지를 추적합니다.' } },
+            { title: { en: 'Root-Cause', fr: 'Cause racine', ko: '근본 원인' }, desc: { en: 'Cited root cause, confidence-gated.', fr: 'Cause racine citée, filtrée par confiance.', ko: '인용된 근본 원인, 신뢰도 게이트.' } },
+            { title: { en: 'Responder-Match', fr: 'Responder-Match', ko: '담당자 매칭' }, desc: { en: 'The right technician by skill and zone.', fr: 'Le bon technicien par compétence et zone.', ko: '역량과 구역으로 적합한 기술자를 선정합니다.' } }
+          ]
+        },
+        {
+          tag: { en: 'Human loop · iPhone', fr: 'Boucle humaine · iPhone', ko: '사람 루프 · iPhone' },
+          nodes: [
+            { title: { en: 'Field technician', fr: 'Technicien terrain', ko: '현장 기술자' }, desc: { en: 'APNs push → confirms or refuses with a measurement.', fr: 'Push APNs → confirme ou refuse avec une mesure.', ko: 'APNs 푸시 → 측정값으로 확인 또는 거부합니다.' } }
+          ]
+        },
+        {
+          tag: { en: 'Validation', fr: 'Validation', ko: '검증' },
+          nodes: [
+            { title: { en: 'Validation', fr: 'Validation', ko: '검증' }, desc: { en: 'Binds the measurement to the fault — confirms or pivots.', fr: 'Lie la mesure à la panne — confirme ou pivote.', ko: '측정값을 장애에 연결 — 확인 또는 전환합니다.' } }
+          ]
+        },
+        {
+          tag: { en: 'Phase 2 · Act', fr: 'Phase 2 · Action', ko: '2단계 · 조치' },
+          nodes: [
+            { title: { en: 'Remediation', fr: 'Remédiation', ko: '복구' }, desc: { en: 'Cited procedure and safety steps.', fr: 'Procédure et étapes de sécurité citées.', ko: '인용된 절차와 안전 단계.' } },
+            { title: { en: 'Cost · Inventory · Dispatch', fr: 'Coût · Stock · Dispatch', ko: '비용 · 재고 · 배정' }, desc: { en: 'Three real tools — pricing and parts.', fr: 'Trois vrais outils — prix et pièces.', ko: '세 개의 실제 도구 — 가격과 부품.' } }
+          ]
+        },
+        {
+          tag: { en: 'Output', fr: 'Sortie', ko: '출력' },
+          nodes: [
+            { title: { en: 'Action report', fr: 'Rapport d’action', ko: '조치 리포트' }, desc: { en: 'Prioritized, cited to the page, PDF export.', fr: 'Priorisé, cité à la page, export PDF.', ko: '우선순위화, 페이지 단위 인용, PDF 내보내기.' } }
+          ]
+        }
+      ],
+      pivot: {
+        en: 'Pivot — a field refusal bubbles up: the technician’s measurement becomes ground truth and triggers a full re-diagnosis.',
+        fr: 'Pivot — un refus terrain remonte : la mesure du technicien devient la vérité de terrain et déclenche un re-diagnostic complet.',
+        ko: '전환 — 현장 거부가 위로 전파됩니다: 기술자의 측정값이 실측 진실이 되어 전체 재진단을 촉발합니다.'
+      },
+      keyPoints: [
+        {
+          n: '01',
+          title: { en: 'Dispatch by matchmaking', fr: 'Dispatch par matchmaking', ko: '매칭 기반 배정' },
+          body: {
+            en: 'The intervention is routed to the one right technician — skill, zone — instead of broadcast to the whole team.',
+            fr: 'L’intervention est routée vers le seul bon technicien — compétence, zone — au lieu d’être diffusée à toute l’équipe.',
+            ko: '개입은 팀 전체에 브로드캐스트되지 않고, 역량과 구역에 맞는 단 한 명의 기술자에게 라우팅됩니다.'
+          }
+        },
+        {
+          n: '02',
+          title: { en: 'Physical validation, direct pivot', fr: 'Validation physique, pivot direct', ko: '물리적 검증, 즉시 전환' },
+          body: {
+            en: 'The technician tests on site and confirms, or refuses with a counter-measurement — then the agents treat the field as ground truth and re-diagnose.',
+            fr: 'Le technicien teste sur site et confirme, ou refuse avec une contre-mesure — les agents traitent alors le terrain comme vérité et re-diagnostiquent.',
+            ko: '기술자가 현장에서 테스트해 확인하거나 반대 측정값으로 거부하면, 에이전트는 현장을 실측 진실로 삼아 재진단합니다.'
+          }
+        },
+        {
+          n: '03',
+          title: { en: 'Every assertion is cited', fr: 'Chaque affirmation est citée', ko: '모든 주장은 인용된다' },
+          body: {
+            en: 'Root cause, procedure, steps — all cite the operator’s technical docs to the page, clickable in the final report.',
+            fr: 'Cause racine, procédure, étapes — tout cite la doc technique de l’opérateur à la page, cliquable dans le rapport final.',
+            ko: '근본 원인, 절차, 단계 — 모두 통신사 기술 문서를 페이지 단위로 인용하며, 최종 리포트에서 클릭할 수 있습니다.'
+          }
+        },
+        {
+          n: '04',
+          title: { en: 'Always terminates', fr: 'Se termine toujours', ko: '항상 종료된다' },
+          body: {
+            en: 'The UI consumes only a frozen-contract SSE stream of 15 event types. A failed agent degrades to a valid, downgraded report rather than blocking the chain.',
+            fr: 'L’UI ne consomme qu’un flux SSE à contrat figé de 15 types d’événements. Un agent en échec dégrade vers un rapport valide plutôt que de bloquer la chaîne.',
+            ko: 'UI는 15가지 이벤트 타입의 고정 계약 SSE 스트림만 소비합니다. 실패한 에이전트는 체인을 막는 대신 유효한 다운그레이드 리포트로 저하됩니다.'
+          }
+        }
+      ],
+      metrics: [
+        { value: '6', label: { en: 'Specialized agents · two phases', fr: 'Agents spécialisés · deux phases', ko: '전문 에이전트 · 2단계' } },
+        { value: '15', label: { en: 'Event types · frozen SSE contract', fr: 'Types d’événements · contrat SSE figé', ko: '이벤트 타입 · 고정 SSE 계약' } },
+        { value: 'E2E', label: { en: 'Tests green · cloud ↔ iPhone', fr: 'Tests au vert · cloud ↔ iPhone', ko: '테스트 통과 · 클라우드 ↔ iPhone' } }
+      ],
+      result: {
+        en: 'Detection, diagnosis, field validation, action — the full chain in one weekend, and a podium finish in the Vultr track.',
+        fr: 'Détection, diagnostic, validation terrain, action — la chaîne complète en un week-end, et une place sur le podium du track Vultr.',
+        ko: '감지, 진단, 현장 검증, 조치 — 한 주말에 완성한 전체 체인, 그리고 Vultr 트랙 포디움.'
+      }
+    }
   },
   {
     id: 'rebloom', title: 'Rebloom', year: '2026',

@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import { projectsData } from '../data/projects'
 import { profile, experience, education, certifications, mentions } from '../data/profile'
 import { ui, pick, LANGS, langLabels, detectLang } from '../i18n'
+import CaseStudy from './CaseStudy'
 import './Portfolio.css'
 
 const PRESENT_YEAR = '2026'
@@ -249,6 +251,7 @@ export default function Portfolio() {
   })
 
   const [activeProject, setActiveProject] = useState(null)
+  const [caseOpen, setCaseOpen] = useState(false)
   const [panel, setPanel] = useState(null) // 'about' | 'certs' | 'edu'
   const [previewPdf, setPreviewPdf] = useState(null)
   const [closing, setClosing] = useState(false)
@@ -402,12 +405,13 @@ export default function Portfolio() {
     const onKey = (e) => {
       if (e.key === 'Escape') {
         if (previewPdf) setPreviewPdf(null)
+        else if (caseOpen) setCaseOpen(false)
         else closeAll()
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [overlayOpen, previewPdf])
+  }, [overlayOpen, previewPdf, caseOpen])
 
   useEffect(() => {
     const onKey = (e) => {
@@ -597,6 +601,7 @@ export default function Portfolio() {
 
     const finish = () => {
       setActiveProject(null)
+      setCaseOpen(false)
       setPanel(null)
       setClosing(false)
       // reveal the original device only once the flying one has landed exactly
@@ -781,10 +786,19 @@ export default function Portfolio() {
                   <span key={tech}>{tech}</span>
                 ))}
               </div>
-              {activeProject.link && (
-                <a className="project-info__link" href={activeProject.link} target="_blank" rel="noreferrer">
-                  {t(activeProject.linkLabel) || T.visitSite} <span aria-hidden="true">↗</span>
-                </a>
+              {(activeProject.link || activeProject.caseStudy) && (
+                <div className="project-info__actions">
+                  {activeProject.link && (
+                    <a className="project-info__link" href={activeProject.link} target="_blank" rel="noreferrer">
+                      {t(activeProject.linkLabel) || T.visitSite} <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  {activeProject.caseStudy && (
+                    <button className="project-info__more" onClick={() => setCaseOpen(true)}>
+                      {T.learnMore} <span aria-hidden="true">→</span>
+                    </button>
+                  )}
+                </div>
               )}
             </div>
             <div
@@ -801,6 +815,19 @@ export default function Portfolio() {
           </div>
         </section>
       )}
+
+      {/* Case study — detailed, motion-driven deep dive over the detail view */}
+      <AnimatePresence>
+        {caseOpen && activeProject?.caseStudy && (
+          <CaseStudy
+            key={`case-${activeProject.id}`}
+            project={activeProject}
+            lang={lang}
+            T={T}
+            onClose={() => setCaseOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* About */}
       {panel === 'about' && (

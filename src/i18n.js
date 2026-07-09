@@ -1,10 +1,10 @@
 // Lightweight i18n: translatable data fields are `{ en, fr, ko }` objects
 // (values may be strings or arrays). `pick` resolves one for the active lang,
 // falling back to English, and passes plain values through untouched.
-// Display order of the language switcher (EN · KR).
-export const LANGS = ['en', 'ko']
+// Display order of the language switcher (EN · FR · KR).
+export const LANGS = ['en', 'fr', 'ko']
 
-export const langLabels = { en: 'EN', ko: 'KR' }
+export const langLabels = { en: 'EN', fr: 'FR', ko: 'KR' }
 
 export function pick(value, lang) {
   if (
@@ -28,6 +28,7 @@ export function detectLang() {
   }
   const n = (navigator.language || 'en').toLowerCase()
   if (n.startsWith('ko')) return 'ko'
+  if (n.startsWith('fr')) return 'fr'
   return 'en'
 }
 
@@ -49,7 +50,35 @@ export const ui = {
     viewCertificate: 'View certificate',
     open: 'Open',
     back: 'Back',
-    language: 'Language'
+    language: 'Language',
+    learnMore: 'Learn more',
+    caseStudy: 'Case study',
+    architecture: 'Architecture',
+    keyPoints: 'Key points',
+    outcome: 'Outcome'
+  },
+  fr: {
+    about: 'À propos',
+    work: 'Expérience',
+    education: 'Formation',
+    certifications: 'Certifications',
+    mentions: 'Mentions',
+    scrollHint: 'Faites défiler ou glissez',
+    origin: 'Là où tout a commencé',
+    visitSite: 'Voir le site',
+    resume: 'CV',
+    download: 'Télécharger',
+    close: 'Fermer',
+    readArticle: "Lire l'article",
+    viewCertificate: 'Voir le certificat',
+    open: 'Ouvrir',
+    back: 'Retour',
+    language: 'Langue',
+    learnMore: 'En savoir plus',
+    caseStudy: 'Étude de cas',
+    architecture: 'Architecture',
+    keyPoints: 'Points clés',
+    outcome: 'Résultat'
   },
   ko: {
     about: '소개',
@@ -67,6 +96,11 @@ export const ui = {
     viewCertificate: '증명서 보기',
     open: '열기',
     back: '뒤로',
-    language: '언어'
+    language: '언어',
+    learnMore: '더 알아보기',
+    caseStudy: '케이스 스터디',
+    architecture: '아키텍처',
+    keyPoints: '핵심 포인트',
+    outcome: '결과'
   }
 }

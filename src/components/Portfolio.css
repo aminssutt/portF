@@ -856,6 +856,36 @@
 .project-info__link:hover {
   border-color: #000;
 }
+.project-info__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 22px;
+  margin-top: 18px;
+}
+.project-info__actions .project-info__link {
+  margin-top: 0;
+}
+.project-info__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 3px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  color: #0a0a0a;
+  transition: gap 0.24s var(--ease), border-color 0.24s var(--ease);
+}
+.project-info__more:hover {
+  gap: 12px;
+  border-color: #000;
+}
+.project-info__more span {
+  transition: transform 0.24s var(--ease);
+}
+.project-info__more:hover span {
+  transform: translateX(2px);
+}
 
 .about {
   display: grid;
@@ -1536,6 +1566,374 @@
   }
   .df--phone-duo .phone-duo__shot {
     width: 47%;
+  }
+}
+
+/* ---------- Case study — minimal, hairline-driven deep dive ---------- */
+.overlay.case-study {
+  z-index: 50;
+  overflow: auto;
+  animation: none; /* framer-motion drives the entrance/exit */
+  -webkit-overflow-scrolling: touch;
+}
+.case-study__scroll {
+  min-height: 100%;
+}
+.case-study__inner {
+  width: min(820px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(94px, 15vh, 148px) 0 clamp(88px, 13vh, 132px);
+}
+
+/* Reading-progress hairline — sticks to the top of the overlay's own scroll
+   port and is scaled by that scroll. Sticky (not fixed) because the overlay is
+   the scroll container and framer-motion's transform on this node would
+   otherwise detach a fixed element's containing block. Sits below the back
+   button, above the content. */
+.cs-progress {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  margin-bottom: -2px; /* overlaps content, never adds vertical space */
+  z-index: 44;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.32));
+  pointer-events: none;
+}
+/* The overlay scrolls itself, so a fixed back button would scroll away on this
+   long page — pin it with sticky instead. Zero net layout footprint (its own
+   height is cancelled) so nothing shifts; other overlays keep the fixed one. */
+.overlay.case-study .back {
+  position: sticky;
+  margin-bottom: -100px;
+}
+
+/* Shared label — same voice as the rest of the site (listing titles) */
+.cs-kicker,
+.cs-section__kicker,
+.cs-flow__tag,
+.cs-block__title,
+.cs-hero__award,
+.cs-meta__label,
+.cs-metric__label {
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Hero */
+.cs-hero {
+  padding-bottom: clamp(38px, 6vw, 64px);
+}
+.cs-hero__award {
+  margin: 0 0 24px;
+  font-size: 12px;
+}
+.cs-hero__title {
+  margin: 0;
+  font-size: clamp(48px, 9vw, 100px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+}
+/* Centred wordmark whose letters converge on mount */
+.cs-hero__title--split {
+  text-align: center;
+}
+.cs-hero__letter {
+  display: inline-block; /* required for transform to apply */
+  will-change: transform;
+}
+.cs-hero__tagline {
+  max-width: 600px;
+  margin: 24px 0 0;
+  font-size: clamp(16px, 2.1vw, 20px);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.cs-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 46px;
+  margin-top: clamp(34px, 5vw, 50px);
+}
+.cs-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.cs-meta__label {
+  font-size: 11px;
+}
+.cs-meta__value {
+  font-size: 14.5px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(0, 0, 0, 0.82);
+}
+.cs-hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 32px;
+}
+.cs-hero__links a,
+.cs-outro a {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  padding-bottom: 3px;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.cs-hero__links a:hover,
+.cs-outro a:hover {
+  color: #000;
+  border-color: #000;
+}
+
+/* Divided rhythm — a hairline before every major block, like the listings */
+.cs-section,
+.cs-flow,
+.cs-block,
+.cs-outro {
+  margin-top: clamp(44px, 6.5vw, 76px);
+  padding-top: clamp(36px, 4.8vw, 56px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Narrative sections */
+.cs-section__head {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  margin-bottom: 18px;
+}
+.cs-section__n {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.32);
+  font-variant-numeric: tabular-nums;
+}
+.cs-section__kicker {
+  font-size: 12px;
+}
+.cs-section__title {
+  max-width: 640px;
+  margin: 0 0 20px;
+  font-size: clamp(25px, 4vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+.cs-section__body p {
+  max-width: 640px;
+  margin: 0 0 15px;
+  font-size: clamp(15px, 1.8vw, 16.5px);
+  line-height: 1.62;
+  color: rgba(0, 0, 0, 0.66);
+}
+.cs-section__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Architecture — a light vertical timeline, no boxes */
+.cs-block__title {
+  margin: 0 0 26px;
+  font-size: 12px;
+}
+.cs-flow__chain {
+  position: relative;
+  max-width: 640px;
+  margin-top: 4px;
+  padding-left: 28px;
+}
+/* Faint static track that the drawn line rides over. */
+.cs-flow__chain::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.06);
+}
+/* The line that draws itself as you scroll through the section. */
+.cs-flow__rail {
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  pointer-events: none;
+}
+.cs-flow__line {
+  position: absolute;
+  inset: 0;
+  width: 1px;
+  transform-origin: 50% 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.05));
+  will-change: transform;
+}
+.cs-flow__head {
+  position: absolute;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.07);
+  transform: translate(-50%, -50%);
+  will-change: top;
+}
+.cs-step {
+  position: relative;
+  padding-bottom: clamp(24px, 3.5vw, 38px);
+}
+.cs-step:last-child {
+  padding-bottom: 0;
+}
+.cs-step__dot {
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fbfbfc;
+  box-shadow: inset 0 0 0 1.5px rgba(0, 0, 0, 0.5);
+}
+.cs-step__dot-fill {
+  position: absolute;
+  inset: 1.5px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  transform-origin: 50% 50%;
+}
+.cs-flow__tag {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 11px;
+}
+.cs-flow__nodes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px 28px;
+}
+.cs-node {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cs-node__title {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: #0a0a0a;
+}
+.cs-node__desc {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.55);
+}
+.cs-flow__pivot {
+  max-width: 600px;
+  margin: 30px 0 0;
+  padding-left: 16px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 13.5px;
+  font-style: italic;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.58);
+}
+
+/* Key points — clean columns, hairline-topped */
+.cs-keys {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(26px, 4vw, 44px) clamp(30px, 5vw, 64px);
+}
+.cs-key {
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.cs-key__n {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+.cs-key__title {
+  margin: 12px 0 10px;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.cs-key__body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, 0.62);
+}
+
+/* Metrics + result */
+.cs-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(28px, 6vw, 72px);
+}
+.cs-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cs-metric__value {
+  font-size: clamp(38px, 6vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+/* Count-up: a hidden ghost holds the final width so the live number, which is
+   absolutely stacked on top of it, never shifts the layout as it ticks. */
+.cs-count {
+  position: relative;
+  display: inline-block;
+}
+.cs-count__live {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.cs-count__ghost {
+  visibility: hidden;
+}
+.cs-metric__label {
+  max-width: 200px;
+  font-size: 11px;
+}
+.cs-result {
+  margin: clamp(34px, 5vw, 50px) 0 0;
+  max-width: 660px;
+  font-size: clamp(19px, 2.7vw, 27px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.36;
+  color: #0c0c0c;
+}
+.cs-outro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+
+@media (max-width: 640px) {
+  .cs-keys {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

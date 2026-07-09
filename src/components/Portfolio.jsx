@@ -744,7 +744,7 @@ export default function Portfolio() {
                   <DeviceFrame project={project} />
                 </div>
                 <span className="project__caption">
-                  {project.title} <em>{project.year}</em>
+                  {project.captionTitle || project.title} <em>{project.year}</em>
                 </span>
               </button>
             </article>

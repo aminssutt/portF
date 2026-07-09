@@ -10,15 +10,15 @@ export const profile = {
   cv: '/cv_lakhdar_berache.pdf',
   bio: {
     en: [
-      'I’m an engineering student working at the intersection of artificial intelligence, data science and web development.',
+      'I’m an engineering student passionate about agentic systems, working at the intersection of artificial intelligence, data science and software.',
       'I design AI systems, build useful products and turn ambitious ideas into clean, thoughtful experiences.'
     ],
     fr: [
-      "Je suis étudiant ingénieur et développeur, à l'intersection de l'intelligence artificielle, de la data science et du développement web.",
+      "Je suis étudiant ingénieur passionné par les systèmes agentiques, à l'intersection de l'intelligence artificielle, de la data science et du software.",
       "Je conçois des systèmes d'IA, je construis des produits utiles et je transforme des idées ambitieuses en expériences claires et soignées."
     ],
     ko: [
-      '저는 인공지능, 데이터 사이언스, 웹 개발이 만나는 지점에서 일하는 공학도입니다.',
+      '저는 에이전트 시스템에 열정을 가진 공학도로, 인공지능, 데이터 사이언스, 소프트웨어가 만나는 지점에서 일합니다.',
       '저는 AI 시스템을 설계하고 유용한 제품을 만들며, 야심 찬 아이디어를 깔끔하고 사려 깊은 경험으로 구현합니다.'
     ]
   },

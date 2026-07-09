@@ -624,8 +624,10 @@
   background: #000;
 }
 /* Per-device: width multiplier + screen rectangle (auto-detected, pixel-exact). */
-.framed--imac    { --fwm: 1;    --sx: 2.92%;  --sy: 3.93%;  --sw: 94.17%; --sh: 62.38%; }
-.framed--imac27  { --fwm: 1.02; --sx: 4.58%;  --sy: 5.49%;  --sw: 90.83%; --sh: 63.46%; }
+/* iMac rects are nudged ~0.5% outward from the pixel-exact cutout so the shot
+   tucks UNDER the bezel — kills the 1px background seam on HiDPI displays. */
+.framed--imac    { --fwm: 1;    --sx: 2.4%;   --sy: 3.4%;   --sw: 95.2%;  --sh: 63.4%; }
+.framed--imac27  { --fwm: 1.02; --sx: 4.0%;   --sy: 4.9%;   --sw: 92.0%;  --sh: 64.5%; }
 .framed--macbook { --fwm: 1.06; --sx: 12.83%; --sy: 8.72%;  --sw: 74.17%; --sh: 78.2%; }
 .framed--mbp14   { --fwm: 1.05; --sx: 11.67%; --sy: 11.79%; --sw: 76.67%; --sh: 76.41%; }
 .framed--mbp16   { --fwm: 1.12; --sx: 10.17%; --sy: 11%;    --sw: 79.67%; --sh: 78%; }

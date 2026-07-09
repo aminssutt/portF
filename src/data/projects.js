@@ -1,6 +1,6 @@
 export const projectsData = [
   {
-    id: 'arc', title: 'Arc', year: '2026',
+    id: 'arc', title: 'Arc', captionTitle: 'Arc - Raise Hackathon', year: '2026',
     role: {
       en: 'Raise Hackathon Winner',
       fr: 'Raise Hackathon Winner',

@@ -32,8 +32,7 @@ export const projectsData = [
       ]
     },
     technologies: ['Multi-Agent', 'Gemma 4', 'vLLM', 'FastAPI', 'Next.js', 'NVIDIA L40S'],
-    linkLabel: { en: 'View source code', fr: 'Voir le code source', ko: '소스 코드 보기' },
-    link: 'https://github.com/aminssutt/Blaze', screenshot: '/images/blaze.png'
+    link: 'https://blaze.aminssutt.fr', screenshot: '/images/blaze.png'
   },
   {
     id: 'arc', title: 'Arc', captionTitle: 'Arc - Raise Hackathon', year: '2026',

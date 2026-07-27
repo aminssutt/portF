@@ -12,6 +12,7 @@ const BIRTH_YEAR = 2004
 
 // Per-project device — a spread of real Apple mockups for variety.
 const DEVICE = {
+  blaze: 'mbp16',
   arc: 'imac27',
   rebloom: 'imac',
   carchat: 'mbp16',
@@ -741,6 +742,12 @@ export default function Portfolio() {
                 aria-label={`${T.open} ${project.title}`}
               >
                 <div className="project__visual">
+                  {project.caseStudy?.award && (
+                    <span className="award-badge">
+                      <span className="award-badge__mark" aria-hidden="true" />
+                      <span className="award-badge__text">{t(project.caseStudy.award)}</span>
+                    </span>
+                  )}
                   <DeviceFrame project={project} />
                 </div>
                 <span className="project__caption">

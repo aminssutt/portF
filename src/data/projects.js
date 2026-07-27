@@ -1,5 +1,41 @@
 export const projectsData = [
   {
+    id: 'blaze', title: 'Blaze', captionTitle: 'Blaze - Gemma 4 Hackathon', year: '2026',
+    role: {
+      en: 'AI & Agents · Build with Gemma 4',
+      fr: 'IA & Agents · Build with Gemma 4',
+      ko: 'AI & 에이전트 · Build with Gemma 4'
+    },
+    description: {
+      en: 'Offline multi-agent system that turns firefighter radio chatter into a safety-reviewed, human-approved tactical plan — built at the Build with Gemma 4 hackathon (Autonomous Agents track + NVIDIA GPU Challenge).',
+      fr: "Système multi-agents hors ligne qui transforme les échanges radio des pompiers en un plan tactique passé au crible d'un critique sécurité puis validé par un humain — réalisé au hackathon Build with Gemma 4 (track Autonomous Agents + NVIDIA GPU Challenge).",
+      ko: '소방 무전을 안전 검토와 사람 승인을 거친 전술 계획으로 바꾸는 오프라인 멀티 에이전트 시스템 — Build with Gemma 4 해커톤(Autonomous Agents 트랙 + NVIDIA GPU Challenge)에서 제작했습니다.'
+    },
+    highlights: {
+      en: [
+        'Radio audio → local speech-to-text → five specialized Gemma 4 agents (radio intelligence, situation context, tactical planning, safety critic, dispatch), chained by a deterministic 15-state orchestrator.',
+        'An adversarial Safety Critic attacks every plan before a human ever sees it — 8 mechanical rule checks the model can escalate but never soften.',
+        'Human approval is a hard gate: the state machine has no transition from “plan drafted” to “dispatched” that skips the commander, then each unit gets its own voice order via local TTS.',
+        '100% local inference on a single NVIDIA L40S through vLLM — zero cloud LLM calls, enforced by the client and counted live in the UI, with 100% valid structured output measured over 27 labeled radio messages.'
+      ],
+      fr: [
+        'Audio radio → transcription locale → cinq agents Gemma 4 spécialisés (radio, contexte terrain, plan tactique, critique sécurité, dispatch), enchaînés par un orchestrateur déterministe à 15 états.',
+        "Un Safety Critic adversarial attaque chaque plan avant même qu'un humain le voie — 8 règles mécaniques que le modèle peut durcir mais jamais assouplir.",
+        "La validation humaine est une barrière dure : la machine à états n'a aucune transition de « plan rédigé » à « dispatché » qui contourne le commandant ; ensuite chaque unité reçoit son ordre vocal via un TTS local.",
+        "Inférence 100 % locale sur un seul NVIDIA L40S via vLLM — zéro appel LLM cloud, garanti par le client et compté en direct dans l'UI, avec 100 % de sorties structurées valides mesurées sur 27 messages radio annotés."
+      ],
+      ko: [
+        '무전 오디오 → 로컬 음성 인식 → 5개의 전문 Gemma 4 에이전트(무전 분석, 현장 맥락, 전술 계획, 안전 비평, 배정)를 15개 상태의 결정론적 오케스트레이터가 연결합니다.',
+        '적대적 Safety Critic이 사람이 보기 전에 모든 계획을 공격합니다 — 모델이 강화할 수는 있어도 결코 완화할 수 없는 8가지 기계적 규칙 검사.',
+        '사람의 승인은 하드 게이트입니다: 상태 머신에는 지휘관을 건너뛰고 “계획 작성”에서 “배정”으로 가는 전이가 없으며, 승인 후 각 부대는 로컬 TTS로 개별 음성 지시를 받습니다.',
+        'vLLM으로 단일 NVIDIA L40S에서 100% 로컬 추론 — 클라우드 LLM 호출 0회를 클라이언트가 강제하고 UI에 실시간 표시하며, 라벨링된 무전 메시지 27건에서 구조화 출력 유효율 100%를 측정했습니다.'
+      ]
+    },
+    technologies: ['Multi-Agent', 'Gemma 4', 'vLLM', 'FastAPI', 'Next.js', 'NVIDIA L40S'],
+    linkLabel: { en: 'View source code', fr: 'Voir le code source', ko: '소스 코드 보기' },
+    link: 'https://github.com/aminssutt/Blaze', screenshot: '/images/blaze.png'
+  },
+  {
     id: 'arc', title: 'Arc', captionTitle: 'Arc - Raise Hackathon', year: '2026',
     role: {
       en: 'Raise Hackathon Winner',

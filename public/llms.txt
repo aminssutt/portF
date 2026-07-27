@@ -24,6 +24,8 @@
 - University of Technology of Troyes (UTT) — Informatics & Systems (2024 – 2027)
 
 ## Selected projects
+- Blaze (2026): offline multi-agent system that turns firefighter radio chatter into a safety-reviewed, human-approved tactical plan — five local Gemma 4 agents, adversarial safety critic, hard human-approval gate, 100% local inference on one NVIDIA L40S via vLLM. Built at the Build with Gemma 4 hackathon (Autonomous Agents track + NVIDIA GPU Challenge). https://github.com/aminssutt/Blaze
+- Arc (2026): multi-agent system for telecom site incident response — detection, document-grounded diagnosis, field validation by a technician and remediation, with every claim cited to the operator's docs. Podium at the RAISE Summit 2026 hackathon (Vultr track). https://arc.vgtray.fr
 - Rebloom (2026): anti-waste floral marketplace connecting florists and customers around discounted unsold bouquets. Founder & CEO. https://re-bloom.fr
 - CarChat (2026): AI assistant for vehicle owner manuals with instant, source-backed answers (RAG, LangChain). Founder. https://carchat.online
 - Megawatt'UTT — SimuPont (2026): mobile training simulator for nuclear bridge-crane fuel handling, built for EDF's Megawatt'UTT challenge — 2nd place and Public's Prize; featured in Le Parisien.
@@ -38,5 +40,7 @@
 Artificial Intelligence, Machine Learning, RAG, Agentic AI, MCP, LangChain, Large Language Models, React, Python, Full-stack development, Data Science, Unity, ROS2.
 
 ## Recognition
+- RAISE Summit 2026 hackathon (Vultr track): podium with Arc, presented on the main stage in front of 6,000 builders.
+- Megawatt'UTT (EDF, 2026): 2nd place and Public's Prize.
 - Le Parisien (2026): article on the EDF × UTT nuclear-plant project.
 - Certifications: Microsoft (Generative AI), AWS (Generative AI), IBM (RAG Applications), Board Infinity (Intelligent Agents).

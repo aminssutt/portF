@@ -32,34 +32,37 @@ export const projectsData = [
       ]
     },
     technologies: ['Multi-Agent', 'Gemma 4', 'vLLM', 'FastAPI', 'Next.js', 'NVIDIA L40S'],
-    link: 'https://blaze.aminssutt.fr', screenshot: '/images/blaze.png'
+    link: 'https://blaze-live.aminssutt.fr', screenshot: '/images/blaze.png'
   },
   {
-    id: 'arc', title: 'Arc', captionTitle: 'Arc - Raise Hackathon', year: '2026',
+    id: 'astyr', title: 'Astyr', captionTitle: 'Astyr (ex-Arc) - Raise Hackathon', year: '2026',
     role: {
-      en: 'Raise Hackathon Winner',
-      fr: 'Raise Hackathon Winner',
-      ko: 'Raise 해커톤 우승'
+      en: 'Raise Hackathon Winner → Startup',
+      fr: 'Raise Hackathon Winner → Startup',
+      ko: 'Raise 해커톤 우승 → 스타트업'
     },
     description: {
-      en: 'Multi-agent system for factory maintenance and operations, presented on the main stage in front of 6,000 builders at the RAISE Summit.',
-      fr: "Système multi-agents pour la maintenance et l'organisation des usines, présenté sur la grande scène devant 6000 builders au RAISE Summit.",
-      ko: '공장 유지보수와 운영을 위한 멀티 에이전트 시스템으로, RAISE Summit 메인 무대에서 6,000명의 빌더 앞에서 발표했습니다.'
+      en: 'Born “Arc” at the RAISE Summit hackathon — a multi-agent system for factory maintenance and operations, presented on the main stage in front of 6,000 builders — the project has since migrated to astyr.app and continues as a startup: the AI fault-diagnosis layer for industrial maintenance.',
+      fr: "Né « Arc » au hackathon RAISE Summit — système multi-agents pour la maintenance et l'organisation des usines, présenté sur la grande scène devant 6000 builders — le projet a depuis migré vers astyr.app et se poursuit en startup : la couche IA de diagnostic de pannes pour la maintenance industrielle.",
+      ko: 'RAISE Summit 해커톤에서 “Arc”라는 이름으로 태어난 공장 유지보수·운영 멀티 에이전트 시스템 — 메인 무대에서 6,000명의 빌더 앞에서 발표했습니다. 이후 프로젝트는 astyr.app으로 이전해 스타트업으로 이어지고 있습니다: 산업 유지보수를 위한 AI 고장 진단 레이어.'
     },
     highlights: {
       en: [
+        'Now a startup: Astyr ranks probable causes from the plant’s own schematics, manuals and past incidents — every cause cited, confidence-gated, and confirmed by one operator field measurement before any fix is prescribed.',
         'Multi-agent orchestrator that routes specialist agents through diagnose-then-act phases around a human validation loop.',
         'Field validation loop: the on-site operator confirms or refuses with a counter-measurement, and the agents pivot and re-diagnose live.',
         'Document-grounded reasoning — every cause and every step cites the source technical docs, down to the page, with a clickable trail.',
         'Native iOS app and web control room driven live by a single server-sent event stream, running on Vultr serverless inference.'
       ],
       fr: [
+        "Aujourd'hui une startup : Astyr classe les causes probables à partir des schémas, manuels et historiques d'incidents de l'usine — chaque cause citée, filtrée par confiance, puis confirmée par une mesure terrain de l'opérateur avant toute prescription.",
         "Orchestrateur multi-agents qui enchaîne des agents spécialisés en deux phases — diagnostic puis action — autour d'une boucle de validation humaine.",
         "Boucle de validation terrain : l'opérateur sur site confirme ou refuse avec une contre-mesure, et les agents pivotent et re-diagnostiquent en direct.",
         "Raisonnement fondé sur les documents — chaque cause et chaque étape cite la documentation technique source, jusqu'à la page, avec une trace cliquable.",
         "Application iOS native et control room web alimentées en direct par un unique flux d'événements SSE, sur inférence serverless Vultr."
       ],
       ko: [
+        '현재는 스타트업: Astyr는 공장의 도면·매뉴얼·과거 인시던트를 근거로 유력한 원인의 순위를 매깁니다 — 모든 원인은 인용되고, 신뢰도 게이트를 거치며, 수리를 제안하기 전에 작업자의 현장 측정 한 번으로 확정됩니다.',
         '전문 에이전트를 진단→조치 두 단계로 라우팅하고, 사람 검증 루프를 중심에 둔 멀티 에이전트 오케스트레이터.',
         '현장 검증 루프: 현장 작업자가 확인하거나 반대 측정값과 함께 거부하면, 에이전트가 즉시 방향을 바꿔 다시 진단합니다.',
         '문서 기반 추론 — 모든 원인과 단계가 원본 기술 문서를 페이지 단위까지 인용하며, 클릭 가능한 출처를 제공합니다.',
@@ -67,7 +70,7 @@ export const projectsData = [
       ]
     },
     technologies: ['Multi-Agent', 'FastAPI', 'Next.js', 'Swift · iOS', 'RAG', 'Vultr'],
-    link: 'https://arc.vgtray.fr', screenshot: '/images/arc.png',
+    link: 'https://astyr.app', screenshot: '/images/astyr.png',
     caseStudy: {
       award: {
         en: 'Podium · RAISE Summit 2026 · Vultr track',
@@ -86,7 +89,7 @@ export const projectsData = [
         { label: { en: 'Year', fr: 'Année', ko: '연도' }, value: '2026' }
       ],
       links: [
-        { label: { en: 'Live site', fr: 'Voir en ligne', ko: '라이브 사이트' }, href: 'https://arc.vgtray.fr' },
+        { label: { en: 'Live site — astyr.app', fr: 'Voir en ligne — astyr.app', ko: '라이브 사이트 — astyr.app' }, href: 'https://astyr.app' },
         { label: { en: 'Source code', fr: 'Code source', ko: '소스 코드' }, href: 'https://github.com/aminssutt/Arc' },
         { label: { en: '60-second demo', fr: 'Démo 60 s', ko: '60초 데모' }, href: 'https://youtu.be/ohvx1NQniWc' }
       ],
@@ -225,11 +228,81 @@ export const projectsData = [
         { value: 'E2E', label: { en: 'Tests green · cloud ↔ iPhone', fr: 'Tests au vert · cloud ↔ iPhone', ko: '테스트 통과 · 클라우드 ↔ iPhone' } }
       ],
       result: {
-        en: 'Detection, diagnosis, field validation, action — the full chain in one weekend, and a podium finish in the Vultr track.',
-        fr: 'Détection, diagnostic, validation terrain, action — la chaîne complète en un week-end, et une place sur le podium du track Vultr.',
-        ko: '감지, 진단, 현장 검증, 조치 — 한 주말에 완성한 전체 체인, 그리고 Vultr 트랙 포디움.'
+        en: 'Detection, diagnosis, field validation, action — the full chain in one weekend, and a podium finish in the Vultr track. Arc has since become Astyr: the project migrated to astyr.app and continues as a startup building the AI fault-diagnosis layer for industrial maintenance.',
+        fr: 'Détection, diagnostic, validation terrain, action — la chaîne complète en un week-end, et une place sur le podium du track Vultr. Arc est depuis devenu Astyr : le projet a migré vers astyr.app et se poursuit en startup, autour de la couche IA de diagnostic de pannes pour la maintenance industrielle.',
+        ko: '감지, 진단, 현장 검증, 조치 — 한 주말에 완성한 전체 체인, 그리고 Vultr 트랙 포디움. 이후 Arc는 Astyr가 되었습니다: 프로젝트는 astyr.app으로 이전했고, 산업 유지보수용 AI 고장 진단 레이어를 만드는 스타트업으로 이어지고 있습니다.'
       }
     }
+  },
+  {
+    id: 'athenvia', title: 'Athenvia', year: '2026',
+    role: {
+      en: 'Founder · Product & Full-stack',
+      fr: 'Fondateur · Produit & Full-stack',
+      ko: '창업자 · 프로덕트 & 풀스택'
+    },
+    description: {
+      en: 'University application reminders: find a graduate program, follow it, and get one calm push at the right time — before applications open or close.',
+      fr: "Rappels de candidatures universitaires : trouvez un programme, suivez-le, et recevez une notification au bon moment — avant l'ouverture ou la clôture des candidatures.",
+      ko: '대학 지원 리마인더: 대학원 프로그램을 찾아 팔로우하면, 지원이 열리거나 마감되기 전 적절한 순간에 차분한 푸시 알림 하나를 받습니다.'
+    },
+    highlights: {
+      en: [
+        'Catalogue of 20+ universities and 50+ graduate programs (Oxford, MIT, ETH Zürich, EPFL, HEC Paris…), each date checked against the official admissions page.',
+        'Verified by design: every date traces back to an official page — and when a university has published nothing yet, Athenvia says so instead of guessing.',
+        'One calm reminder — a single push at the right moment, no feeds, no streaks, no noise between you and the deadline.',
+        'Installs straight from Safari to the iPhone Home Screen — real app feel, programs one tap away, readable offline — with a free plan and a Max tier.'
+      ],
+      fr: [
+        "Catalogue de plus de 20 universités et 50 programmes de master (Oxford, MIT, ETH Zürich, EPFL, HEC Paris…), chaque date vérifiée sur la page officielle des admissions.",
+        "Vérifié par conception : chaque date remonte à une page officielle — et quand l'université n'a encore rien publié, Athenvia le dit au lieu de deviner.",
+        "Un seul rappel, au bon moment — une notification unique, sans feed, sans streaks, sans bruit entre vous et la deadline.",
+        "S'installe depuis Safari sur l'écran d'accueil de l'iPhone — sensation d'app native, programmes à un tap, lisibles hors ligne — avec une offre gratuite et un palier Max."
+      ],
+      ko: [
+        '20개 이상 대학, 50개 이상 대학원 프로그램 카탈로그(옥스퍼드, MIT, ETH 취리히, EPFL, HEC 파리…) — 모든 날짜를 공식 입학 페이지와 대조해 확인합니다.',
+        '설계부터 검증 중심: 모든 날짜는 공식 페이지로 거슬러 올라가며, 대학이 아직 아무것도 공개하지 않았다면 추측하는 대신 그렇다고 말합니다.',
+        '차분한 리마인더 하나 — 적절한 순간의 푸시 한 번, 피드도 스트릭도 소음도 없이 마감일에만 집중합니다.',
+        'Safari에서 바로 iPhone 홈 화면에 설치 — 네이티브 앱 감각, 한 번의 탭으로 프로그램 확인, 오프라인에서도 읽기 가능 — 무료 플랜과 Max 티어 제공.'
+      ]
+    },
+    technologies: ['PWA', 'Push Notifications', 'Offline-first', 'iOS Home Screen'],
+    link: 'https://athenvia.aminssutt.fr', screenshot: '/images/athenvia.png'
+  },
+  {
+    id: 'alpin', title: 'Alpin', year: '2026',
+    role: {
+      en: 'AI & Agents · ECU Verification',
+      fr: 'IA & Agents · Vérification ECU',
+      ko: 'AI & 에이전트 · ECU 검증'
+    },
+    description: {
+      en: 'Autonomous multi-agent system that adversarially pushes an automotive ECU state machine to failure — generating scenarios, injecting faults, verifying safety and closing coverage gaps in a live, auditable loop.',
+      fr: "Système multi-agents autonome qui pousse la machine à états d'un ECU automobile jusqu'à la panne — génération de scénarios, injection de défauts, vérification de sécurité et couverture des angles morts, dans une boucle vivante et auditable.",
+      ko: '자동차 ECU 상태 머신을 고장 직전까지 적대적으로 밀어붙이는 자율 멀티 에이전트 시스템 — 시나리오 생성, 결함 주입, 안전 검증, 커버리지 공백 보완을 살아 있는 감사 가능한 루프로 수행합니다.'
+    },
+    highlights: {
+      en: [
+        'A Supervisor hub routes six specialist agents plus a code-execution node through a directed feedback loop: plan → generate → inject → execute → verify → critique → repeat.',
+        'Hand-written test suites under-explore the state machine; Alpin explores it adversarially — 5 states, 10 events, 18 transitions.',
+        'Injects faults such as sensor failures and false speed readings, then proves the safe path — e.g. OFF → IDLE → RUNNING, sensor fault, fallback to SAFE_MODE.',
+        'The whole campaign streams live into a bilingual control room over 13 typed SSE events — every step auditable.'
+      ],
+      fr: [
+        "Un hub Superviseur route six agents spécialistes plus un nœud d'exécution de code dans une boucle de rétroaction dirigée : plan → generate → inject → execute → verify → critique → répéter.",
+        "Les suites de tests écrites à la main sous-explorent la machine à états ; Alpin l'explore de façon adversariale — 5 états, 10 événements, 18 transitions.",
+        "Injecte des défauts comme les pannes capteur ou les fausses lectures de vitesse, puis prouve le chemin sûr — p. ex. OFF → IDLE → RUNNING, défaut capteur, repli vers SAFE_MODE.",
+        "Toute la campagne est diffusée en direct dans une control room bilingue via 13 événements SSE typés — chaque étape auditable."
+      ],
+      ko: [
+        'Supervisor 허브가 6개의 전문 에이전트와 코드 실행 노드를 방향성 피드백 루프로 라우팅합니다: plan → generate → inject → execute → verify → critique → 반복.',
+        '수작업 테스트 스위트는 상태 머신을 충분히 탐색하지 못합니다. Alpin은 이를 적대적으로 탐색합니다 — 5개 상태, 10개 이벤트, 18개 전이.',
+        '센서 고장이나 잘못된 속도 값 같은 결함을 주입한 뒤 안전 경로를 증명합니다 — 예: OFF → IDLE → RUNNING, 센서 결함, SAFE_MODE로 폴백.',
+        '전체 캠페인이 13가지 타입의 SSE 이벤트로 2개 국어 컨트롤 룸에 실시간 스트리밍됩니다 — 모든 단계를 감사할 수 있습니다.'
+      ]
+    },
+    technologies: ['Multi-Agent', 'Fault Injection', 'State Machine', 'SSE', 'Safety'],
+    link: 'https://alpin.aminssutt.fr', screenshot: '/images/alpin.png'
   },
   {
     id: 'rebloom', title: 'Rebloom', year: '2026',
@@ -264,7 +337,7 @@ export const projectsData = [
     link: 'https://re-bloom.fr', screenshot: '/images/rebloom.png'
   },
   {
-    id: 'carchat', title: 'CarChat', year: '2026',
+    id: 'wallside', title: 'Wallside', captionTitle: 'Wallside (ex-CarChat)', year: '2026',
     role: {
       en: 'Founder · AI Engineer',
       fr: 'Fondateur · Ingénieur IA',
@@ -277,26 +350,26 @@ export const projectsData = [
     },
     highlights: {
       en: [
-        'Indexes 40+ owner manuals across 16 car brands (Renault, Hyundai, Kia, Peugeot, BMW, Tesla, Mercedes…), each isolated in its own per-vehicle session.',
+        'Indexes official owner manuals covering 130+ vehicles (Renault, Hyundai, Kia, Peugeot, BMW, Tesla, Mercedes…), each isolated in its own per-vehicle session.',
         'Hybrid retrieval — FAISS (semantic) + BM25 (lexical) — with intelligent section-based chunking and parallel PDF extraction.',
         'Answers generated with Google Gemini, grounded in the official manual and backed by verified source passages.',
         'Multilingual conversational interface that cuts documentation search from minutes to seconds.'
       ],
       fr: [
-        'Indexe plus de 40 manuels d’utilisation sur 16 marques (Renault, Hyundai, Kia, Peugeot, BMW, Tesla, Mercedes…), chacun isolé dans sa propre session véhicule.',
+        'Indexe les manuels d’utilisation officiels de plus de 130 véhicules (Renault, Hyundai, Kia, Peugeot, BMW, Tesla, Mercedes…), chacun isolé dans sa propre session véhicule.',
         'Recherche hybride — FAISS (sémantique) + BM25 (lexicale) — avec chunking intelligent par sections et extraction PDF parallèle.',
         'Réponses générées avec Google Gemini, fondées sur le manuel officiel et appuyées par des passages sources vérifiés.',
         'Interface conversationnelle multilingue qui réduit la recherche documentaire de plusieurs minutes à quelques secondes.'
       ],
       ko: [
-        '16개 브랜드(르노, 현대, 기아, 푸조, BMW, 테슬라, 메르세데스…)의 40개 이상 사용 설명서를 색인하며, 각 차량은 독립된 세션으로 분리됩니다.',
+        '130대 이상 차량(르노, 현대, 기아, 푸조, BMW, 테슬라, 메르세데스…)의 공식 사용 설명서를 색인하며, 각 차량은 독립된 세션으로 분리됩니다.',
         '하이브리드 검색 — FAISS(의미) + BM25(어휘) — 과 섹션 기반 지능형 청킹, 병렬 PDF 추출을 사용합니다.',
         'Google Gemini로 답변을 생성하고, 공식 설명서에 근거해 검증된 출처 구절로 뒷받침합니다.',
         '문서 검색 시간을 몇 분에서 몇 초로 줄이는 다국어 대화형 인터페이스입니다.'
       ]
     },
     technologies: ['RAG', 'FAISS', 'BM25', 'Gemini', 'React', 'Python'],
-    link: 'https://carchat.online', screenshot: '/images/carchat.png'
+    link: 'https://wallside.aminssutt.fr', screenshot: '/images/wallside.png'
   },
   {
     id: 'megawatt-utt', title: "Megawatt'UTT — SimuPont", year: '2026',

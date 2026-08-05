@@ -13,9 +13,11 @@ const BIRTH_YEAR = 2004
 // Per-project device — a spread of real Apple mockups for variety.
 const DEVICE = {
   blaze: 'mbp16',
-  arc: 'imac27',
+  astyr: 'imac27',
+  athenvia: 'iphone',
+  alpin: 'mbp14',
   rebloom: 'imac',
-  carchat: 'mbp16',
+  wallside: 'mbp16',
   'hera-studio': 'iphone',
   'fabulous-creations': 'macbook',
   'ai-adventure': 'imac27',

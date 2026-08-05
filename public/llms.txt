@@ -24,10 +24,12 @@
 - University of Technology of Troyes (UTT) — Informatics & Systems (2024 – 2027)
 
 ## Selected projects
-- Blaze (2026): offline multi-agent system that turns firefighter radio chatter into a safety-reviewed, human-approved tactical plan — five local Gemma 4 agents, adversarial safety critic, hard human-approval gate, 100% local inference on one NVIDIA L40S via vLLM. Built at the Build with Gemma 4 hackathon (Autonomous Agents track + NVIDIA GPU Challenge). https://blaze.aminssutt.fr
-- Arc (2026): multi-agent system for telecom site incident response — detection, document-grounded diagnosis, field validation by a technician and remediation, with every claim cited to the operator's docs. Podium at the RAISE Summit 2026 hackathon (Vultr track). https://arc.vgtray.fr
+- Blaze (2026): offline multi-agent system that turns firefighter radio chatter into a safety-reviewed, human-approved tactical plan — five local Gemma 4 agents, adversarial safety critic, hard human-approval gate, 100% local inference on one NVIDIA L40S via vLLM. Built at the Build with Gemma 4 hackathon (Autonomous Agents track + NVIDIA GPU Challenge). https://blaze-live.aminssutt.fr
+- Astyr (2026, ex-Arc): born "Arc" at the RAISE Summit 2026 hackathon — multi-agent incident response with document-grounded diagnosis, field validation by a technician and remediation, podium in the Vultr track. The project has since migrated to astyr.app and continues as a startup: AI fault diagnosis for industrial maintenance, every cause cited to the plant's own docs and confirmed by one operator field measurement. https://astyr.app
+- Athenvia (2026): university application reminders — a catalogue of 20+ universities and 50+ graduate programs with dates verified against official admissions pages, one calm push before applications open or close, installable from Safari to the iPhone Home Screen. Founder. https://athenvia.aminssutt.fr
+- Alpin (2026): autonomous multi-agent system that adversarially explores an automotive ECU state machine — a Supervisor routing six specialist agents through a plan/generate/inject/execute/verify/critique loop, fault injection down to SAFE_MODE fallback, 13 typed SSE events streaming a live bilingual control room. https://alpin.aminssutt.fr
 - Rebloom (2026): anti-waste floral marketplace connecting florists and customers around discounted unsold bouquets. Founder & CEO. https://re-bloom.fr
-- CarChat (2026): AI assistant for vehicle owner manuals with instant, source-backed answers (RAG, LangChain). Founder. https://carchat.online
+- Wallside (2026, ex-CarChat): AI assistant for vehicle owner manuals with instant, source-backed answers (RAG, LangChain), covering 130+ vehicles. Founder. https://wallside.aminssutt.fr
 - Megawatt'UTT — SimuPont (2026): mobile training simulator for nuclear bridge-crane fuel handling, built for EDF's Megawatt'UTT challenge — 2nd place and Public's Prize; featured in Le Parisien.
 - Hera Studio (2025): AI platform for personalized children's coloring books. Founder. https://www.herastudio.art
 - AI Adventure (2025): student learning platform turning research-paper databases into accessible knowledge (KAIST).
@@ -40,7 +42,7 @@
 Artificial Intelligence, Machine Learning, RAG, Agentic AI, MCP, LangChain, Large Language Models, React, Python, Full-stack development, Data Science, Unity, ROS2.
 
 ## Recognition
-- RAISE Summit 2026 hackathon (Vultr track): podium with Arc, presented on the main stage in front of 6,000 builders.
+- RAISE Summit 2026 hackathon (Vultr track): podium with Arc (now Astyr, astyr.app), presented on the main stage in front of 6,000 builders.
 - Megawatt'UTT (EDF, 2026): 2nd place and Public's Prize.
 - Le Parisien (2026): article on the EDF × UTT nuclear-plant project.
 - Certifications: Microsoft (Generative AI), AWS (Generative AI), IBM (RAG Applications), Board Infinity (Intelligent Agents).

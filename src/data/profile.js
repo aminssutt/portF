@@ -7,7 +7,10 @@ export const profile = {
     ko: '프랑스 파리 거주 · 새로운 기회에 열려 있습니다'
   },
   email: 'lakhdarberache@gmail.com',
-  cv: '/cv_lakhdar_berache.pdf',
+  cvs: [
+    { label: 'Corpo', href: '/cv_lakhdar_berache_corpo.pdf' },
+    { label: 'Research', href: '/cv_lakhdar_berache_research.pdf' }
+  ],
   bio: {
     en: [
       'I’m an engineering student passionate about agentic systems, working at the intersection of artificial intelligence, data science and software.',

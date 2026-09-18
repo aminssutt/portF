@@ -860,10 +860,24 @@ export default function Portfolio() {
                     {social.label}
                   </a>
                 ))}
-                {profile.cv && (
-                  <button className="about__links-btn" onClick={() => setPreviewPdf(profile.cv)}>
-                    {T.resume}
-                  </button>
+                {profile.cvs?.length > 0 && (
+                  <details className="about__resume">
+                    <summary className="about__links-btn">{T.resume}</summary>
+                    <div className="about__resume-options">
+                      {profile.cvs.map((cv) => (
+                        <button
+                          key={cv.href}
+                          className="about__resume-option"
+                          onClick={(event) => {
+                            event.currentTarget.closest('details').open = false
+                            setPreviewPdf(cv.href)
+                          }}
+                        >
+                          {cv.label} <span aria-hidden="true">↗</span>
+                        </button>
+                      ))}
+                    </div>
+                  </details>
                 )}
               </div>
               <small>{t(profile.location)}</small>

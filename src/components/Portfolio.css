@@ -995,6 +995,45 @@
   height: 1px;
   background: rgba(0, 0, 0, 0.5);
 }
+.about__resume {
+  position: relative;
+}
+.about__resume summary {
+  list-style: none;
+}
+.about__resume summary::-webkit-details-marker {
+  display: none;
+}
+.about__resume-options {
+  position: absolute;
+  z-index: 1;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 160px;
+  padding: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+.about__resume-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: #000;
+  font: inherit;
+  cursor: pointer;
+}
+.about__resume-option:hover,
+.about__resume-option:focus-visible {
+  background: rgba(0, 0, 0, 0.05);
+}
 .about__text small {
   display: block;
   margin-top: 26px;

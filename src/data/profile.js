@@ -8,8 +8,8 @@ export const profile = {
   },
   email: 'lakhdarberache@gmail.com',
   cvs: [
-    { label: 'Corpo', href: '/cv_lakhdar_berache_corpo.pdf' },
-    { label: 'Research', href: '/cv_lakhdar_berache_research.pdf' }
+    { key: 'research', label: 'Research', href: '/cv_lakhdar_berache_research.pdf' },
+    { key: 'corpo', label: 'Corporate', href: '/cv_lakhdar_berache_corpo.pdf' }
   ],
   bio: {
     en: [
